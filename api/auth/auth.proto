@@ -6,15 +6,15 @@ option go_package = "./auth";
 import "google/api/annotations.proto";
 
 service Auth {
-  rpc AuthWithCredentials(AuthWithCredentialsRequest) returns (AccessRefreshTokens) {
+  rpc AuthWithCredentialsV1(AuthWithCredentialsV1Request) returns (AccessRefreshTokens) {
     option (google.api.http) = { post: "/api/v1/auth/with/credentials"; body: "*"; };
   };
 
-  rpc AuthWithAccessToken(AuthWithAccessTokenRequest) returns (AuthWithAccessTokenResponse) {
+  rpc AuthWithAccessTokenV1(AuthWithAccessTokenV1Request) returns (AuthWithAccessTokenV1Response) {
     option (google.api.http) = { post: "/api/v1/auth/with/access/token"; body: "*"; };
   };
 
-  rpc RefreshTokens(AccessRefreshTokens) returns (AccessRefreshTokens){
+  rpc RefreshTokensV1(AccessRefreshTokens) returns (AccessRefreshTokens){
     option (google.api.http) = { post: "/api/v1/access/refresh/token"; body: "*"; };
   };
 }
@@ -24,18 +24,16 @@ message AccessRefreshTokens {
   string refresh_token = 2;
 }
 
-message AuthWithCredentialsRequest {
+message AuthWithCredentialsV1Request {
   string login     = 1;
   string password  = 2;
 }
 
-message AuthWithAccessTokenRequest {
+message AuthWithAccessTokenV1Request {
   string access_token = 1;
 }
 
-message AuthWithAccessTokenResponse {
-  string message = 1;
-}
+message AuthWithAccessTokenV1Response {}
 
 
 

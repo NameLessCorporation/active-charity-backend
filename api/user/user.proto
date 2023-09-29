@@ -6,36 +6,16 @@ option go_package = "./user";
 import "google/api/annotations.proto";
 
 service User {
-  rpc CreateUser(CreateUserRequest) returns (UserMessageResponse) {
+  rpc CreateUserV1(CreateUserV1Request) returns (CreateUserV1Response) {
     option (google.api.http) = { post: "/api/v1/create/user"; body: "*"; };
-  };
-  rpc DeleteUser(DeleteUserRequest) returns (UserMessageResponse) {
-    option (google.api.http) = { post: "/api/v1/delete/user"; body: "*"; };
-  };
-  rpc UpdateUser(UpdateUserRequest) returns (UserMessageResponse) {
-    option (google.api.http) = { post: "/api/v1/update/user"; body: "*"; };
   };
 }
 
-message CreateUserRequest {
+message CreateUserV1Request {
   string access_token  = 1;
   string user_login    = 2;
   string user_password = 3;
   string user_role     = 4;
 }
 
-message DeleteUserRequest {
-  string access_token  = 1;
-  string user_login    = 2;
-}
-
-message UpdateUserRequest {
-  string access_token      = 1;
-  string user_login        = 2;
-  string new_user_password = 4;
-  string new_user_role     = 5;
-}
-
-message UserMessageResponse {
-  string message = 1;
-}
+message CreateUserV1Response {}

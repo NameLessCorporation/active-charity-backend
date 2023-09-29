@@ -2,6 +2,12 @@ package app
 
 import (
 	"context"
+	"net"
+	"net/http"
+	"time"
+
+	"google.golang.org/grpc/credentials/insecure"
+
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/role"
@@ -13,19 +19,15 @@ import (
 	app_auth "github.com/NameLessCorporation/active-charity-backend/extra/auth"
 	app_role "github.com/NameLessCorporation/active-charity-backend/extra/role"
 	app_user "github.com/NameLessCorporation/active-charity-backend/extra/user"
+	gateway_tools "github.com/NameLessCorporation/active-charity-backend/tools/gateway"
+
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	_ "github.com/lib/pq"
+	"github.com/rs/cors"
+	"github.com/tmc/grpc-websocket-proxy/wsproxy"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/encoding/protojson"
-	"net"
-	"net/http"
-	"time"
-
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-
-	gateway_tools "github.com/NameLessCorporation/active-charity-backend/tools/gateway"
-	"github.com/rs/cors"
-	"github.com/tmc/grpc-websocket-proxy/wsproxy"
 )
 
 type App struct {
@@ -120,22 +122,21 @@ func (app *App) StartApp(certPath string) error {
 		context.Background(),
 		app.config.Server.IP+app.config.Server.Port,
 		grpc.WithBlock(),
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		return err
 	}
 
-	err = app_auth.RegisterAuthHandler(context.Background(), gwmux, gwconn)
-	if err != nil {
+	if err = app_auth.RegisterAuthHandler(context.Background(), gwmux, gwconn); err != nil {
 		return err
 	}
-	err = app_role.RegisterRoleHandler(context.Background(), gwmux, gwconn)
-	if err != nil {
+
+	if err = app_role.RegisterRoleHandler(context.Background(), gwmux, gwconn); err != nil {
 		return err
 	}
-	err = app_user.RegisterUserHandler(context.Background(), gwmux, gwconn)
-	if err != nil {
+
+	if err = app_user.RegisterUserHandler(context.Background(), gwmux, gwconn); err != nil {
 		return err
 	}
 

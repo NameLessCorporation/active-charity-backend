@@ -2,8 +2,10 @@ package repository
 
 import (
 	"context"
-	"github.com/NameLessCorporation/active-charity-backend/app/models"
+
 	"github.com/jmoiron/sqlx"
+
+	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
 type UserRepository interface {
@@ -22,33 +24,14 @@ type TokenRepository interface {
 	DeleteTokenByAccessToken(ctx context.Context, accessToken string) error
 }
 
-type RoleRepository interface {
-	IsExistByRole(ctx context.Context, role string) bool
-	GetRoleIDByName(ctx context.Context, name string) (uint64, error)
-	GetRoleByRoleID(ctx context.Context, roleID uint64) (*models.Role, error)
-	CreateRole(ctx context.Context, role *models.Role) (uint64, error)
-}
-
-type ConfigRepository interface {
-}
-
-type ValueRepository interface {
-}
-
 type Repository struct {
-	UserRepository   UserRepository
-	TokenRepository  TokenRepository
-	RoleRepository   RoleRepository
-	ConfigRepository ConfigRepository
-	ValueRepository  ValueRepository
+	UserRepository  UserRepository
+	TokenRepository TokenRepository
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
-		UserRepository:   NewUserRepository(db),
-		TokenRepository:  NewTokenRepository(db),
-		RoleRepository:   NewRoleRepository(db),
-		ConfigRepository: NewConfigRepository(db),
-		ValueRepository:  NewValueRepository(db),
+		UserRepository:  NewUserRepository(db),
+		TokenRepository: NewTokenRepository(db),
 	}
 }

@@ -2,10 +2,11 @@ package service
 
 import (
 	"context"
+	"time"
+
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 	"github.com/NameLessCorporation/active-charity-backend/app/repository"
 	"github.com/NameLessCorporation/active-charity-backend/config"
-	"time"
 )
 
 type ITokenService interface {
@@ -27,26 +28,9 @@ type IUserService interface {
 	GetUserIDByLogin(ctx context.Context, login string) (uint64, error)
 }
 
-type IConfigService interface {
-}
-
-type IRoleService interface {
-	IsExistByRole(ctx context.Context, role string) bool
-	GetRoleIDByName(ctx context.Context, name string) (*models.Role, error)
-	GetRoleByRoleID(ctx context.Context, roleID uint64) (*models.Role, error)
-	IsRoleAllowedForUser(ctx context.Context, userID uint64, role string) (bool, error)
-	CreateRole(ctx context.Context, role *models.Role) (uint64, error)
-}
-
-type IValueService interface {
-}
-
 type Services struct {
-	TokenService  ITokenService
-	UserService   IUserService
-	ConfigService IConfigService
-	RoleService   IRoleService
-	ValueService  IValueService
+	TokenService ITokenService
+	UserService  IUserService
 }
 
 type Service struct {
@@ -64,10 +48,7 @@ func NewService(repository *repository.Repository, config *config.Config) *Servi
 
 func (s *Service) InitServices() {
 	s.Services = &Services{
-		TokenService:  s,
-		UserService:   s,
-		ConfigService: s,
-		RoleService:   s,
-		ValueService:  s,
+		TokenService: s,
+		UserService:  s,
 	}
 }
