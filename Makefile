@@ -1,19 +1,29 @@
-SOURCES = $(sort $(dir $(wildcard ./api/*/)))
+PUBLIC = $(sort $(dir $(wildcard ./api/*/)))
+
+SWAGGER = $(wildcard ./docs/*/*.json)
+
+GOPATH = $(HOME)/go
 
 .ONESHELL:
 
-.PHONY: build-go
-build-go:
+build:
 	go build -v ./cmd/app
 
-.ONESHELL:
-.PHONY: generate-pb
-generate-pb:
-	for SOURCE in $(SOURCES); do \
-  		  echo $$SOURCE; \
-  		  protoc -I=./api --go_out=plugins=grpc:./extra $$SOURCE*.proto; \
-  	done;
+gen-pb:
+	for public in $(PUBLIC) ; do \
+		protoc -I ./api \
+				-I$(GOPATH) \
+				--go_out ./extra --go_opt paths=source_relative \
+				--go-grpc_out=require_unimplemented_servers=false:./extra \
+				--go-grpc_opt paths=source_relative \
+				--grpc-gateway_out ./extra \
+				--grpc-gateway_opt paths=source_relative \
+				--openapiv2_out ./docs \
+				--openapiv2_opt logtostderr=true \
+				$$public/*.proto; \
+	done \
 
-.PHONY: evans
-evans:
-	evans api/$(name).proto -p $(port)
+gen-docs:
+	for pb in $(SWAGGER) ; do \
+  		redoc-cli bundle -o ./docs/generated/"$$(basename -s .json $$pb)".html $$pb; \
+	done;
