@@ -2,6 +2,10 @@ server:
   ip:   "0.0.0.0"
   port: "65000"
 
+gateway:
+  ip: "0.0.0.0"
+  port: "65001"
+
 db:
   host:     "postgresql"
   port:     "5432"

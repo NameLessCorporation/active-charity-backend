@@ -15,7 +15,104 @@
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/api/v1/create/role": {
+      "post": {
+        "operationId": "Role_CreateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/roleRoleMessageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/roleRoleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Role"
+        ]
+      }
+    },
+    "/api/v1/delete/role": {
+      "post": {
+        "operationId": "Role_DeleteRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/roleRoleMessageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/roleDeleteRoleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Role"
+        ]
+      }
+    },
+    "/api/v1/update/role": {
+      "post": {
+        "operationId": "Role_UpdateRole",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/roleRoleMessageResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/roleRoleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Role"
+        ]
+      }
+    }
+  },
   "definitions": {
     "protobufAny": {
       "type": "object",
@@ -26,11 +123,75 @@
       },
       "additionalProperties": {}
     },
+    "roleDeleteRoleRequest": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "roleName": {
+          "type": "string"
+        }
+      }
+    },
     "roleRoleMessageResponse": {
       "type": "object",
       "properties": {
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "roleRoleRequest": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "roleName": {
+          "type": "string"
+        },
+        "createUser": {
+          "type": "boolean"
+        },
+        "deleteUser": {
+          "type": "boolean"
+        },
+        "updateUser": {
+          "type": "boolean"
+        },
+        "createConfig": {
+          "type": "boolean"
+        },
+        "deleteConfig": {
+          "type": "boolean"
+        },
+        "updateConfig": {
+          "type": "boolean"
+        },
+        "createRole": {
+          "type": "boolean"
+        },
+        "deleteRole": {
+          "type": "boolean"
+        },
+        "updateRole": {
+          "type": "boolean"
+        },
+        "createValue": {
+          "type": "boolean"
+        },
+        "deleteValue": {
+          "type": "boolean"
+        },
+        "updateValue": {
+          "type": "boolean"
+        },
+        "allowedUsers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/role"
@@ -15,8 +16,16 @@ import (
 	_ "github.com/lib/pq"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/encoding/protojson"
 	"net"
+	"net/http"
 	"time"
+
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+
+	gateway_tools "github.com/NameLessCorporation/active-charity-backend/tools/gateway"
+	"github.com/rs/cors"
+	"github.com/tmc/grpc-websocket-proxy/wsproxy"
 )
 
 type App struct {
@@ -81,11 +90,61 @@ func (app *App) StartApp(certPath string) error {
 		zap.Int64("duration", time.Now().UnixNano()-startTime),
 	)
 
-	if err := grpcServer.Serve(listener); err != nil {
+	go func() {
+		app.logger.Fatal("listen grpc server error", zap.Error(grpcServer.Serve(listener)))
+	}()
+
+	gwmux := runtime.NewServeMux(
+		runtime.WithIncomingHeaderMatcher(gateway_tools.CustomMatcher),
+		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.HTTPBodyMarshaler{
+			Marshaler: &runtime.JSONPb{
+				MarshalOptions: protojson.MarshalOptions{
+					UseProtoNames:   false,
+					EmitUnpopulated: true,
+				},
+				UnmarshalOptions: protojson.UnmarshalOptions{
+					DiscardUnknown: true,
+				},
+			},
+		}),
+	)
+
+	handler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST"},
+		AllowedHeaders:   []string{"Content-Type", "X-Remote-Address", "X-Access-Token"},
+		AllowCredentials: true,
+	}).Handler(gwmux)
+
+	gwconn, err := grpc.DialContext(
+		context.Background(),
+		app.config.Server.IP+app.config.Server.Port,
+		grpc.WithBlock(),
+		grpc.WithInsecure(),
+	)
+	if err != nil {
 		return err
 	}
 
-	return nil
+	err = app_auth.RegisterAuthHandler(context.Background(), gwmux, gwconn)
+	if err != nil {
+		return err
+	}
+	err = app_role.RegisterRoleHandler(context.Background(), gwmux, gwconn)
+	if err != nil {
+		return err
+	}
+	err = app_user.RegisterUserHandler(context.Background(), gwmux, gwconn)
+	if err != nil {
+		return err
+	}
+
+	gwServer := &http.Server{
+		Addr:    app.config.Gateway.IP + app.config.Gateway.Port,
+		Handler: gwmux,
+	}
+
+	return http.ListenAndServe(gwServer.Addr, wsproxy.WebsocketProxy(handler))
 }
 
 func (app *App) InitEndpointContainer(service *service.Services) *endpoint.EndpointContainer {

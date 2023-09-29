@@ -3,11 +3,18 @@ syntax = "proto3";
 package proto.user;
 
 option go_package = "./user";
+import "google/api/annotations.proto";
 
 service User {
-  rpc CreateUser(CreateUserRequest) returns (UserMessageResponse);
-  rpc DeleteUser(DeleteUserRequest) returns (UserMessageResponse);
-  rpc UpdateUser(UpdateUserRequest) returns (UserMessageResponse);
+  rpc CreateUser(CreateUserRequest) returns (UserMessageResponse) {
+    option (google.api.http) = { post: "/api/v1/create/user"; body: "*"; };
+  };
+  rpc DeleteUser(DeleteUserRequest) returns (UserMessageResponse) {
+    option (google.api.http) = { post: "/api/v1/delete/user"; body: "*"; };
+  };
+  rpc UpdateUser(UpdateUserRequest) returns (UserMessageResponse) {
+    option (google.api.http) = { post: "/api/v1/update/user"; body: "*"; };
+  };
 }
 
 message CreateUserRequest {

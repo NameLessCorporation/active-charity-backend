@@ -12,7 +12,7 @@ build:
 gen-pb:
 	for public in $(PUBLIC) ; do \
 		protoc -I ./api \
-				-I$(GOPATH) \
+				-I$(GOPATH)/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 				--go_out ./extra --go_opt paths=source_relative \
 				--go-grpc_out=require_unimplemented_servers=false:./extra \
 				--go-grpc_opt paths=source_relative \

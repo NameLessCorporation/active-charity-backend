@@ -3,13 +3,20 @@ syntax = "proto3";
 package proto.auth;
 
 option go_package = "./auth";
+import "google/api/annotations.proto";
 
 service Auth {
-  rpc AuthWithCredentials(AuthWithCredentialsRequest) returns (AccessRefreshTokens);
+  rpc AuthWithCredentials(AuthWithCredentialsRequest) returns (AccessRefreshTokens) {
+    option (google.api.http) = { post: "/api/v1/auth/with/credentials"; body: "*"; };
+  };
 
-  rpc AuthWithAccessToken(AuthWithAccessTokenRequest) returns (AuthWithAccessTokenResponse);
+  rpc AuthWithAccessToken(AuthWithAccessTokenRequest) returns (AuthWithAccessTokenResponse) {
+    option (google.api.http) = { post: "/api/v1/auth/with/access/token"; body: "*"; };
+  };
 
-  rpc RefreshTokens(AccessRefreshTokens) returns (AccessRefreshTokens);
+  rpc RefreshTokens(AccessRefreshTokens) returns (AccessRefreshTokens){
+    option (google.api.http) = { post: "/api/v1/access/refresh/token"; body: "*"; };
+  };
 }
 
 message AccessRefreshTokens {

@@ -3,11 +3,18 @@ syntax = "proto3";
 package proto.role;
 
 option go_package = "./role";
+import "google/api/annotations.proto";
 
 service Role {
-  rpc CreateRole(RoleRequest) returns (RoleMessageResponse);
-  rpc DeleteRole(DeleteRoleRequest) returns (RoleMessageResponse);
-  rpc UpdateRole(RoleRequest) returns (RoleMessageResponse);
+  rpc CreateRole(RoleRequest) returns (RoleMessageResponse) {
+    option (google.api.http) = { post: "/api/v1/create/role"; body: "*"; };
+  };
+  rpc DeleteRole(DeleteRoleRequest) returns (RoleMessageResponse) {
+    option (google.api.http) = { post: "/api/v1/delete/role"; body: "*"; };
+  };
+  rpc UpdateRole(RoleRequest) returns (RoleMessageResponse) {
+    option (google.api.http) = { post: "/api/v1/update/role"; body: "*"; };
+  };
 }
 
 message RoleRequest {

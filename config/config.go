@@ -3,12 +3,18 @@ package config
 import "time"
 
 type Config struct {
-	Server Server `yaml:"server"`
-	DB     DB     `yaml:"db"`
-	JWT    JWT    `yaml:"jwt"`
+	Server  Server  `yaml:"server"`
+	DB      DB      `yaml:"db"`
+	Gateway Gateway `yaml:"gateway"`
+	JWT     JWT     `yaml:"jwt"`
 }
 
 type Server struct {
+	IP   string `yaml:"ip"`
+	Port string `yaml:"port"`
+}
+
+type Gateway struct {
 	IP   string `yaml:"ip"`
 	Port string `yaml:"port"`
 }
