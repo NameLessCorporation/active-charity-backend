@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  emmet-server:
+  active-charity-backend:
     build: ./
     ports:
       - 65000:65000
