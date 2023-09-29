@@ -76,7 +76,7 @@ func (app *App) StartApp(certPath string) error {
 	app_user.RegisterUserServer(grpcServer, endpointContainer.UserService)
 	app_role.RegisterRoleServer(grpcServer, endpointContainer.RoleService)
 
-	app.logger.Info("emmet-server successfully started",
+	app.logger.Info("active-charity-backend successfully started",
 		zap.String("addr", app.config.Server.IP+":"+app.config.Server.Port),
 		zap.Int64("duration", time.Now().UnixNano()-startTime),
 	)
