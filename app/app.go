@@ -2,9 +2,12 @@ package app
 
 import (
 	"context"
+	"log"
 	"net"
 	"net/http"
 	"time"
+
+	"google.golang.org/grpc/credentials/insecure"
 
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/activity"
@@ -25,7 +28,6 @@ import (
 	"github.com/tmc/grpc-websocket-proxy/wsproxy"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
@@ -89,6 +91,7 @@ func (app *App) StartApp(certPath string) error {
 		zap.String("addr", app.config.Server.IP+":"+app.config.Server.Port),
 		zap.Int64("duration", time.Now().UnixNano()-startTime),
 	)
+	log.Println(app.config.Server.IP + ":" + app.config.Server.Port)
 
 	go func() {
 		app.logger.Fatal("listen grpc server error", zap.Error(grpcServer.Serve(listener)))
@@ -118,7 +121,7 @@ func (app *App) StartApp(certPath string) error {
 
 	gwconn, err := grpc.DialContext(
 		context.Background(),
-		app.config.Server.IP+app.config.Server.Port,
+		app.config.Server.IP+":"+app.config.Server.Port,
 		grpc.WithBlock(),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
@@ -135,7 +138,7 @@ func (app *App) StartApp(certPath string) error {
 	}
 
 	gwServer := &http.Server{
-		Addr:    app.config.Gateway.IP + app.config.Gateway.Port,
+		Addr:    app.config.Gateway.IP + ":" + app.config.Gateway.Port,
 		Handler: gwmux,
 	}
 
