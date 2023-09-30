@@ -21,6 +21,7 @@ func (u *UserEndpoint) CreateUserV1(ctx context.Context, req *user.CreateUserV1R
 		Password:       req.GetPassword(),
 		Name:           req.GetName(),
 		DateOfBirthday: req.GetDateOfBirthday(),
+		OrganizationID: 0,
 	}
 	if err := newUser.Validate(); err != nil {
 		return nil, err
@@ -32,6 +33,18 @@ func (u *UserEndpoint) CreateUserV1(ctx context.Context, req *user.CreateUserV1R
 	}
 
 	newUser.Password = hashPassword
+
+	var walletID uint64
+	walletID, err = u.services.WalletService.CreateWallet(ctx, &models.Wallet{
+		Type:   models.WalletUserType,
+		Coins:  0,
+		Rubles: 0,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	newUser.WalletID = walletID
 
 	_, err = u.services.UserService.CreateUser(ctx, newUser)
 	if err != nil {

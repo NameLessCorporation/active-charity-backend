@@ -22,9 +22,10 @@ func (o *Organization) CreateOrganization(ctx context.Context, organization *mod
 	var id uint64
 	err := o.db.QueryRowContext(
 		ctx,
-		"INSERT INTO public.organizations (name, owner_id, created_at, updated_at) VALUES ($1,$2, NOW(), NOW()) RETURNING id",
+		"INSERT INTO public.organizations (name, owner_id, wallet_id, created_at, updated_at) VALUES ($1,$2,$3,NOW(),NOW()) RETURNING id",
 		organization.Name,
 		organization.OwnerID,
+		organization.WalletID,
 	).Scan(&id)
 	if err != nil {
 		return 0, err

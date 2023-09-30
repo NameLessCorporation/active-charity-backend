@@ -35,11 +35,28 @@ type IInviteCodeService interface {
 	GetInviteCodeByCode(ctx context.Context, code string) (*models.InviteCode, error)
 }
 
+type IWalletService interface {
+	CreateWallet(ctx context.Context, wallet *models.Wallet) (uint64, error)
+	GetWalletByID(ctx context.Context, id uint64) (*models.Wallet, error)
+	UpdateCoinsByID(ctx context.Context, id, coins uint64) error
+	UpdateRublesByID(ctx context.Context, id, rubles uint64) error
+}
+
+type ITransactionService interface {
+	CreateTransaction(ctx context.Context, transaction *models.Transaction) (uint64, error)
+	UpdateStatusByID(ctx context.Context, id uint64, status string) error
+	GetTransactionByID(ctx context.Context, id uint64) (*models.Transaction, error)
+	GetTransactionByToWalletID(ctx context.Context, toWalletID uint64) (*models.Transaction, error)
+	GetTransactionByFromWalletID(ctx context.Context, fromWalletID uint64) (*models.Transaction, error)
+}
+
 type Services struct {
 	TokenService        ITokenService
 	UserService         IUserService
 	OrganizationService IOrganizationService
 	InviteCodeService   IInviteCodeService
+	WalletService       IWalletService
+	TransactionService  ITransactionService
 }
 
 type Service struct {
@@ -61,5 +78,7 @@ func (s *Service) InitServices() {
 		UserService:         s,
 		OrganizationService: s,
 		InviteCodeService:   s,
+		WalletService:       s,
+		TransactionService:  s,
 	}
 }
