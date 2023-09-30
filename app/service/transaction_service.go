@@ -35,19 +35,10 @@ func (s *Service) GetTransactionByID(ctx context.Context, id uint64) (*models.Tr
 	return transaction, nil
 }
 
-func (s *Service) GetTransactionByToWalletID(ctx context.Context, toWalletID uint64) (*models.Transaction, error) {
-	transaction, err := s.repository.TransactionRepository.GetTransactionByToWalletID(ctx, toWalletID)
+func (s *Service) GetTransactionByToWalletIDAndFromWalletID(ctx context.Context, fromWalletID, toWalletID uint64) (*models.Transaction, error) {
+	transaction, err := s.repository.TransactionRepository.GetTransactionByToWalletIDAndFromWalletID(ctx, fromWalletID, toWalletID)
 	if err != nil {
-		return nil, status.Error(codes.Internal, "Ошибка получения транзакции через получателя")
-	}
-
-	return transaction, nil
-}
-
-func (s *Service) GetTransactionByFromWalletID(ctx context.Context, toWalletID uint64) (*models.Transaction, error) {
-	transaction, err := s.repository.TransactionRepository.GetTransactionByFromWalletID(ctx, toWalletID)
-	if err != nil {
-		return nil, status.Error(codes.Internal, "Ошибка получения транзакции через отправителя")
+		return nil, status.Error(codes.Internal, "Ошибка получения транзакции через получателя и отправителя")
 	}
 
 	return transaction, nil

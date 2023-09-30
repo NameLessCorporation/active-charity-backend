@@ -14,8 +14,8 @@ const (
 type Transaction struct {
 	ID           uint64 `db:"id"`
 	Type         string `db:"type"`
-	FromWalletID string `db:"from_wallet_id"`
-	ToWalletID   string `db:"to_wallet_id"`
+	FromWalletID uint64 `db:"from_wallet_id"`
+	ToWalletID   uint64 `db:"to_wallet_id"`
 	Coins        uint64 `db:"coins"`
 	Rubles       uint64 `db:"rubles"`
 	Status       string `db:"status"`

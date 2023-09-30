@@ -46,8 +46,7 @@ type ITransactionService interface {
 	CreateTransaction(ctx context.Context, transaction *models.Transaction) (uint64, error)
 	UpdateStatusByID(ctx context.Context, id uint64, status string) error
 	GetTransactionByID(ctx context.Context, id uint64) (*models.Transaction, error)
-	GetTransactionByToWalletID(ctx context.Context, toWalletID uint64) (*models.Transaction, error)
-	GetTransactionByFromWalletID(ctx context.Context, fromWalletID uint64) (*models.Transaction, error)
+	GetTransactionByToWalletIDAndFromWalletID(ctx context.Context, fromWalletID, toWalletID uint64) (*models.Transaction, error)
 }
 
 type Services struct {
