@@ -90,6 +90,9 @@ func (app *App) StartApp(certPath string) error {
 
 	app_auth.RegisterAuthServer(grpcServer, endpointContainer.AuthService)
 	app_user.RegisterUserServer(grpcServer, endpointContainer.UserService)
+	app_organization.RegisterOrganizationServer(grpcServer, endpointContainer.OrganizationService)
+	app_fund.RegisterFundServer(grpcServer, endpointContainer.FundService)
+	app_activity.RegisterActivityServer(grpcServer, endpointContainer.ActivityService)
 
 	app.logger.Info("active-charity-backend successfully started",
 		zap.String("addr", app.config.Server.IP+":"+app.config.Server.Port),
