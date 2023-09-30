@@ -6,18 +6,15 @@ import (
 	"net/http"
 	"time"
 
-	"google.golang.org/grpc/credentials/insecure"
-
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
-	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/role"
+	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/organization"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/user"
 	"github.com/NameLessCorporation/active-charity-backend/app/repository"
 	"github.com/NameLessCorporation/active-charity-backend/app/service"
 	"github.com/NameLessCorporation/active-charity-backend/config"
 	"github.com/NameLessCorporation/active-charity-backend/dependers/database"
 	app_auth "github.com/NameLessCorporation/active-charity-backend/extra/auth"
-	app_role "github.com/NameLessCorporation/active-charity-backend/extra/role"
 	app_user "github.com/NameLessCorporation/active-charity-backend/extra/user"
 	gateway_tools "github.com/NameLessCorporation/active-charity-backend/tools/gateway"
 
@@ -27,6 +24,7 @@ import (
 	"github.com/tmc/grpc-websocket-proxy/wsproxy"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
@@ -85,7 +83,6 @@ func (app *App) StartApp(certPath string) error {
 
 	app_auth.RegisterAuthServer(grpcServer, endpointContainer.AuthService)
 	app_user.RegisterUserServer(grpcServer, endpointContainer.UserService)
-	app_role.RegisterRoleServer(grpcServer, endpointContainer.RoleService)
 
 	app.logger.Info("active-charity-backend successfully started",
 		zap.String("addr", app.config.Server.IP+":"+app.config.Server.Port),
@@ -132,10 +129,6 @@ func (app *App) StartApp(certPath string) error {
 		return err
 	}
 
-	if err = app_role.RegisterRoleHandler(context.Background(), gwmux, gwconn); err != nil {
-		return err
-	}
-
 	if err = app_user.RegisterUserHandler(context.Background(), gwmux, gwconn); err != nil {
 		return err
 	}
@@ -151,12 +144,12 @@ func (app *App) StartApp(certPath string) error {
 func (app *App) InitEndpointContainer(service *service.Services) *endpoint.EndpointContainer {
 	authServices := auth.NewAuthEndpoint(service, app.config)
 	userServices := user.NewUserEndpoint(service, app.config)
-	roleServices := role.NewRoleEndpoint(service, app.config)
+	organizationServices := organization.NewOrganizationEndpoint(service, app.config)
 
 	serviceContainer := endpoint.NewEndpointContainer(
 		authServices,
 		userServices,
-		roleServices,
+		organizationServices,
 	)
 
 	return serviceContainer

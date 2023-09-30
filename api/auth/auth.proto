@@ -20,13 +20,13 @@ service Auth {
 }
 
 message AccessRefreshTokens {
-  string access_token  = 1;
+  string access_token = 1;
   string refresh_token = 2;
 }
 
 message AuthWithCredentialsV1Request {
-  string login     = 1;
-  string password  = 2;
+  string email = 1;
+  string password = 2;
 }
 
 message AuthWithAccessTokenV1Request {

@@ -2,10 +2,10 @@ package repository
 
 import (
 	"context"
-	"github.com/NameLessCorporation/active-charity-backend/app/models"
+
 	"github.com/jmoiron/sqlx"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+
+	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
 type User struct {
@@ -18,10 +18,9 @@ func NewUserRepository(db *sqlx.DB) *User {
 	}
 }
 
-func (u *User) IsExistByLogin(ctx context.Context, login string) bool {
+func (u *User) IsExistByEmail(ctx context.Context, email string) bool {
 	var id uint64
-
-	err := u.db.GetContext(ctx, &id, "SELECT id FROM users WHERE login = $1", login)
+	err := u.db.GetContext(ctx, &id, "SELECT id FROM public.users WHERE email = $1", email)
 	if err != nil {
 		return false
 	}
@@ -33,27 +32,27 @@ func (u *User) IsExistByLogin(ctx context.Context, login string) bool {
 	return true
 }
 
-func (u *User) GetUserByCredentials(ctx context.Context, credentials *models.Credentials) (uint64, error) {
+func (u *User) GetIDByCredentials(ctx context.Context, credentials *models.Credential) (uint64, error) {
 	var id uint64
-
-	err := u.db.GetContext(ctx, &id, "SELECT id FROM users WHERE login = $1 AND password = $2", credentials.Login, credentials.Password)
+	err := u.db.GetContext(
+		ctx,
+		&id,
+		"SELECT id FROM public.users WHERE email = $1 AND password = $2",
+		credentials.Email,
+		credentials.Password,
+	)
 	if err != nil {
-		return 0, status.Error(codes.InvalidArgument, "login or password incorrect")
-	}
-
-	if id == 0 {
-		return 0, status.Error(codes.Internal, "user not found")
+		return 0, err
 	}
 
 	return id, nil
 }
 
-func (u *User) GetUserByUserID(ctx context.Context, userID uint64) (*models.User, error) {
+func (u *User) GetUserByID(ctx context.Context, id uint64) (*models.User, error) {
 	var user models.User
-
-	err := u.db.GetContext(ctx, &user, "SELECT * FROM users WHERE id = $1", userID)
+	err := u.db.GetContext(ctx, &user, "SELECT * FROM public.users WHERE id = $1", id)
 	if err != nil {
-		return nil, status.Error(codes.NotFound, "user not found")
+		return nil, err
 	}
 
 	return &user, nil
@@ -61,48 +60,35 @@ func (u *User) GetUserByUserID(ctx context.Context, userID uint64) (*models.User
 
 func (u *User) CreateUser(ctx context.Context, user *models.User) (uint64, error) {
 	var id uint64
-
-	err := u.db.QueryRowContext(ctx, "INSERT INTO users (login, password, user_role, created_by) VALUES ($1,$2,$3,$4) RETURNING id",
-		user.Login,
+	err := u.db.QueryRowContext(
+		ctx,
+		"INSERT INTO public.users (email, password, name, date_of_birthday, organization_id created_at, updated_at) VALUES ($1,$2,$3,$4,0,NOW(),NOW()) RETURNING id",
+		user.Email,
 		user.Password,
-		user.Role,
-		user.CreatedBy,
+		user.Name,
+		user.DateOfBirthday,
 	).Scan(&id)
-	if err != nil {
-		return 0, status.Error(codes.NotFound, "user creation error")
-	}
-
-	return id, nil
-}
-
-func (u *User) GetUserIDByLogin(ctx context.Context, login string) (uint64, error) {
-	var id uint64
-
-	err := u.db.GetContext(ctx, &id, "SELECT id FROM users WHERE login = $1", login)
 	if err != nil {
 		return 0, err
 	}
 
-	if id == 0 {
-		return 0, status.Error(codes.Internal, "user not found")
+	return id, nil
+}
+
+func (u *User) GetIDByEmail(ctx context.Context, email string) (uint64, error) {
+	var id uint64
+	err := u.db.GetContext(ctx, &id, "SELECT id FROM public.users WHERE email = $1", email)
+	if err != nil {
+		return 0, err
 	}
 
 	return id, nil
 }
 
-func (u *User) DeleteUserByUserID(ctx context.Context, userID uint64) error {
-	_, err := u.db.ExecContext(ctx, "DELETE FROM users WHERE id = $1", userID)
+func (u *User) UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error {
+	_, err := u.db.ExecContext(ctx, "UPDATE public.users SET (organization_id) = ($1) WHERE id = $2", organizationID, id)
 	if err != nil {
-		return status.Error(codes.NotFound, "user not found")
-	}
-
-	return nil
-}
-
-func (u *User) UpdateUserPasswordAndRoleByUserID(ctx context.Context, userID uint64, password string, role string) error {
-	_, err := u.db.ExecContext(ctx, "UPDATE users SET (password, user_role) = ($1,$2) WHERE id = $3", password, role, userID)
-	if err != nil {
-		return status.Error(codes.NotFound, "user not found")
+		return err
 	}
 
 	return nil

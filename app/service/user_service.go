@@ -2,42 +2,57 @@ package service
 
 import (
 	"context"
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
-func (s *Service) IsExistByLogin(ctx context.Context, login string) bool {
-	return s.repository.UserRepository.IsExistByLogin(ctx, login)
+func (s *Service) IsExistByEmail(ctx context.Context, email string) bool {
+	return s.repository.UserRepository.IsExistByEmail(ctx, email)
 }
 
-func (s *Service) GetUserByCredentials(ctx context.Context, credentials *models.Credentials) (uint64, error) {
-	return s.repository.UserRepository.GetUserByCredentials(ctx, credentials)
-}
-
-func (s *Service) GetUserByLogin(ctx context.Context, login string) (*models.User, error) {
-	id, err := s.repository.UserRepository.GetUserIDByLogin(ctx, login)
+func (s *Service) GetIDByCredentials(ctx context.Context, credentials *models.Credential) (uint64, error) {
+	id, err := s.repository.UserRepository.GetIDByCredentials(ctx, credentials)
 	if err != nil {
-		return nil, err
+		return 0, status.Error(codes.Internal, "Ошибка получения id пользователя через учетные данные")
 	}
 
-	return s.GetUserByUserID(ctx, id)
+	return id, nil
 }
 
-func (s *Service) GetUserByUserID(ctx context.Context, userID uint64) (*models.User, error) {
-	return s.repository.UserRepository.GetUserByUserID(ctx, userID)
+func (s *Service) GetUserByID(ctx context.Context, id uint64) (*models.User, error) {
+	user, err := s.repository.UserRepository.GetUserByID(ctx, id)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Ошибка получения пользователя через id")
+	}
+
+	return user, nil
 }
 
 func (s *Service) CreateUser(ctx context.Context, user *models.User) (uint64, error) {
-	return s.repository.UserRepository.CreateUser(ctx, user)
+	id, err := s.repository.UserRepository.CreateUser(ctx, user)
+	if err != nil {
+		return 0, status.Error(codes.Internal, "Ошибка создания пользователя")
+	}
+
+	return id, nil
 }
 
-func (s *Service) DeleteUserByUserID(ctx context.Context, userID uint64) error {
-	return s.repository.UserRepository.DeleteUserByUserID(ctx, userID)
+func (s *Service) GetIDByEmail(ctx context.Context, email string) (uint64, error) {
+	id, err := s.repository.UserRepository.GetIDByEmail(ctx, email)
+	if err != nil {
+		return 0, status.Error(codes.Internal, "Ошибка получения email пользователя через id")
+	}
+
+	return id, nil
 }
 
-func (s *Service) UpdateUserPasswordAndRoleByUserID(ctx context.Context, userID uint64, password string, role string) error {
-	return s.repository.UserRepository.UpdateUserPasswordAndRoleByUserID(ctx, userID, password, role)
-}
+func (s *Service) UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error {
+	if err := s.repository.UserRepository.UpdateOrganizationIDByID(ctx, id, organizationID); err != nil {
+		return status.Error(codes.Internal, "Ошибка привязки к организации")
+	}
 
-func (s *Service) GetUserIDByLogin(ctx context.Context, login string) (uint64, error) {
-	return s.repository.UserRepository.GetUserIDByLogin(ctx, login)
+	return nil
 }

@@ -5,9 +5,9 @@ import (
 )
 
 type Token struct {
-	ID           uint64    `json:"id"            db:"id"`
-	AccessToken  string    `json:"access_token"  db:"access_token"`
-	RefreshToken string    `json:"refresh_token" db:"refresh_token"`
-	Exp          time.Time `json:"exp"           db:"exp"`
-	UserID       uint64    `json:"user_id"       db:"user_id"`
+	ID           uint64    `db:"id"`
+	AccessToken  string    `db:"access_token"`
+	RefreshToken string    `db:"refresh_token"`
+	Exp          time.Time `db:"exp"`
+	UserID       uint64    `db:"user_id"`
 }

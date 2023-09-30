@@ -2,11 +2,13 @@ package main
 
 import (
 	"flag"
-	"github.com/NameLessCorporation/active-charity-backend/app"
-	"github.com/NameLessCorporation/active-charity-backend/config"
+	"io/ioutil"
+
 	"go.uber.org/zap"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
+
+	"github.com/NameLessCorporation/active-charity-backend/app"
+	"github.com/NameLessCorporation/active-charity-backend/config"
 )
 
 const defaultConfigPath = "./config/default-config.yaml"
@@ -35,7 +37,6 @@ func main() {
 	}
 
 	var config config.Config
-
 	err = yaml.Unmarshal(yamlFile, &config)
 	if err != nil {
 		logger.Fatal("failed config unmarshalling",

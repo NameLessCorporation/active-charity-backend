@@ -18,7 +18,7 @@
   "paths": {
     "/api/v1/access/refresh/token": {
       "post": {
-        "operationId": "Auth_RefreshTokens",
+        "operationId": "Auth_RefreshTokensV1",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -50,12 +50,12 @@
     },
     "/api/v1/auth/with/access/token": {
       "post": {
-        "operationId": "Auth_AuthWithAccessToken",
+        "operationId": "Auth_AuthWithAccessTokenV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/authAuthWithAccessTokenResponse"
+              "$ref": "#/definitions/authAuthWithAccessTokenV1Response"
             }
           },
           "default": {
@@ -71,7 +71,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/authAuthWithAccessTokenRequest"
+              "$ref": "#/definitions/authAuthWithAccessTokenV1Request"
             }
           }
         ],
@@ -82,7 +82,7 @@
     },
     "/api/v1/auth/with/credentials": {
       "post": {
-        "operationId": "Auth_AuthWithCredentials",
+        "operationId": "Auth_AuthWithCredentialsV1",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -103,7 +103,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/authAuthWithCredentialsRequest"
+              "$ref": "#/definitions/authAuthWithCredentialsV1Request"
             }
           }
         ],
@@ -125,7 +125,7 @@
         }
       }
     },
-    "authAuthWithAccessTokenRequest": {
+    "authAuthWithAccessTokenV1Request": {
       "type": "object",
       "properties": {
         "accessToken": {
@@ -133,18 +133,13 @@
         }
       }
     },
-    "authAuthWithAccessTokenResponse": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string"
-        }
-      }
+    "authAuthWithAccessTokenV1Response": {
+      "type": "object"
     },
-    "authAuthWithCredentialsRequest": {
+    "authAuthWithCredentialsV1Request": {
       "type": "object",
       "properties": {
-        "login": {
+        "email": {
           "type": "string"
         },
         "password": {

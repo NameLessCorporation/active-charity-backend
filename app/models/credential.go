@@ -5,16 +5,12 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type User struct {
-	ID             uint64 `db:"id"`
-	Email          string `db:"email"`
-	Name           string `db:"name"`
-	Password       string `db:"password"`
-	DateOfBirthday string `db:"date_of_birthday"`
-	OrganizationID uint64 `db:"organization_id"`
+type Credential struct {
+	Email    string `json:"email"    db:"email"`
+	Password string `json:"password" db:"password"`
 }
 
-func (c *User) Validate() error {
+func (c *Credential) Validate() error {
 	if len(c.Password) > 64 {
 		return status.Error(codes.InvalidArgument, "Длина пароля больше 64 символов")
 	}

@@ -9,13 +9,23 @@ service User {
   rpc CreateUserV1(CreateUserV1Request) returns (CreateUserV1Response) {
     option (google.api.http) = { post: "/api/v1/create/user"; body: "*"; };
   };
+  rpc JoinUserToOrganizationV1(JoinUserToOrganizationV1Request) returns (JoinUserToOrganizationV1Response) {
+    option (google.api.http) = { post: "/api/v1/join/user/organization"; body: "*"; };
+  };
 }
 
 message CreateUserV1Request {
-  string access_token  = 1;
-  string user_login    = 2;
-  string user_password = 3;
-  string user_role     = 4;
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string date_of_birthday = 4;
 }
 
 message CreateUserV1Response {}
+
+message JoinUserToOrganizationV1Request {
+  string access_token = 1;
+  string organization_invite_code = 2;
+}
+
+message JoinUserToOrganizationV1Response {}

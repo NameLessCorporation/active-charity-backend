@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "user/user.proto",
+    "title": "organization/organization.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "User"
+      "name": "Organization"
     }
   ],
   "consumes": [
@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/create/user": {
+    "/api/v1/create/organization": {
       "post": {
-        "operationId": "User_CreateUserV1",
+        "operationId": "Organization_CreateOrganizationV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/userCreateUserV1Response"
+              "$ref": "#/definitions/organizationCreateOrganizationV1Response"
             }
           },
           "default": {
@@ -39,23 +39,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userCreateUserV1Request"
+              "$ref": "#/definitions/organizationCreateOrganizationV1Request"
             }
           }
         ],
         "tags": [
-          "User"
+          "Organization"
         ]
       }
     },
-    "/api/v1/join/user/organization": {
+    "/api/v1/create/organization/code": {
       "post": {
-        "operationId": "User_JoinUserToOrganizationV1",
+        "operationId": "Organization_CreateOrganizationInviteCodeV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/userJoinUserToOrganizationV1Response"
+              "$ref": "#/definitions/organizationCreateOrganizationInviteCodeV1Response"
             }
           },
           "default": {
@@ -71,17 +71,47 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userJoinUserToOrganizationV1Request"
+              "$ref": "#/definitions/organizationCreateOrganizationInviteCodeV1Request"
             }
           }
         ],
         "tags": [
-          "User"
+          "Organization"
         ]
       }
     }
   },
   "definitions": {
+    "organizationCreateOrganizationInviteCodeV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationCreateOrganizationInviteCodeV1Response": {
+      "type": "object",
+      "properties": {
+        "inviteCode": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationCreateOrganizationV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationCreateOrganizationV1Response": {
+      "type": "object"
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -109,40 +139,6 @@
           }
         }
       }
-    },
-    "userCreateUserV1Request": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "dateOfBirthday": {
-          "type": "string"
-        }
-      }
-    },
-    "userCreateUserV1Response": {
-      "type": "object"
-    },
-    "userJoinUserToOrganizationV1Request": {
-      "type": "object",
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        },
-        "organizationInviteCode": {
-          "type": "string"
-        }
-      }
-    },
-    "userJoinUserToOrganizationV1Response": {
-      "type": "object"
     }
   }
 }

@@ -31,8 +31,8 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_Auth_AuthWithCredentials_0(ctx context.Context, marshaler runtime.Marshaler, client AuthClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq AuthWithCredentialsRequest
+func request_Auth_AuthWithCredentialsV1_0(ctx context.Context, marshaler runtime.Marshaler, client AuthClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AuthWithCredentialsV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -43,13 +43,13 @@ func request_Auth_AuthWithCredentials_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.AuthWithCredentials(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.AuthWithCredentialsV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Auth_AuthWithCredentials_0(ctx context.Context, marshaler runtime.Marshaler, server AuthServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq AuthWithCredentialsRequest
+func local_request_Auth_AuthWithCredentialsV1_0(ctx context.Context, marshaler runtime.Marshaler, server AuthServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AuthWithCredentialsV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -60,13 +60,13 @@ func local_request_Auth_AuthWithCredentials_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.AuthWithCredentials(ctx, &protoReq)
+	msg, err := server.AuthWithCredentialsV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_Auth_AuthWithAccessToken_0(ctx context.Context, marshaler runtime.Marshaler, client AuthClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq AuthWithAccessTokenRequest
+func request_Auth_AuthWithAccessTokenV1_0(ctx context.Context, marshaler runtime.Marshaler, client AuthClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AuthWithAccessTokenV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -77,13 +77,13 @@ func request_Auth_AuthWithAccessToken_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.AuthWithAccessToken(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.AuthWithAccessTokenV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Auth_AuthWithAccessToken_0(ctx context.Context, marshaler runtime.Marshaler, server AuthServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq AuthWithAccessTokenRequest
+func local_request_Auth_AuthWithAccessTokenV1_0(ctx context.Context, marshaler runtime.Marshaler, server AuthServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AuthWithAccessTokenV1Request
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -94,12 +94,12 @@ func local_request_Auth_AuthWithAccessToken_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.AuthWithAccessToken(ctx, &protoReq)
+	msg, err := server.AuthWithAccessTokenV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_Auth_RefreshTokens_0(ctx context.Context, marshaler runtime.Marshaler, client AuthClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Auth_RefreshTokensV1_0(ctx context.Context, marshaler runtime.Marshaler, client AuthClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq AccessRefreshTokens
 	var metadata runtime.ServerMetadata
 
@@ -111,12 +111,12 @@ func request_Auth_RefreshTokens_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.RefreshTokens(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.RefreshTokensV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Auth_RefreshTokens_0(ctx context.Context, marshaler runtime.Marshaler, server AuthServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Auth_RefreshTokensV1_0(ctx context.Context, marshaler runtime.Marshaler, server AuthServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq AccessRefreshTokens
 	var metadata runtime.ServerMetadata
 
@@ -128,7 +128,7 @@ func local_request_Auth_RefreshTokens_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.RefreshTokens(ctx, &protoReq)
+	msg, err := server.RefreshTokensV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -139,7 +139,7 @@ func local_request_Auth_RefreshTokens_0(ctx context.Context, marshaler runtime.M
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterAuthHandlerFromEndpoint instead.
 func RegisterAuthHandlerServer(ctx context.Context, mux *runtime.ServeMux, server AuthServer) error {
 
-	mux.Handle("POST", pattern_Auth_AuthWithCredentials_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Auth_AuthWithCredentialsV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -147,12 +147,12 @@ func RegisterAuthHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.auth.Auth/AuthWithCredentials", runtime.WithHTTPPathPattern("/api/v1/auth/with/credentials"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.auth.Auth/AuthWithCredentialsV1", runtime.WithHTTPPathPattern("/api/v1/auth/with/credentials"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Auth_AuthWithCredentials_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Auth_AuthWithCredentialsV1_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -160,11 +160,11 @@ func RegisterAuthHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 			return
 		}
 
-		forward_Auth_AuthWithCredentials_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Auth_AuthWithCredentialsV1_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_Auth_AuthWithAccessToken_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Auth_AuthWithAccessTokenV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -172,12 +172,12 @@ func RegisterAuthHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.auth.Auth/AuthWithAccessToken", runtime.WithHTTPPathPattern("/api/v1/auth/with/access/token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.auth.Auth/AuthWithAccessTokenV1", runtime.WithHTTPPathPattern("/api/v1/auth/with/access/token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Auth_AuthWithAccessToken_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Auth_AuthWithAccessTokenV1_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -185,11 +185,11 @@ func RegisterAuthHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 			return
 		}
 
-		forward_Auth_AuthWithAccessToken_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Auth_AuthWithAccessTokenV1_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_Auth_RefreshTokens_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Auth_RefreshTokensV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -197,12 +197,12 @@ func RegisterAuthHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.auth.Auth/RefreshTokens", runtime.WithHTTPPathPattern("/api/v1/access/refresh/token"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.auth.Auth/RefreshTokensV1", runtime.WithHTTPPathPattern("/api/v1/access/refresh/token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Auth_RefreshTokens_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Auth_RefreshTokensV1_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -210,7 +210,7 @@ func RegisterAuthHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 			return
 		}
 
-		forward_Auth_RefreshTokens_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Auth_RefreshTokensV1_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -255,69 +255,69 @@ func RegisterAuthHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.
 // "AuthClient" to call the correct interceptors.
 func RegisterAuthHandlerClient(ctx context.Context, mux *runtime.ServeMux, client AuthClient) error {
 
-	mux.Handle("POST", pattern_Auth_AuthWithCredentials_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Auth_AuthWithCredentialsV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.auth.Auth/AuthWithCredentials", runtime.WithHTTPPathPattern("/api/v1/auth/with/credentials"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.auth.Auth/AuthWithCredentialsV1", runtime.WithHTTPPathPattern("/api/v1/auth/with/credentials"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Auth_AuthWithCredentials_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Auth_AuthWithCredentialsV1_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Auth_AuthWithCredentials_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Auth_AuthWithCredentialsV1_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_Auth_AuthWithAccessToken_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Auth_AuthWithAccessTokenV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.auth.Auth/AuthWithAccessToken", runtime.WithHTTPPathPattern("/api/v1/auth/with/access/token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.auth.Auth/AuthWithAccessTokenV1", runtime.WithHTTPPathPattern("/api/v1/auth/with/access/token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Auth_AuthWithAccessToken_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Auth_AuthWithAccessTokenV1_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Auth_AuthWithAccessToken_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Auth_AuthWithAccessTokenV1_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_Auth_RefreshTokens_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Auth_RefreshTokensV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.auth.Auth/RefreshTokens", runtime.WithHTTPPathPattern("/api/v1/access/refresh/token"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.auth.Auth/RefreshTokensV1", runtime.WithHTTPPathPattern("/api/v1/access/refresh/token"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Auth_RefreshTokens_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Auth_RefreshTokensV1_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Auth_RefreshTokens_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Auth_RefreshTokensV1_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -325,17 +325,17 @@ func RegisterAuthHandlerClient(ctx context.Context, mux *runtime.ServeMux, clien
 }
 
 var (
-	pattern_Auth_AuthWithCredentials_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "auth", "with", "credentials"}, ""))
+	pattern_Auth_AuthWithCredentialsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "auth", "with", "credentials"}, ""))
 
-	pattern_Auth_AuthWithAccessToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5}, []string{"api", "v1", "auth", "with", "access", "token"}, ""))
+	pattern_Auth_AuthWithAccessTokenV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5}, []string{"api", "v1", "auth", "with", "access", "token"}, ""))
 
-	pattern_Auth_RefreshTokens_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "access", "refresh", "token"}, ""))
+	pattern_Auth_RefreshTokensV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "access", "refresh", "token"}, ""))
 )
 
 var (
-	forward_Auth_AuthWithCredentials_0 = runtime.ForwardResponseMessage
+	forward_Auth_AuthWithCredentialsV1_0 = runtime.ForwardResponseMessage
 
-	forward_Auth_AuthWithAccessToken_0 = runtime.ForwardResponseMessage
+	forward_Auth_AuthWithAccessTokenV1_0 = runtime.ForwardResponseMessage
 
-	forward_Auth_RefreshTokens_0 = runtime.ForwardResponseMessage
+	forward_Auth_RefreshTokensV1_0 = runtime.ForwardResponseMessage
 )

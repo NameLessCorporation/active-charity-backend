@@ -2,8 +2,10 @@ package repository
 
 import (
 	"context"
-	"github.com/NameLessCorporation/active-charity-backend/app/models"
+
 	"github.com/jmoiron/sqlx"
+
+	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
 type Token struct {
@@ -17,7 +19,9 @@ func NewTokenRepository(db *sqlx.DB) *Token {
 }
 
 func (t *Token) CreateToken(ctx context.Context, token *models.Token) error {
-	_, err := t.db.ExecContext(ctx, "INSERT INTO tokens (user_id, access_token, refresh_token, exp) VALUES($1, $2, $3, $4)",
+	_, err := t.db.ExecContext(
+		ctx,
+		"INSERT INTO public.tokens (user_id, access_token, refresh_token, exp) VALUES($1, $2, $3, $4)",
 		token.UserID,
 		token.AccessToken,
 		token.RefreshToken,
@@ -32,7 +36,7 @@ func (t *Token) CreateToken(ctx context.Context, token *models.Token) error {
 
 func (t *Token) GetTokenByAccessToken(ctx context.Context, accessToken string) (*models.Token, error) {
 	var token models.Token
-	err := t.db.GetContext(ctx, &token, "SELECT * FROM tokens WHERE access_token=$1", accessToken)
+	err := t.db.GetContext(ctx, &token, "SELECT * FROM public.tokens WHERE access_token = $1", accessToken)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +45,7 @@ func (t *Token) GetTokenByAccessToken(ctx context.Context, accessToken string) (
 }
 
 func (t *Token) DeleteTokenByAccessToken(ctx context.Context, accessToken string) error {
-	_, err := t.db.ExecContext(ctx, "DELETE FROM tokens WHERE access_token=$1", accessToken)
+	_, err := t.db.ExecContext(ctx, "DELETE FROM public.tokens WHERE access_token = $1", accessToken)
 	if err != nil {
 		return err
 	}

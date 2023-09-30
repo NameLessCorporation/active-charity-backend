@@ -10,12 +10,11 @@ import (
 
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *models.User) (uint64, error)
-	IsExistByLogin(ctx context.Context, login string) bool
-	GetUserByCredentials(ctx context.Context, credentials *models.Credentials) (uint64, error)
-	GetUserByUserID(ctx context.Context, userID uint64) (*models.User, error)
-	GetUserIDByLogin(ctx context.Context, login string) (uint64, error)
-	DeleteUserByUserID(ctx context.Context, userID uint64) error
-	UpdateUserPasswordAndRoleByUserID(ctx context.Context, userID uint64, password string, role string) error
+	IsExistByEmail(ctx context.Context, email string) bool
+	GetIDByCredentials(ctx context.Context, credentials *models.Credential) (uint64, error)
+	GetUserByID(ctx context.Context, id uint64) (*models.User, error)
+	GetIDByEmail(ctx context.Context, email string) (uint64, error)
+	UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error
 }
 
 type TokenRepository interface {
@@ -24,14 +23,27 @@ type TokenRepository interface {
 	DeleteTokenByAccessToken(ctx context.Context, accessToken string) error
 }
 
+type OrganizationRepository interface {
+	CreateOrganization(ctx context.Context, organization *models.Organization) (uint64, error)
+}
+
+type InviteCodeRepository interface {
+	CreateInviteCode(ctx context.Context, code *models.InviteCode) (uint64, error)
+	GetInviteCodeByCode(ctx context.Context, code string) (*models.InviteCode, error)
+}
+
 type Repository struct {
-	UserRepository  UserRepository
-	TokenRepository TokenRepository
+	UserRepository         UserRepository
+	TokenRepository        TokenRepository
+	OrganizationRepository OrganizationRepository
+	InviteCodeRepository   InviteCodeRepository
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
-		UserRepository:  NewUserRepository(db),
-		TokenRepository: NewTokenRepository(db),
+		UserRepository:         NewUserRepository(db),
+		TokenRepository:        NewTokenRepository(db),
+		OrganizationRepository: NewOrganizationRepository(db),
+		InviteCodeRepository:   NewInviteCodeRepository(db),
 	}
 }
