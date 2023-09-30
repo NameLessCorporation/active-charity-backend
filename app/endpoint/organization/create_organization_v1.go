@@ -16,10 +16,21 @@ func (o *OrganizationEndpoint) CreateOrganizationV1(
 		return nil, err
 	}
 
+	var walletID uint64
+	walletID, err = o.services.WalletService.CreateWallet(ctx, &models.Wallet{
+		Type:   models.WalletOrganizationType,
+		Coins:  0,
+		Rubles: 0,
+	})
+	if err != nil {
+		return nil, err
+	}
+
 	var id uint64
 	id, err = o.services.OrganizationService.CreateOrganization(ctx, &models.Organization{
-		Name:    req.GetName(),
-		OwnerID: userID,
+		Name:     req.GetName(),
+		OwnerID:  userID,
+		WalletID: walletID,
 	})
 	if err != nil {
 		return nil, err
