@@ -18,6 +18,66 @@ func NewActivityRepository(db *sqlx.DB) *Activity {
 	}
 }
 
+func (a *Activity) TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into push_ups_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into bench_press_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into cycling_history(user_id, metres, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		metres,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into crunches_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (a *Activity) TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
 	_, err := a.db.ExecContext(
 		ctx,

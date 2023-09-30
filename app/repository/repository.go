@@ -15,6 +15,10 @@ type ActivityRepository interface {
 	IsActiveStepsPeriod(ctx context.Context, userId uint64) (bool, error)
 	GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, error)
 	TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error
+	TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 }
 
 type UserRepository interface {

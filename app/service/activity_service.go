@@ -7,19 +7,35 @@ import (
 )
 
 func (a *Service) TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackPushUps(ctx, repeats, activityId, userId); err != nil {
+		return err
+	}
 
+	return nil
 }
 
 func (a *Service) TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackBenchPress(ctx, repeats, activityId, userId); err != nil {
+		return err
+	}
 
+	return nil
 }
 
 func (a *Service) TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackCycling(ctx, metres, activityId, userId); err != nil {
+		return err
+	}
 
+	return nil
 }
 
 func (a *Service) TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackCrunches(ctx, repeats, activityId, userId); err != nil {
+		return err
+	}
 
+	return nil
 }
 
 func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {

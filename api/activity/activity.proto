@@ -9,7 +9,6 @@ service Activity {
   rpc GetActivityListV1(GetActivityListV1Request) returns (GetActivityListV1Response) {
     option (google.api.http) = { post: "/api/v1/get/activity/list"; body:"*"; };
   };
-
   rpc TrackStepsV1(TrackStepsV1Request) returns (TrackStepsV1Response) {
     option (google.api.http) = { post: "/api/v1/track/steps"; body: "*"; };
   };
