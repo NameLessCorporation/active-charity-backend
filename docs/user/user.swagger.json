@@ -225,6 +225,14 @@
         "rubles": {
           "type": "string",
           "format": "uint64"
+        },
+        "organizationId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "fundId": {
+          "type": "string",
+          "format": "uint64"
         }
       }
     },

@@ -47,6 +47,8 @@ message GetUserV1Response {
   string date_of_birthday = 4;
   uint64 coins = 5;
   uint64 rubles = 6;
+  uint64 organization_id = 7;
+  uint64 fund_id = 8;
 }
 
 message SelectUserFundV1Request {
