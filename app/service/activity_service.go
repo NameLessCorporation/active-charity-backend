@@ -7,12 +7,27 @@ import (
 )
 
 func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
-	err := a.repository.ActivityRepository.TrackSteps(ctx, steps, activityId, userId)
+	isPeriod, err := a.repository.ActivityRepository.IsActiveStepsPeriod(ctx, userId)
 	if err != nil {
 		return err
 	}
 
-	// req to earn coin
+	if isPeriod {
+		periodId, err := a.repository.ActivityRepository.GetCurrentPeriodId(ctx, userId)
+		if err != nil {
+			return err
+		}
+
+		err = a.repository.ActivityRepository.TrackCurrentPeriodSteps(ctx, steps, periodId)
+		if err != nil {
+			return err
+		}
+	} else {
+		err = a.repository.ActivityRepository.TrackNewPeriodSteps(ctx, steps, activityId, userId)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
 }

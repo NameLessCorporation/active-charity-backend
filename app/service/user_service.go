@@ -13,6 +13,15 @@ func (s *Service) IsExistByEmail(ctx context.Context, email string) bool {
 	return s.repository.UserRepository.IsExistByEmail(ctx, email)
 }
 
+func (s *Service) GetWalletIdByUserId(ctx context.Context, userId uint64) (uint64, error) {
+	walletId, err := s.repository.UserRepository.GetWalletIdById(ctx, userId)
+	if err != nil {
+		return 0, err
+	}
+
+	return walletId, nil
+}
+
 func (s *Service) GetIDByCredentials(ctx context.Context, credentials *models.Credential) (uint64, error) {
 	id, err := s.repository.UserRepository.GetIDByCredentials(ctx, credentials)
 	if err != nil {

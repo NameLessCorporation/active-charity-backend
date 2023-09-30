@@ -2,6 +2,7 @@ package activity
 
 import (
 	"context"
+	"math"
 
 	"github.com/NameLessCorporation/active-charity-backend/extra/activity"
 )
@@ -13,6 +14,18 @@ func (a *ActivityEndpoint) TrackStepsV1(ctx context.Context, req *activity.Track
 	}
 
 	if err = a.services.ActivityService.TrackSteps(ctx, req.StepsPerDay, req.ActivityId, userID); err != nil {
+		return nil, err
+	}
+
+	walletId, err := a.services.UserService.GetWalletIdByUserId(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	coins := uint64(math.Floor(float64(req.StepsPerDay) / 10))
+
+	_, err = a.operations.AccrualOfCoinsForActivity(ctx, coins, walletId)
+	if err != nil {
 		return nil, err
 	}
 

@@ -29,6 +29,7 @@ type IUserService interface {
 	GetUserByID(ctx context.Context, id uint64) (*models.User, error)
 	GetIDByEmail(ctx context.Context, email string) (uint64, error)
 	UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error
+	GetWalletIdByUserId(ctx context.Context, userId uint64) (uint64, error)
 }
 
 type IOrganizationService interface {

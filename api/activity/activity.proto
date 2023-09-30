@@ -5,7 +5,7 @@ package proto.activity;
 option go_package = "./activity";
 import "google/api/annotations.proto";
 
-service Auth {
+service Activity {
   rpc GetActivityListV1(GetActivityListV1Request) returns (GetActivityListV1Response) {
     option (google.api.http) = { post: "/api/v1/get/activity/list"; body:"*"; };
   };
@@ -26,7 +26,7 @@ message GetActivityListV1Response {
 message TrackStepsV1Request {
   uint64 activity_id = 1;
   string access_token = 2;
-  uint32 steps_per_day = 3;
+  uint32 steps = 3;
 }
 
 message TrackStepsV1Response {}
