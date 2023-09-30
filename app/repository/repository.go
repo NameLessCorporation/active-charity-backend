@@ -14,6 +14,7 @@ type ActivityRepository interface {
 	GetActivityList(ctx context.Context) ([]*models.Activity, error)
 	IsActiveStepsPeriod(ctx context.Context, userId uint64) (bool, error)
 	GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, error)
+	TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 }
 
 type UserRepository interface {

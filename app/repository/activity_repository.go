@@ -18,6 +18,21 @@ func NewActivityRepository(db *sqlx.DB) *Activity {
 	}
 }
 
+func (a *Activity) TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into pull_ups_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (a *Activity) GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, error) {
 	var periodId uint64
 
