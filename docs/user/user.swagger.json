@@ -48,6 +48,38 @@
         ]
       }
     },
+    "/api/v1/get/user": {
+      "post": {
+        "operationId": "User_GetUserV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetUserV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userGetUserV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/api/v1/join/user/organization": {
       "post": {
         "operationId": "User_JoinUserToOrganizationV1",
@@ -72,6 +104,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/userJoinUserToOrganizationV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/select/user/fund": {
+      "post": {
+        "operationId": "User_SelectUserFundV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userSelectUserFundV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userSelectUserFundV1Request"
             }
           }
         ],
@@ -130,6 +194,36 @@
     "userCreateUserV1Response": {
       "type": "object"
     },
+    "userGetUserV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "userGetUserV1Response": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "dateOfBirthday": {
+          "type": "string"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "rubles": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
     "userJoinUserToOrganizationV1Request": {
       "type": "object",
       "properties": {
@@ -142,6 +236,21 @@
       }
     },
     "userJoinUserToOrganizationV1Response": {
+      "type": "object"
+    },
+    "userSelectUserFundV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "fundId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "userSelectUserFundV1Response": {
       "type": "object"
     }
   }

@@ -56,3 +56,11 @@ func (s *Service) UpdateOrganizationIDByID(ctx context.Context, id, organization
 
 	return nil
 }
+
+func (s *Service) UpdateFundIDByID(ctx context.Context, id, fundID uint64) error {
+	if err := s.repository.UserRepository.UpdateFundIDByID(ctx, id, fundID); err != nil {
+		return status.Error(codes.Internal, "Ошибка привязки к фонду")
+	}
+
+	return nil
+}

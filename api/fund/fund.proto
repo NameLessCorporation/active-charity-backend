@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package proto.fund;
+
+option go_package = "./fund";
+import "google/api/annotations.proto";
+
+service Fund {
+  rpc CreateFundV1(CreateFundV1Request) returns (CreateFundV1Response) {
+    option (google.api.http) = { post: "/api/v1/create/fund"; body: "*"; };
+  };
+
+  rpc GetFundV1(GetFundV1Request) returns (GetFundV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/fund"; body: "*"; };
+  };
+
+  rpc GetFundsV1(GetFundsV1Request) returns (GetFundsV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/funds"; body: "*"; };
+  };
+}
+
+message CreateFundV1Request {
+  string access_token = 1;
+  FundMessage fund = 2;
+}
+
+message CreateFundV1Response {}
+
+message GetFundsV1Request {}
+
+message GetFundsV1Response {
+  repeated GetFundMessage funds = 1;
+}
+
+message GetFundV1Request {
+  string access_token = 1;
+}
+
+message GetFundV1Response {
+  GetFundMessage fund = 1;
+}
+
+message FundMessage {
+  string name = 1;
+  string description = 2;
+}
+
+message GetFundMessage {
+  uint64 id = 1;
+  string name = 2;
+  string description = 3;
+}

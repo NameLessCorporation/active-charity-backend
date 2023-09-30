@@ -95,3 +95,12 @@ func (u *User) UpdateOrganizationIDByID(ctx context.Context, id, organizationID 
 
 	return nil
 }
+
+func (u *User) UpdateFundIDByID(ctx context.Context, id, fundID uint64) error {
+	_, err := u.db.ExecContext(ctx, "UPDATE public.users SET (fund_id, updated_at) = ($1, NOW()) WHERE id = $2", fundID, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -20,6 +20,7 @@ type UserRepository interface {
 	GetUserByID(ctx context.Context, id uint64) (*models.User, error)
 	GetIDByEmail(ctx context.Context, email string) (uint64, error)
 	UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error
+	UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
 }
 
 type TokenRepository interface {
@@ -30,6 +31,7 @@ type TokenRepository interface {
 
 type OrganizationRepository interface {
 	CreateOrganization(ctx context.Context, organization *models.Organization) (uint64, error)
+	GetOrganizationByID(ctx context.Context, id uint64) (*models.Organization, error)
 }
 
 type InviteCodeRepository interface {
@@ -51,6 +53,12 @@ type TransactionRepository interface {
 	GetTransactionByToWalletIDAndFromWalletID(ctx context.Context, fromWalletID, toWalletID uint64) (*models.Transaction, error)
 }
 
+type FundRepository interface {
+	CreateFund(ctx context.Context, fund *models.Fund) (uint64, error)
+	GetFundByID(ctx context.Context, id uint64) (*models.Fund, error)
+	GetFunds(ctx context.Context) ([]*models.Fund, error)
+}
+
 type Repository struct {
 	UserRepository         UserRepository
 	TokenRepository        TokenRepository
@@ -59,6 +67,7 @@ type Repository struct {
 	ActivityRepository     ActivityRepository
 	WalletRepository       WalletRepository
 	TransactionRepository  TransactionRepository
+	FundRepository         FundRepository
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
@@ -70,5 +79,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 		ActivityRepository:     NewActivityRepository(db),
 		WalletRepository:       NewWalletRepository(db),
 		TransactionRepository:  NewTransactionRepository(db),
+		FundRepository:         NewFundRepository(db),
 	}
 }

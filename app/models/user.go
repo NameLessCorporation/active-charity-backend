@@ -13,6 +13,7 @@ type User struct {
 	DateOfBirthday string `db:"date_of_birthday"`
 	OrganizationID uint64 `db:"organization_id"`
 	WalletID       uint64 `db:"wallet_id"`
+	FundID         uint64 `db:"fund_id"`
 }
 
 func (c *User) Validate() error {

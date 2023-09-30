@@ -79,6 +79,38 @@
           "Organization"
         ]
       }
+    },
+    "/api/v1/get/organization": {
+      "post": {
+        "operationId": "Organization_GetOrganizationV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationGetOrganizationV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationGetOrganizationV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
     }
   },
   "definitions": {
@@ -111,6 +143,22 @@
     },
     "organizationCreateOrganizationV1Response": {
       "type": "object"
+    },
+    "organizationGetOrganizationV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationGetOrganizationV1Response": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
     },
     "protobufAny": {
       "type": "object",

@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Organization_CreateOrganizationV1_FullMethodName           = "/proto.organization.Organization/CreateOrganizationV1"
+	Organization_GetOrganizationV1_FullMethodName              = "/proto.organization.Organization/GetOrganizationV1"
 	Organization_CreateOrganizationInviteCodeV1_FullMethodName = "/proto.organization.Organization/CreateOrganizationInviteCodeV1"
 )
 
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrganizationClient interface {
 	CreateOrganizationV1(ctx context.Context, in *CreateOrganizationV1Request, opts ...grpc.CallOption) (*CreateOrganizationV1Response, error)
+	GetOrganizationV1(ctx context.Context, in *GetOrganizationV1Request, opts ...grpc.CallOption) (*GetOrganizationV1Response, error)
 	CreateOrganizationInviteCodeV1(ctx context.Context, in *CreateOrganizationInviteCodeV1Request, opts ...grpc.CallOption) (*CreateOrganizationInviteCodeV1Response, error)
 }
 
@@ -48,6 +50,15 @@ func (c *organizationClient) CreateOrganizationV1(ctx context.Context, in *Creat
 	return out, nil
 }
 
+func (c *organizationClient) GetOrganizationV1(ctx context.Context, in *GetOrganizationV1Request, opts ...grpc.CallOption) (*GetOrganizationV1Response, error) {
+	out := new(GetOrganizationV1Response)
+	err := c.cc.Invoke(ctx, Organization_GetOrganizationV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *organizationClient) CreateOrganizationInviteCodeV1(ctx context.Context, in *CreateOrganizationInviteCodeV1Request, opts ...grpc.CallOption) (*CreateOrganizationInviteCodeV1Response, error) {
 	out := new(CreateOrganizationInviteCodeV1Response)
 	err := c.cc.Invoke(ctx, Organization_CreateOrganizationInviteCodeV1_FullMethodName, in, out, opts...)
@@ -62,6 +73,7 @@ func (c *organizationClient) CreateOrganizationInviteCodeV1(ctx context.Context,
 // for forward compatibility
 type OrganizationServer interface {
 	CreateOrganizationV1(context.Context, *CreateOrganizationV1Request) (*CreateOrganizationV1Response, error)
+	GetOrganizationV1(context.Context, *GetOrganizationV1Request) (*GetOrganizationV1Response, error)
 	CreateOrganizationInviteCodeV1(context.Context, *CreateOrganizationInviteCodeV1Request) (*CreateOrganizationInviteCodeV1Response, error)
 }
 
@@ -71,6 +83,9 @@ type UnimplementedOrganizationServer struct {
 
 func (UnimplementedOrganizationServer) CreateOrganizationV1(context.Context, *CreateOrganizationV1Request) (*CreateOrganizationV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrganizationV1 not implemented")
+}
+func (UnimplementedOrganizationServer) GetOrganizationV1(context.Context, *GetOrganizationV1Request) (*GetOrganizationV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrganizationV1 not implemented")
 }
 func (UnimplementedOrganizationServer) CreateOrganizationInviteCodeV1(context.Context, *CreateOrganizationInviteCodeV1Request) (*CreateOrganizationInviteCodeV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrganizationInviteCodeV1 not implemented")
@@ -105,6 +120,24 @@ func _Organization_CreateOrganizationV1_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Organization_GetOrganizationV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrganizationV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).GetOrganizationV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_GetOrganizationV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).GetOrganizationV1(ctx, req.(*GetOrganizationV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Organization_CreateOrganizationInviteCodeV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateOrganizationInviteCodeV1Request)
 	if err := dec(in); err != nil {
@@ -133,6 +166,10 @@ var Organization_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateOrganizationV1",
 			Handler:    _Organization_CreateOrganizationV1_Handler,
+		},
+		{
+			MethodName: "GetOrganizationV1",
+			Handler:    _Organization_GetOrganizationV1_Handler,
 		},
 		{
 			MethodName: "CreateOrganizationInviteCodeV1",

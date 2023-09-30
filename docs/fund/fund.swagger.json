@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "activity/activity.proto",
+    "title": "fund/fund.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "Activity"
+      "name": "Fund"
     }
   ],
   "consumes": [
@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/get/activity/list": {
+    "/api/v1/create/fund": {
       "post": {
-        "operationId": "Activity_GetActivityListV1",
+        "operationId": "Fund_CreateFundV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/activityGetActivityListV1Response"
+              "$ref": "#/definitions/fundCreateFundV1Response"
             }
           },
           "default": {
@@ -39,23 +39,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/activityGetActivityListV1Request"
+              "$ref": "#/definitions/fundCreateFundV1Request"
             }
           }
         ],
         "tags": [
-          "Activity"
+          "Fund"
         ]
       }
     },
-    "/api/v1/track/steps": {
+    "/api/v1/get/fund": {
       "post": {
-        "operationId": "Activity_TrackStepsV1",
+        "operationId": "Fund_GetFundV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/activityTrackStepsV1Response"
+              "$ref": "#/definitions/fundGetFundV1Response"
             }
           },
           "default": {
@@ -71,18 +71,75 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/activityTrackStepsV1Request"
+              "$ref": "#/definitions/fundGetFundV1Request"
             }
           }
         ],
         "tags": [
-          "Activity"
+          "Fund"
+        ]
+      }
+    },
+    "/api/v1/get/funds": {
+      "post": {
+        "operationId": "Fund_GetFundsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/fundGetFundsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fundGetFundsV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Fund"
         ]
       }
     }
   },
   "definitions": {
-    "activityActivityMessage": {
+    "fundCreateFundV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "fund": {
+          "$ref": "#/definitions/fundFundMessage"
+        }
+      }
+    },
+    "fundCreateFundV1Response": {
+      "type": "object"
+    },
+    "fundFundMessage": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "fundGetFundMessage": {
       "type": "object",
       "properties": {
         "id": {
@@ -91,10 +148,13 @@
         },
         "name": {
           "type": "string"
+        },
+        "description": {
+          "type": "string"
         }
       }
     },
-    "activityGetActivityListV1Request": {
+    "fundGetFundV1Request": {
       "type": "object",
       "properties": {
         "accessToken": {
@@ -102,36 +162,28 @@
         }
       }
     },
-    "activityGetActivityListV1Response": {
+    "fundGetFundV1Response": {
       "type": "object",
       "properties": {
-        "activityList": {
+        "fund": {
+          "$ref": "#/definitions/fundGetFundMessage"
+        }
+      }
+    },
+    "fundGetFundsV1Request": {
+      "type": "object"
+    },
+    "fundGetFundsV1Response": {
+      "type": "object",
+      "properties": {
+        "funds": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/activityActivityMessage"
+            "$ref": "#/definitions/fundGetFundMessage"
           }
         }
       }
-    },
-    "activityTrackStepsV1Request": {
-      "type": "object",
-      "properties": {
-        "activityId": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "accessToken": {
-          "type": "string"
-        },
-        "stepsPerDay": {
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
-    "activityTrackStepsV1Response": {
-      "type": "object"
     },
     "protobufAny": {
       "type": "object",
