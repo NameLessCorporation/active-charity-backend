@@ -22,6 +22,7 @@ func (u *UserEndpoint) CreateUserV1(ctx context.Context, req *user.CreateUserV1R
 		Name:           req.GetName(),
 		DateOfBirthday: req.GetDateOfBirthday(),
 		OrganizationID: 0,
+		FundID:         0,
 	}
 	if err := newUser.Validate(); err != nil {
 		return nil, err
