@@ -28,7 +28,7 @@ func (u *UserEndpoint) GetUserV1(ctx context.Context, req *user.GetUserV1Request
 	return &user.GetUserV1Response{
 		Id:             userID,
 		FundId:         usr.FundID,
-		OrganizationId: usr.FundID,
+		OrganizationId: usr.OrganizationID,
 		Email:          usr.Email,
 		Name:           usr.Name,
 		DateOfBirthday: usr.DateOfBirthday,
