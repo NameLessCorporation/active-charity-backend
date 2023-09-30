@@ -22,7 +22,7 @@ func (t *Transaction) CreateTransaction(ctx context.Context, transaction *models
 	var id uint64
 	err := t.db.QueryRowContext(
 		ctx,
-		"INSERT INTO public.transactions (type, from_wallet_id, to_wallet_id, coints, rubles, status, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,NOW(),NOW()) RETURNING id",
+		"INSERT INTO public.transactions (type, from_wallet_id, to_wallet_id, coins, rubles, status, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,NOW(),NOW()) RETURNING id",
 		transaction.Type,
 		transaction.FromWalletID,
 		transaction.ToWalletID,
@@ -56,19 +56,9 @@ func (t *Transaction) GetTransactionByID(ctx context.Context, id uint64) (*model
 	return &transaction, nil
 }
 
-func (t *Transaction) GetTransactionByToWalletID(ctx context.Context, toWalletID uint64) (*models.Transaction, error) {
+func (t *Transaction) GetTransactionByToWalletIDAndFromWalletID(ctx context.Context, fromWalletID, toWalletID uint64) (*models.Transaction, error) {
 	var transaction models.Transaction
-	err := t.db.GetContext(ctx, &transaction, "SELECT * FROM public.transactions WHERE to_wallet_id = $1", toWalletID)
-	if err != nil {
-		return nil, err
-	}
-
-	return &transaction, nil
-}
-
-func (t *Transaction) GetTransactionByFromWalletID(ctx context.Context, fromWalletID uint64) (*models.Transaction, error) {
-	var transaction models.Transaction
-	err := t.db.GetContext(ctx, &transaction, "SELECT * FROM public.transactions WHERE from_wallet_id = $1", fromWalletID)
+	err := t.db.GetContext(ctx, &transaction, "SELECT * FROM public.transactions WHERE to_wallet_id = $1 AND from_wallet_id = $2", toWalletID, fromWalletID)
 	if err != nil {
 		return nil, err
 	}
