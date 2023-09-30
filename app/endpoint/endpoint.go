@@ -48,5 +48,11 @@ type OrganizationServiceInter interface {
 
 type ActivityServiceInter interface {
 	TrackStepsV1(ctx context.Context, req *activity.TrackStepsV1Request) (*activity.TrackStepsV1Response, error)
+	TrackBenchPressV1(ctx context.Context, req *activity.TrackBenchPressV1Request) (*activity.TrackBenchPressV1Response, error)
+	TrackPullUpsV1(ctx context.Context, req *activity.TrackPullUpsV1Request) (*activity.TrackPullUpsV1Response, error)
+	TrackCyclingV1(ctx context.Context, req *activity.TrackCyclingV1Request) (*activity.TrackCyclingV1Response, error)
+	TrackCrunchesV1(ctx context.Context, req *activity.TrackCrunchesV1Request) (*activity.TrackCrunchesV1Response, error)
+	TrackPushUpsV1(ctx context.Context, req *activity.TrackPushUpV1Request) (*activity.TrackPushUpsV1Response, error)
+
 	GetActivityListV1(ctx context.Context, req *activity.GetActivityListV1Request) (*activity.GetActivityListV1Response, error)
 }
