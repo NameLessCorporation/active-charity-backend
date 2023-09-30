@@ -7,13 +7,13 @@ gateway:
   port: "65001"
 
 db:
-  host:     "postgresql"
+  host:     "dev.bloomy.group"
   port:     "5432"
   user:     "postgres"
-  password: "12345678"
-  db_name:  "emmet"
+  password: "lsafhoeagoaedioh2108wtyfihow3r)"
+  db_name:  "active_charity"
   ssl_mode: "disable"
 
 jwt:
   secret_key:      "1234"
-  expiration_time: "24h"
+  expiration_time: "168h"
