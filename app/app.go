@@ -76,7 +76,7 @@ func (app *App) StartApp(certPath string) error {
 
 	store := repository.NewRepository(db)
 
-	service := service.NewService(store, app.config)
+	service := service.NewService(store, app.config, app.logger)
 	service.InitServices()
 
 	endpointContainer := app.InitEndpointContainer(service.Services)
