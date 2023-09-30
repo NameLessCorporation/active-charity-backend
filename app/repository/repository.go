@@ -8,6 +8,11 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
+type ActivityRepository interface {
+	TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
+	GetActivityList(ctx context.Context) ([]*models.Activity, error)
+}
+
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *models.User) (uint64, error)
 	IsExistByEmail(ctx context.Context, email string) bool
@@ -51,6 +56,7 @@ type Repository struct {
 	TokenRepository        TokenRepository
 	OrganizationRepository OrganizationRepository
 	InviteCodeRepository   InviteCodeRepository
+	ActivityRepository     ActivityRepository
 	WalletRepository       WalletRepository
 	TransactionRepository  TransactionRepository
 }
@@ -61,6 +67,7 @@ func NewRepository(db *sqlx.DB) *Repository {
 		TokenRepository:        NewTokenRepository(db),
 		OrganizationRepository: NewOrganizationRepository(db),
 		InviteCodeRepository:   NewInviteCodeRepository(db),
+		ActivityRepository:     NewActivityRepository(db),
 		WalletRepository:       NewWalletRepository(db),
 		TransactionRepository:  NewTransactionRepository(db),
 	}

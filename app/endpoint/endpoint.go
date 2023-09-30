@@ -3,6 +3,7 @@ package endpoint
 import (
 	"context"
 
+	"github.com/NameLessCorporation/active-charity-backend/extra/activity"
 	"github.com/NameLessCorporation/active-charity-backend/extra/auth"
 	"github.com/NameLessCorporation/active-charity-backend/extra/organization"
 	"github.com/NameLessCorporation/active-charity-backend/extra/user"
@@ -12,17 +13,20 @@ type EndpointContainer struct {
 	AuthService         AuthServiceInter
 	UserService         UserServiceInter
 	OrganizationService OrganizationServiceInter
+	ActivityService     ActivityServiceInter
 }
 
 func NewEndpointContainer(
 	auth AuthServiceInter,
 	user UserServiceInter,
 	organizationService OrganizationServiceInter,
+	activity ActivityServiceInter,
 ) *EndpointContainer {
 	return &EndpointContainer{
 		AuthService:         auth,
 		UserService:         user,
 		OrganizationService: organizationService,
+		ActivityService:     activity,
 	}
 }
 
@@ -40,4 +44,9 @@ type UserServiceInter interface {
 type OrganizationServiceInter interface {
 	CreateOrganizationV1(ctx context.Context, req *organization.CreateOrganizationV1Request) (*organization.CreateOrganizationV1Response, error)
 	CreateOrganizationInviteCodeV1(ctx context.Context, req *organization.CreateOrganizationInviteCodeV1Request) (*organization.CreateOrganizationInviteCodeV1Response, error)
+}
+
+type ActivityServiceInter interface {
+	TrackStepsV1(ctx context.Context, req *activity.TrackStepsV1Request) (*activity.TrackStepsV1Response, error)
+	GetActivityListV1(ctx context.Context, req *activity.GetActivityListV1Request) (*activity.GetActivityListV1Response, error)
 }
