@@ -62,7 +62,7 @@ func (u *User) CreateUser(ctx context.Context, user *models.User) (uint64, error
 	var id uint64
 	err := u.db.QueryRowContext(
 		ctx,
-		"INSERT INTO public.users (email, password, name, date_of_birthday, organization_id, wallet_id, fund_id created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,NOW(),NOW()) RETURNING id",
+		"INSERT INTO public.users (email, password, name, date_of_birthday, organization_id, wallet_id, fund_id, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,NOW(),NOW()) RETURNING id",
 		user.Email,
 		user.Password,
 		user.Name,
