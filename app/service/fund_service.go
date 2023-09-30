@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -12,6 +13,7 @@ import (
 func (s *Service) CreateFund(ctx context.Context, fund *models.Fund) (uint64, error) {
 	id, err := s.repository.FundRepository.CreateFund(ctx, fund)
 	if err != nil {
+		s.logger.Error("s.repository.FundRepository.CreateFund", zap.Error(err))
 		return 0, status.Error(codes.Internal, "Ошибка создания фонда")
 	}
 
@@ -21,6 +23,7 @@ func (s *Service) CreateFund(ctx context.Context, fund *models.Fund) (uint64, er
 func (s *Service) GetFundByID(ctx context.Context, id uint64) (*models.Fund, error) {
 	fund, err := s.Services.FundService.GetFundByID(ctx, id)
 	if err != nil {
+		s.logger.Error("s.Services.FundService.GetFundByID", zap.Error(err))
 		return nil, status.Error(codes.Internal, "Ошибка получения фонда")
 	}
 
@@ -30,6 +33,7 @@ func (s *Service) GetFundByID(ctx context.Context, id uint64) (*models.Fund, err
 func (s *Service) GetFunds(ctx context.Context) ([]*models.Fund, error) {
 	funds, err := s.Services.FundService.GetFunds(ctx)
 	if err != nil {
+		s.logger.Error("s.Services.FundService.GetFunds", zap.Error(err))
 		return nil, status.Error(codes.Internal, "Ошибка получения фондов")
 	}
 

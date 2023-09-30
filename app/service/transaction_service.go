@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -12,6 +13,7 @@ import (
 func (s *Service) CreateTransaction(ctx context.Context, transaction *models.Transaction) (uint64, error) {
 	id, err := s.repository.TransactionRepository.CreateTransaction(ctx, transaction)
 	if err != nil {
+		s.logger.Error("s.repository.TransactionRepository.CreateTransaction", zap.Error(err))
 		return 0, status.Error(codes.Internal, "Ошибка создания транзакции")
 	}
 
@@ -20,6 +22,7 @@ func (s *Service) CreateTransaction(ctx context.Context, transaction *models.Tra
 
 func (s *Service) UpdateStatusByID(ctx context.Context, id uint64, transactionStatus string) error {
 	if err := s.repository.TransactionRepository.UpdateStatusByID(ctx, id, transactionStatus); err != nil {
+		s.logger.Error("s.repository.TransactionRepository.UpdateStatusByID", zap.Error(err))
 		return status.Error(codes.Internal, "Ошибка обновления статуса через id")
 	}
 
@@ -29,6 +32,7 @@ func (s *Service) UpdateStatusByID(ctx context.Context, id uint64, transactionSt
 func (s *Service) GetTransactionByID(ctx context.Context, id uint64) (*models.Transaction, error) {
 	transaction, err := s.repository.TransactionRepository.GetTransactionByID(ctx, id)
 	if err != nil {
+		s.logger.Error("s.repository.TransactionRepository.GetTransactionByID", zap.Error(err))
 		return nil, status.Error(codes.Internal, "Ошибка получения транзакции через id")
 	}
 
@@ -38,6 +42,7 @@ func (s *Service) GetTransactionByID(ctx context.Context, id uint64) (*models.Tr
 func (s *Service) GetTransactionByToWalletIDAndFromWalletID(ctx context.Context, fromWalletID, toWalletID uint64) (*models.Transaction, error) {
 	transaction, err := s.repository.TransactionRepository.GetTransactionByToWalletIDAndFromWalletID(ctx, fromWalletID, toWalletID)
 	if err != nil {
+		s.logger.Error("s.repository.TransactionRepository.GetTransactionByToWalletIDAndFromWalletID", zap.Error(err))
 		return nil, status.Error(codes.Internal, "Ошибка получения транзакции через получателя и отправителя")
 	}
 

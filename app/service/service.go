@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"go.uber.org/zap"
+
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 	"github.com/NameLessCorporation/active-charity-backend/app/repository"
 	"github.com/NameLessCorporation/active-charity-backend/config"
@@ -77,12 +79,14 @@ type Service struct {
 	repository *repository.Repository
 	config     *config.Config
 	Services   *Services
+	logger     *zap.Logger
 }
 
-func NewService(repository *repository.Repository, config *config.Config) *Service {
+func NewService(repository *repository.Repository, config *config.Config, logger *zap.Logger) *Service {
 	return &Service{
 		repository: repository,
 		config:     config,
+		logger:     logger,
 	}
 }
 

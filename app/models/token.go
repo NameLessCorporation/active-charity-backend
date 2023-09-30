@@ -10,4 +10,6 @@ type Token struct {
 	RefreshToken string    `db:"refresh_token"`
 	Exp          time.Time `db:"exp"`
 	UserID       uint64    `db:"user_id"`
+	CreatedAt    time.Time `db:"created_at"`
+	UpdatedAt    time.Time `db:"updated_at"`
 }
