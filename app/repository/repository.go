@@ -32,11 +32,28 @@ type InviteCodeRepository interface {
 	GetInviteCodeByCode(ctx context.Context, code string) (*models.InviteCode, error)
 }
 
+type WalletRepository interface {
+	CreateWallet(ctx context.Context, wallet *models.Wallet) (uint64, error)
+	GetWalletByID(ctx context.Context, id uint64) (*models.Wallet, error)
+	UpdateCoinsByID(ctx context.Context, id, coins uint64) error
+	UpdateRublesByID(ctx context.Context, id, rubles uint64) error
+}
+
+type TransactionRepository interface {
+	CreateTransaction(ctx context.Context, transaction *models.Transaction) (uint64, error)
+	UpdateStatusByID(ctx context.Context, id uint64, status string) error
+	GetTransactionByID(ctx context.Context, id uint64) (*models.Transaction, error)
+	GetTransactionByToWalletID(ctx context.Context, toWalletID uint64) (*models.Transaction, error)
+	GetTransactionByFromWalletID(ctx context.Context, fromWalletID uint64) (*models.Transaction, error)
+}
+
 type Repository struct {
 	UserRepository         UserRepository
 	TokenRepository        TokenRepository
 	OrganizationRepository OrganizationRepository
 	InviteCodeRepository   InviteCodeRepository
+	WalletRepository       WalletRepository
+	TransactionRepository  TransactionRepository
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
@@ -45,5 +62,7 @@ func NewRepository(db *sqlx.DB) *Repository {
 		TokenRepository:        NewTokenRepository(db),
 		OrganizationRepository: NewOrganizationRepository(db),
 		InviteCodeRepository:   NewInviteCodeRepository(db),
+		WalletRepository:       NewWalletRepository(db),
+		TransactionRepository:  NewTransactionRepository(db),
 	}
 }

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package proto.wallet;
+
+option go_package = "./wallet";
+import "google/api/annotations.proto";
+
+service Wallet {
+  rpc CreateOrganizationV1(CreateOrganizationV1Request) returns (CreateOrganizationV1Response) {
+    option (google.api.http) = { post: "/api/v1/create/organization"; body: "*"; };
+  };
+
+  rpc CreateOrganizationInviteCodeV1(CreateOrganizationInviteCodeV1Request) returns (CreateOrganizationInviteCodeV1Response) {
+    option (google.api.http) = { post: "/api/v1/create/organization/code"; body: "*"; };
+  };
+}
+
+message CreateOrganizationV1Request {
+  string access_token = 1;
+  string name = 2;
+}
+
+message CreateOrganizationV1Response {}
+
+message CreateOrganizationInviteCodeV1Request {
+  string access_token = 1;
+}
+
+message CreateOrganizationInviteCodeV1Response {
+  string invite_code = 1;
+}
