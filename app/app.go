@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
+	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/activity"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/organization"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/user"
@@ -145,11 +146,13 @@ func (app *App) InitEndpointContainer(service *service.Services) *endpoint.Endpo
 	authServices := auth.NewAuthEndpoint(service, app.config)
 	userServices := user.NewUserEndpoint(service, app.config)
 	organizationServices := organization.NewOrganizationEndpoint(service, app.config)
+	activityServices := activity.NewActivityEndpoint(service, app.config)
 
 	serviceContainer := endpoint.NewEndpointContainer(
 		authServices,
 		userServices,
 		organizationServices,
+		activityServices,
 	)
 
 	return serviceContainer

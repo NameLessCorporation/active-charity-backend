@@ -9,6 +9,11 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/config"
 )
 
+type IActivityService interface {
+	TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
+	GetActivityList(ctx context.Context) ([]*models.Activity, error)
+}
+
 type ITokenService interface {
 	CreateToken(ctx context.Context, token *models.Token) error
 	GenerateTokens(ctx context.Context, userID uint64, jwtSecretKey string, expirationTime time.Duration) (*models.Token, error)
@@ -40,6 +45,7 @@ type Services struct {
 	UserService         IUserService
 	OrganizationService IOrganizationService
 	InviteCodeService   IInviteCodeService
+	ActivityService     IActivityService
 }
 
 type Service struct {
@@ -61,5 +67,6 @@ func (s *Service) InitServices() {
 		UserService:         s,
 		OrganizationService: s,
 		InviteCodeService:   s,
+		ActivityService:     s,
 	}
 }
