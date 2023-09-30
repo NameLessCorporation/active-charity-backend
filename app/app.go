@@ -9,6 +9,9 @@ import (
 
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/fund"
+	app_fund "github.com/NameLessCorporation/active-charity-backend/extra/fund"
+
 	"github.com/NameLessCorporation/active-charity-backend/app/balance_operations"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/activity"
@@ -19,7 +22,9 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/service"
 	"github.com/NameLessCorporation/active-charity-backend/config"
 	"github.com/NameLessCorporation/active-charity-backend/dependers/database"
+	app_activity "github.com/NameLessCorporation/active-charity-backend/extra/activity"
 	app_auth "github.com/NameLessCorporation/active-charity-backend/extra/auth"
+	app_organization "github.com/NameLessCorporation/active-charity-backend/extra/organization"
 	app_user "github.com/NameLessCorporation/active-charity-backend/extra/user"
 	gateway_tools "github.com/NameLessCorporation/active-charity-backend/tools/gateway"
 
@@ -73,7 +78,8 @@ func (app *App) StartApp(certPath string) error {
 
 	store := repository.NewRepository(db)
 
-	service := service.NewService(store, app.config)
+	var serviceLogger = app.logger
+	service := service.NewService(store, app.config, serviceLogger)
 	service.InitServices()
 
 	balanceOperations := balance_operations.NewBalanceOperations(*service.Services)
@@ -88,6 +94,9 @@ func (app *App) StartApp(certPath string) error {
 
 	app_auth.RegisterAuthServer(grpcServer, endpointContainer.AuthService)
 	app_user.RegisterUserServer(grpcServer, endpointContainer.UserService)
+	app_organization.RegisterOrganizationServer(grpcServer, endpointContainer.OrganizationService)
+	app_fund.RegisterFundServer(grpcServer, endpointContainer.FundService)
+	app_activity.RegisterActivityServer(grpcServer, endpointContainer.ActivityService)
 
 	app.logger.Info("active-charity-backend successfully started",
 		zap.String("addr", app.config.Server.IP+":"+app.config.Server.Port),
@@ -139,6 +148,18 @@ func (app *App) StartApp(certPath string) error {
 		return err
 	}
 
+	if err = app_activity.RegisterActivityHandler(context.Background(), gwmux, gwconn); err != nil {
+		return err
+	}
+
+	if err = app_fund.RegisterFundHandler(context.Background(), gwmux, gwconn); err != nil {
+		return err
+	}
+
+	if err = app_organization.RegisterOrganizationHandler(context.Background(), gwmux, gwconn); err != nil {
+		return err
+	}
+
 	gwServer := &http.Server{
 		Addr:    app.config.Gateway.IP + ":" + app.config.Gateway.Port,
 		Handler: gwmux,
@@ -152,6 +173,7 @@ func (app *App) InitEndpointContainer(service *service.Services, operations bala
 	userServices := user.NewUserEndpoint(service, app.config)
 	organizationServices := organization.NewOrganizationEndpoint(service, app.config)
 	activityServices := activity.NewActivityEndpoint(service, app.config, operations)
+	fundService := fund.NewFundEndpoint(service, app.config)
 
 	serviceContainer := endpoint.NewEndpointContainer(
 		authServices,

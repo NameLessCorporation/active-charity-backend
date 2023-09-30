@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "organization/organization.proto",
+    "title": "fund/fund.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "Organization"
+      "name": "Fund"
     }
   ],
   "consumes": [
@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/create/organization": {
+    "/api/v1/create/fund": {
       "post": {
-        "operationId": "Organization_CreateOrganizationV1",
+        "operationId": "Fund_CreateFundV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/organizationCreateOrganizationV1Response"
+              "$ref": "#/definitions/fundCreateFundV1Response"
             }
           },
           "default": {
@@ -39,23 +39,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/organizationCreateOrganizationV1Request"
+              "$ref": "#/definitions/fundCreateFundV1Request"
             }
           }
         ],
         "tags": [
-          "Organization"
+          "Fund"
         ]
       }
     },
-    "/api/v1/create/organization/code": {
+    "/api/v1/get/fund": {
       "post": {
-        "operationId": "Organization_CreateOrganizationInviteCodeV1",
+        "operationId": "Fund_GetFundV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/organizationCreateOrganizationInviteCodeV1Response"
+              "$ref": "#/definitions/fundGetFundV1Response"
             }
           },
           "default": {
@@ -71,23 +71,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/organizationCreateOrganizationInviteCodeV1Request"
+              "$ref": "#/definitions/fundGetFundV1Request"
             }
           }
         ],
         "tags": [
-          "Organization"
+          "Fund"
         ]
       }
     },
-    "/api/v1/get/organization": {
+    "/api/v1/get/funds": {
       "post": {
-        "operationId": "Organization_GetOrganizationV1",
+        "operationId": "Fund_GetFundsV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/organizationGetOrganizationV1Response"
+              "$ref": "#/definitions/fundGetFundsV1Response"
             }
           },
           "default": {
@@ -103,64 +103,89 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/organizationGetOrganizationV1Request"
+              "$ref": "#/definitions/fundGetFundsV1Request"
             }
           }
         ],
         "tags": [
-          "Organization"
+          "Fund"
         ]
       }
     }
   },
   "definitions": {
-    "organizationCreateOrganizationInviteCodeV1Request": {
-      "type": "object",
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        }
-      }
-    },
-    "organizationCreateOrganizationInviteCodeV1Response": {
-      "type": "object",
-      "properties": {
-        "inviteCode": {
-          "type": "string"
-        }
-      }
-    },
-    "organizationCreateOrganizationV1Request": {
+    "fundCreateFundV1Request": {
       "type": "object",
       "properties": {
         "accessToken": {
           "type": "string"
         },
-        "name": {
-          "type": "string"
+        "fund": {
+          "$ref": "#/definitions/fundFundMessage"
         }
       }
     },
-    "organizationCreateOrganizationV1Response": {
+    "fundCreateFundV1Response": {
       "type": "object"
     },
-    "organizationGetOrganizationV1Request": {
+    "fundFundMessage": {
       "type": "object",
       "properties": {
-        "accessToken": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         }
       }
     },
-    "organizationGetOrganizationV1Response": {
+    "fundGetFundMessage": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
         "name": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         },
         "ownerId": {
           "type": "string",
           "format": "uint64"
+        }
+      }
+    },
+    "fundGetFundV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "fundGetFundV1Response": {
+      "type": "object",
+      "properties": {
+        "fund": {
+          "$ref": "#/definitions/fundGetFundMessage"
+        }
+      }
+    },
+    "fundGetFundsV1Request": {
+      "type": "object"
+    },
+    "fundGetFundsV1Response": {
+      "type": "object",
+      "properties": {
+        "funds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/fundGetFundMessage"
+          }
         }
       }
     },

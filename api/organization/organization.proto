@@ -10,6 +10,10 @@ service Organization {
     option (google.api.http) = { post: "/api/v1/create/organization"; body: "*"; };
   };
 
+  rpc GetOrganizationV1(GetOrganizationV1Request) returns (GetOrganizationV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/organization"; body: "*"; };
+  };
+
   rpc CreateOrganizationInviteCodeV1(CreateOrganizationInviteCodeV1Request) returns (CreateOrganizationInviteCodeV1Response) {
     option (google.api.http) = { post: "/api/v1/create/organization/code"; body: "*"; };
   };
@@ -28,4 +32,13 @@ message CreateOrganizationInviteCodeV1Request {
 
 message CreateOrganizationInviteCodeV1Response {
   string invite_code = 1;
+}
+
+message GetOrganizationV1Request {
+  string access_token = 1;
+}
+
+message GetOrganizationV1Response {
+  string name = 1;
+  uint64 owner_id = 2;
 }

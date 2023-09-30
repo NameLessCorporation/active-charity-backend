@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"go.uber.org/zap"
+
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 	"github.com/NameLessCorporation/active-charity-backend/app/repository"
 	"github.com/NameLessCorporation/active-charity-backend/config"
@@ -34,11 +36,13 @@ type IUserService interface {
 	GetUserByID(ctx context.Context, id uint64) (*models.User, error)
 	GetIDByEmail(ctx context.Context, email string) (uint64, error)
 	UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error
+	UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
 	GetWalletIdByUserId(ctx context.Context, userId uint64) (uint64, error)
 }
 
 type IOrganizationService interface {
 	CreateOrganization(ctx context.Context, organization *models.Organization) (uint64, error)
+	GetOrganizationByID(ctx context.Context, id uint64) (*models.Organization, error)
 }
 
 type IInviteCodeService interface {
@@ -60,6 +64,12 @@ type ITransactionService interface {
 	GetTransactionByToWalletIDAndFromWalletID(ctx context.Context, fromWalletID, toWalletID uint64) (*models.Transaction, error)
 }
 
+type IFundService interface {
+	CreateFund(ctx context.Context, fund *models.Fund) (uint64, error)
+	GetFundByID(ctx context.Context, id uint64) (*models.Fund, error)
+	GetFunds(ctx context.Context) ([]*models.Fund, error)
+}
+
 type Services struct {
 	TokenService        ITokenService
 	UserService         IUserService
@@ -68,18 +78,21 @@ type Services struct {
 	ActivityService     IActivityService
 	WalletService       IWalletService
 	TransactionService  ITransactionService
+	FundService         IFundService
 }
 
 type Service struct {
 	repository *repository.Repository
 	config     *config.Config
 	Services   *Services
+	logger     *zap.Logger
 }
 
-func NewService(repository *repository.Repository, config *config.Config) *Service {
+func NewService(repository *repository.Repository, config *config.Config, logger *zap.Logger) *Service {
 	return &Service{
 		repository: repository,
 		config:     config,
+		logger:     logger,
 	}
 }
 
@@ -92,5 +105,6 @@ func (s *Service) InitServices() {
 		WalletService:       s,
 		TransactionService:  s,
 		ActivityService:     s,
+		FundService:         s,
 	}
 }

@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 
+	"go.uber.org/zap"
+
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
@@ -41,6 +43,7 @@ func (a *Service) TrackCrunches(ctx context.Context, repeats uint32, activityId 
 func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
 	isPeriod, err := a.repository.ActivityRepository.IsActiveStepsPeriod(ctx, userId)
 	if err != nil {
+		a.logger.Error("s.repository.ActivityRepository.TrackSteps", zap.Error(err))
 		return err
 	}
 
@@ -72,9 +75,10 @@ func (a *Service) TrackPullUps(ctx context.Context, repeats uint32, activityId u
 	return nil
 }
 
-func (a *Service) GetActivityList(ctx context.Context) ([]*models.Activity, error) {
-	list, err := a.repository.ActivityRepository.GetActivityList(ctx)
+func (s *Service) GetActivityList(ctx context.Context) ([]*models.Activity, error) {
+	list, err := s.repository.ActivityRepository.GetActivityList(ctx)
 	if err != nil {
+		s.logger.Error("s.repository.ActivityRepository.GetActivityList", zap.Error(err))
 		return nil, err
 	}
 
