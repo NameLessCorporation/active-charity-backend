@@ -180,6 +180,7 @@ func (app *App) InitEndpointContainer(service *service.Services, operations bala
 		userServices,
 		organizationServices,
 		activityServices,
+		fundService,
 	)
 
 	return serviceContainer
