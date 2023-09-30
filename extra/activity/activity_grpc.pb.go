@@ -21,6 +21,11 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Activity_GetActivityListV1_FullMethodName = "/proto.activity.Activity/GetActivityListV1"
 	Activity_TrackStepsV1_FullMethodName      = "/proto.activity.Activity/TrackStepsV1"
+	Activity_TrackPushUpsV1_FullMethodName    = "/proto.activity.Activity/TrackPushUpsV1"
+	Activity_TrackCrunchesV1_FullMethodName   = "/proto.activity.Activity/TrackCrunchesV1"
+	Activity_TrackCyclingV1_FullMethodName    = "/proto.activity.Activity/TrackCyclingV1"
+	Activity_TrackPullUpsV1_FullMethodName    = "/proto.activity.Activity/TrackPullUpsV1"
+	Activity_TrackBenchPressV1_FullMethodName = "/proto.activity.Activity/TrackBenchPressV1"
 )
 
 // ActivityClient is the client API for Activity service.
@@ -29,6 +34,11 @@ const (
 type ActivityClient interface {
 	GetActivityListV1(ctx context.Context, in *GetActivityListV1Request, opts ...grpc.CallOption) (*GetActivityListV1Response, error)
 	TrackStepsV1(ctx context.Context, in *TrackStepsV1Request, opts ...grpc.CallOption) (*TrackStepsV1Response, error)
+	TrackPushUpsV1(ctx context.Context, in *TrackPushUpV1Request, opts ...grpc.CallOption) (*TrackPushUpsV1Response, error)
+	TrackCrunchesV1(ctx context.Context, in *TrackCrunchesV1Request, opts ...grpc.CallOption) (*TrackCrunchesV1Response, error)
+	TrackCyclingV1(ctx context.Context, in *TrackCyclingV1Request, opts ...grpc.CallOption) (*TrackCyclingV1Response, error)
+	TrackPullUpsV1(ctx context.Context, in *TrackPullUpsV1Request, opts ...grpc.CallOption) (*TrackPullUpsV1Response, error)
+	TrackBenchPressV1(ctx context.Context, in *TrackBenchPressV1Request, opts ...grpc.CallOption) (*TrackBenchPressV1Response, error)
 }
 
 type activityClient struct {
@@ -57,12 +67,62 @@ func (c *activityClient) TrackStepsV1(ctx context.Context, in *TrackStepsV1Reque
 	return out, nil
 }
 
+func (c *activityClient) TrackPushUpsV1(ctx context.Context, in *TrackPushUpV1Request, opts ...grpc.CallOption) (*TrackPushUpsV1Response, error) {
+	out := new(TrackPushUpsV1Response)
+	err := c.cc.Invoke(ctx, Activity_TrackPushUpsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityClient) TrackCrunchesV1(ctx context.Context, in *TrackCrunchesV1Request, opts ...grpc.CallOption) (*TrackCrunchesV1Response, error) {
+	out := new(TrackCrunchesV1Response)
+	err := c.cc.Invoke(ctx, Activity_TrackCrunchesV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityClient) TrackCyclingV1(ctx context.Context, in *TrackCyclingV1Request, opts ...grpc.CallOption) (*TrackCyclingV1Response, error) {
+	out := new(TrackCyclingV1Response)
+	err := c.cc.Invoke(ctx, Activity_TrackCyclingV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityClient) TrackPullUpsV1(ctx context.Context, in *TrackPullUpsV1Request, opts ...grpc.CallOption) (*TrackPullUpsV1Response, error) {
+	out := new(TrackPullUpsV1Response)
+	err := c.cc.Invoke(ctx, Activity_TrackPullUpsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityClient) TrackBenchPressV1(ctx context.Context, in *TrackBenchPressV1Request, opts ...grpc.CallOption) (*TrackBenchPressV1Response, error) {
+	out := new(TrackBenchPressV1Response)
+	err := c.cc.Invoke(ctx, Activity_TrackBenchPressV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ActivityServer is the server API for Activity service.
 // All implementations should embed UnimplementedActivityServer
 // for forward compatibility
 type ActivityServer interface {
 	GetActivityListV1(context.Context, *GetActivityListV1Request) (*GetActivityListV1Response, error)
 	TrackStepsV1(context.Context, *TrackStepsV1Request) (*TrackStepsV1Response, error)
+	TrackPushUpsV1(context.Context, *TrackPushUpV1Request) (*TrackPushUpsV1Response, error)
+	TrackCrunchesV1(context.Context, *TrackCrunchesV1Request) (*TrackCrunchesV1Response, error)
+	TrackCyclingV1(context.Context, *TrackCyclingV1Request) (*TrackCyclingV1Response, error)
+	TrackPullUpsV1(context.Context, *TrackPullUpsV1Request) (*TrackPullUpsV1Response, error)
+	TrackBenchPressV1(context.Context, *TrackBenchPressV1Request) (*TrackBenchPressV1Response, error)
 }
 
 // UnimplementedActivityServer should be embedded to have forward compatible implementations.
@@ -74,6 +134,21 @@ func (UnimplementedActivityServer) GetActivityListV1(context.Context, *GetActivi
 }
 func (UnimplementedActivityServer) TrackStepsV1(context.Context, *TrackStepsV1Request) (*TrackStepsV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TrackStepsV1 not implemented")
+}
+func (UnimplementedActivityServer) TrackPushUpsV1(context.Context, *TrackPushUpV1Request) (*TrackPushUpsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TrackPushUpsV1 not implemented")
+}
+func (UnimplementedActivityServer) TrackCrunchesV1(context.Context, *TrackCrunchesV1Request) (*TrackCrunchesV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TrackCrunchesV1 not implemented")
+}
+func (UnimplementedActivityServer) TrackCyclingV1(context.Context, *TrackCyclingV1Request) (*TrackCyclingV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TrackCyclingV1 not implemented")
+}
+func (UnimplementedActivityServer) TrackPullUpsV1(context.Context, *TrackPullUpsV1Request) (*TrackPullUpsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TrackPullUpsV1 not implemented")
+}
+func (UnimplementedActivityServer) TrackBenchPressV1(context.Context, *TrackBenchPressV1Request) (*TrackBenchPressV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TrackBenchPressV1 not implemented")
 }
 
 // UnsafeActivityServer may be embedded to opt out of forward compatibility for this service.
@@ -123,6 +198,96 @@ func _Activity_TrackStepsV1_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Activity_TrackPushUpsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrackPushUpV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityServer).TrackPushUpsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Activity_TrackPushUpsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityServer).TrackPushUpsV1(ctx, req.(*TrackPushUpV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Activity_TrackCrunchesV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrackCrunchesV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityServer).TrackCrunchesV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Activity_TrackCrunchesV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityServer).TrackCrunchesV1(ctx, req.(*TrackCrunchesV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Activity_TrackCyclingV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrackCyclingV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityServer).TrackCyclingV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Activity_TrackCyclingV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityServer).TrackCyclingV1(ctx, req.(*TrackCyclingV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Activity_TrackPullUpsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrackPullUpsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityServer).TrackPullUpsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Activity_TrackPullUpsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityServer).TrackPullUpsV1(ctx, req.(*TrackPullUpsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Activity_TrackBenchPressV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrackBenchPressV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ActivityServer).TrackBenchPressV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Activity_TrackBenchPressV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ActivityServer).TrackBenchPressV1(ctx, req.(*TrackBenchPressV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Activity_ServiceDesc is the grpc.ServiceDesc for Activity service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -137,6 +302,26 @@ var Activity_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TrackStepsV1",
 			Handler:    _Activity_TrackStepsV1_Handler,
+		},
+		{
+			MethodName: "TrackPushUpsV1",
+			Handler:    _Activity_TrackPushUpsV1_Handler,
+		},
+		{
+			MethodName: "TrackCrunchesV1",
+			Handler:    _Activity_TrackCrunchesV1_Handler,
+		},
+		{
+			MethodName: "TrackCyclingV1",
+			Handler:    _Activity_TrackCyclingV1_Handler,
+		},
+		{
+			MethodName: "TrackPullUpsV1",
+			Handler:    _Activity_TrackPullUpsV1_Handler,
+		},
+		{
+			MethodName: "TrackBenchPressV1",
+			Handler:    _Activity_TrackBenchPressV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -9,8 +9,16 @@ import (
 )
 
 type ActivityRepository interface {
-	TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
+	TrackCurrentPeriodSteps(ctx context.Context, steps uint32, periodId uint64) error
+	TrackNewPeriodSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
 	GetActivityList(ctx context.Context) ([]*models.Activity, error)
+	IsActiveStepsPeriod(ctx context.Context, userId uint64) (bool, error)
+	GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, error)
+	TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error
+	TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 }
 
 type UserRepository interface {
@@ -21,6 +29,7 @@ type UserRepository interface {
 	GetIDByEmail(ctx context.Context, email string) (uint64, error)
 	UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error
 	UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
+	GetWalletIdById(ctx context.Context, id uint64) (uint64, error)
 }
 
 type TokenRepository interface {

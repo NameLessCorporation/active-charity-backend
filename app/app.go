@@ -9,10 +9,13 @@ import (
 
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/fund"
+	app_fund "github.com/NameLessCorporation/active-charity-backend/extra/fund"
+
+	"github.com/NameLessCorporation/active-charity-backend/app/balance_operations"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/activity"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
-	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/fund"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/organization"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/user"
 	"github.com/NameLessCorporation/active-charity-backend/app/repository"
@@ -21,7 +24,6 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/dependers/database"
 	app_activity "github.com/NameLessCorporation/active-charity-backend/extra/activity"
 	app_auth "github.com/NameLessCorporation/active-charity-backend/extra/auth"
-	app_fund "github.com/NameLessCorporation/active-charity-backend/extra/fund"
 	app_organization "github.com/NameLessCorporation/active-charity-backend/extra/organization"
 	app_user "github.com/NameLessCorporation/active-charity-backend/extra/user"
 	gateway_tools "github.com/NameLessCorporation/active-charity-backend/tools/gateway"
@@ -80,7 +82,8 @@ func (app *App) StartApp(certPath string) error {
 	service := service.NewService(store, app.config, serviceLogger)
 	service.InitServices()
 
-	endpointContainer := app.InitEndpointContainer(service.Services)
+	balanceOperations := balance_operations.NewBalanceOperations(*service.Services)
+	endpointContainer := app.InitEndpointContainer(service.Services, balanceOperations)
 
 	listener, err := net.Listen("tcp", ":"+app.config.Server.Port)
 	if err != nil {
@@ -165,11 +168,11 @@ func (app *App) StartApp(certPath string) error {
 	return http.ListenAndServe(gwServer.Addr, wsproxy.WebsocketProxy(handler))
 }
 
-func (app *App) InitEndpointContainer(service *service.Services) *endpoint.EndpointContainer {
+func (app *App) InitEndpointContainer(service *service.Services, operations balance_operations.BalanceOperations) *endpoint.EndpointContainer {
 	authServices := auth.NewAuthEndpoint(service, app.config)
 	userServices := user.NewUserEndpoint(service, app.config)
 	organizationServices := organization.NewOrganizationEndpoint(service, app.config)
-	activityServices := activity.NewActivityEndpoint(service, app.config)
+	activityServices := activity.NewActivityEndpoint(service, app.config, operations)
 	fundService := fund.NewFundEndpoint(service, app.config)
 
 	serviceContainer := endpoint.NewEndpointContainer(
@@ -177,7 +180,6 @@ func (app *App) InitEndpointContainer(service *service.Services) *endpoint.Endpo
 		userServices,
 		organizationServices,
 		activityServices,
-		fundService,
 	)
 
 	return serviceContainer

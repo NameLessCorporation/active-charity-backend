@@ -18,10 +18,138 @@ func NewActivityRepository(db *sqlx.DB) *Activity {
 	}
 }
 
-func (a *Activity) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
+func (a *Activity) TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
 	_, err := a.db.ExecContext(
 		ctx,
-		"insert into steps_history(user_id, steps, activity_id) values($1, $2, $3)",
+		"insert into push_ups_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into bench_press_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into cycling_history(user_id, metres, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		metres,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into crunches_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into pull_ups_history(user_id, repeats, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
+		userId,
+		repeats,
+		activityId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, error) {
+	var periodId uint64
+
+	err := a.db.GetContext(
+		ctx,
+		&periodId,
+		`select id from steps_history 
+                where created_at > CURRENT_DATE and 
+                      created_at < CURRENT_DATE + interval '1 day' and
+                      user_id = $1`,
+		userId)
+	if err != nil {
+		return 0, err
+	}
+
+	return periodId, nil
+}
+
+func (a *Activity) IsActiveStepsPeriod(ctx context.Context, userId uint64) (bool, error) {
+	var count int32
+
+	err := a.db.GetContext(
+		ctx,
+		&count,
+		`select count(*) from steps_history 
+                where created_at > CURRENT_DATE and 
+                      created_at < CURRENT_DATE + interval '1 day' and
+                      user_id = $1`, userId)
+	if err != nil {
+		return false, err
+	}
+
+	if count == 0 {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+func (a *Activity) TrackCurrentPeriodSteps(ctx context.Context, steps uint32, periodId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"update steps_history set steps = $1 and updated_at = now() where id = $2",
+		steps,
+		periodId,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Activity) TrackNewPeriodSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
+	_, err := a.db.ExecContext(
+		ctx,
+		"insert into steps_history(user_id, steps, activity_id, created_at, updated_at) values($1, $2, $3, now(), now())",
 		userId,
 		steps,
 		activityId,
