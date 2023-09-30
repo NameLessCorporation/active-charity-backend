@@ -21,7 +21,7 @@ func (s *Service) CreateFund(ctx context.Context, fund *models.Fund) (uint64, er
 }
 
 func (s *Service) GetFundByID(ctx context.Context, id uint64) (*models.Fund, error) {
-	fund, err := s.Services.FundService.GetFundByID(ctx, id)
+	fund, err := s.repository.FundRepository.GetFundByID(ctx, id)
 	if err != nil {
 		s.logger.Error("s.Services.FundService.GetFundByID", zap.Error(err))
 		return nil, status.Error(codes.Internal, "Ошибка получения фонда")
@@ -31,7 +31,7 @@ func (s *Service) GetFundByID(ctx context.Context, id uint64) (*models.Fund, err
 }
 
 func (s *Service) GetFunds(ctx context.Context) ([]*models.Fund, error) {
-	funds, err := s.Services.FundService.GetFunds(ctx)
+	funds, err := s.repository.FundRepository.GetFunds(ctx)
 	if err != nil {
 		s.logger.Error("s.Services.FundService.GetFunds", zap.Error(err))
 		return nil, status.Error(codes.Internal, "Ошибка получения фондов")
