@@ -17,9 +17,9 @@ func (a *ActivityEndpoint) GetActivityListV1(ctx context.Context, req *activity.
 		return nil, err
 	}
 
-	activityList := make([]*activity.Activity, 0, len(list))
+	activityList := make([]*activity.ActivityMessage, 0, len(list))
 	for _, value := range list {
-		activityList = append(activityList, &activity.Activity{
+		activityList = append(activityList, &activity.ActivityMessage{
 			Id:   value.Id,
 			Name: value.Name,
 		})

@@ -20,7 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	User_CreateUserV1_FullMethodName             = "/proto.user.User/CreateUserV1"
+	User_GetUserV1_FullMethodName                = "/proto.user.User/GetUserV1"
 	User_JoinUserToOrganizationV1_FullMethodName = "/proto.user.User/JoinUserToOrganizationV1"
+	User_SelectUserFundV1_FullMethodName         = "/proto.user.User/SelectUserFundV1"
 )
 
 // UserClient is the client API for User service.
@@ -28,7 +30,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
 	CreateUserV1(ctx context.Context, in *CreateUserV1Request, opts ...grpc.CallOption) (*CreateUserV1Response, error)
+	GetUserV1(ctx context.Context, in *GetUserV1Request, opts ...grpc.CallOption) (*GetUserV1Response, error)
 	JoinUserToOrganizationV1(ctx context.Context, in *JoinUserToOrganizationV1Request, opts ...grpc.CallOption) (*JoinUserToOrganizationV1Response, error)
+	SelectUserFundV1(ctx context.Context, in *SelectUserFundV1Request, opts ...grpc.CallOption) (*SelectUserFundV1Response, error)
 }
 
 type userClient struct {
@@ -48,9 +52,27 @@ func (c *userClient) CreateUserV1(ctx context.Context, in *CreateUserV1Request, 
 	return out, nil
 }
 
+func (c *userClient) GetUserV1(ctx context.Context, in *GetUserV1Request, opts ...grpc.CallOption) (*GetUserV1Response, error) {
+	out := new(GetUserV1Response)
+	err := c.cc.Invoke(ctx, User_GetUserV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userClient) JoinUserToOrganizationV1(ctx context.Context, in *JoinUserToOrganizationV1Request, opts ...grpc.CallOption) (*JoinUserToOrganizationV1Response, error) {
 	out := new(JoinUserToOrganizationV1Response)
 	err := c.cc.Invoke(ctx, User_JoinUserToOrganizationV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) SelectUserFundV1(ctx context.Context, in *SelectUserFundV1Request, opts ...grpc.CallOption) (*SelectUserFundV1Response, error) {
+	out := new(SelectUserFundV1Response)
+	err := c.cc.Invoke(ctx, User_SelectUserFundV1_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +84,9 @@ func (c *userClient) JoinUserToOrganizationV1(ctx context.Context, in *JoinUserT
 // for forward compatibility
 type UserServer interface {
 	CreateUserV1(context.Context, *CreateUserV1Request) (*CreateUserV1Response, error)
+	GetUserV1(context.Context, *GetUserV1Request) (*GetUserV1Response, error)
 	JoinUserToOrganizationV1(context.Context, *JoinUserToOrganizationV1Request) (*JoinUserToOrganizationV1Response, error)
+	SelectUserFundV1(context.Context, *SelectUserFundV1Request) (*SelectUserFundV1Response, error)
 }
 
 // UnimplementedUserServer should be embedded to have forward compatible implementations.
@@ -72,8 +96,14 @@ type UnimplementedUserServer struct {
 func (UnimplementedUserServer) CreateUserV1(context.Context, *CreateUserV1Request) (*CreateUserV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUserV1 not implemented")
 }
+func (UnimplementedUserServer) GetUserV1(context.Context, *GetUserV1Request) (*GetUserV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserV1 not implemented")
+}
 func (UnimplementedUserServer) JoinUserToOrganizationV1(context.Context, *JoinUserToOrganizationV1Request) (*JoinUserToOrganizationV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinUserToOrganizationV1 not implemented")
+}
+func (UnimplementedUserServer) SelectUserFundV1(context.Context, *SelectUserFundV1Request) (*SelectUserFundV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectUserFundV1 not implemented")
 }
 
 // UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
@@ -105,6 +135,24 @@ func _User_CreateUserV1_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetUserV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetUserV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetUserV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetUserV1(ctx, req.(*GetUserV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _User_JoinUserToOrganizationV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(JoinUserToOrganizationV1Request)
 	if err := dec(in); err != nil {
@@ -123,6 +171,24 @@ func _User_JoinUserToOrganizationV1_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_SelectUserFundV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectUserFundV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).SelectUserFundV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_SelectUserFundV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).SelectUserFundV1(ctx, req.(*SelectUserFundV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -135,8 +201,16 @@ var User_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _User_CreateUserV1_Handler,
 		},
 		{
+			MethodName: "GetUserV1",
+			Handler:    _User_GetUserV1_Handler,
+		},
+		{
 			MethodName: "JoinUserToOrganizationV1",
 			Handler:    _User_JoinUserToOrganizationV1_Handler,
+		},
+		{
+			MethodName: "SelectUserFundV1",
+			Handler:    _User_SelectUserFundV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

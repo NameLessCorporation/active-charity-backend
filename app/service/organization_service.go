@@ -17,3 +17,12 @@ func (s *Service) CreateOrganization(ctx context.Context, organization *models.O
 
 	return id, nil
 }
+
+func (s *Service) GetOrganizationByID(ctx context.Context, id uint64) (*models.Organization, error) {
+	organization, err := s.repository.OrganizationRepository.GetOrganizationByID(ctx, id)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Ошибка при получении организации")
+	}
+
+	return organization, nil
+}

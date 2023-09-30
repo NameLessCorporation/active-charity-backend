@@ -5,6 +5,7 @@ import (
 
 	"github.com/NameLessCorporation/active-charity-backend/extra/activity"
 	"github.com/NameLessCorporation/active-charity-backend/extra/auth"
+	"github.com/NameLessCorporation/active-charity-backend/extra/fund"
 	"github.com/NameLessCorporation/active-charity-backend/extra/organization"
 	"github.com/NameLessCorporation/active-charity-backend/extra/user"
 )
@@ -14,6 +15,7 @@ type EndpointContainer struct {
 	UserService         UserServiceInter
 	OrganizationService OrganizationServiceInter
 	ActivityService     ActivityServiceInter
+	FundService         FundServiceInter
 }
 
 func NewEndpointContainer(
@@ -21,12 +23,14 @@ func NewEndpointContainer(
 	user UserServiceInter,
 	organizationService OrganizationServiceInter,
 	activity ActivityServiceInter,
+	fund FundServiceInter,
 ) *EndpointContainer {
 	return &EndpointContainer{
 		AuthService:         auth,
 		UserService:         user,
 		OrganizationService: organizationService,
 		ActivityService:     activity,
+		FundService:         fund,
 	}
 }
 
@@ -39,14 +43,23 @@ type AuthServiceInter interface {
 type UserServiceInter interface {
 	CreateUserV1(ctx context.Context, req *user.CreateUserV1Request) (*user.CreateUserV1Response, error)
 	JoinUserToOrganizationV1(ctx context.Context, req *user.JoinUserToOrganizationV1Request) (*user.JoinUserToOrganizationV1Response, error)
+	GetUserV1(ctx context.Context, req *user.GetUserV1Request) (*user.GetUserV1Response, error)
+	SelectUserFundV1(ctx context.Context, req *user.SelectUserFundV1Request) (*user.SelectUserFundV1Response, error)
 }
 
 type OrganizationServiceInter interface {
 	CreateOrganizationV1(ctx context.Context, req *organization.CreateOrganizationV1Request) (*organization.CreateOrganizationV1Response, error)
 	CreateOrganizationInviteCodeV1(ctx context.Context, req *organization.CreateOrganizationInviteCodeV1Request) (*organization.CreateOrganizationInviteCodeV1Response, error)
+	GetOrganizationV1(ctx context.Context, req *organization.GetOrganizationV1Request) (*organization.GetOrganizationV1Response, error)
 }
 
 type ActivityServiceInter interface {
 	TrackStepsV1(ctx context.Context, req *activity.TrackStepsV1Request) (*activity.TrackStepsV1Response, error)
 	GetActivityListV1(ctx context.Context, req *activity.GetActivityListV1Request) (*activity.GetActivityListV1Response, error)
+}
+
+type FundServiceInter interface {
+	CreateFundV1(ctx context.Context, req *fund.CreateFundV1Request) (*fund.CreateFundV1Response, error)
+	GetFundV1(ctx context.Context, req *fund.GetFundV1Request) (*fund.GetFundV1Response, error)
+	GetFundsV1(ctx context.Context, req *fund.GetFundsV1Request) (*fund.GetFundsV1Response, error)
 }

@@ -9,8 +9,14 @@ service User {
   rpc CreateUserV1(CreateUserV1Request) returns (CreateUserV1Response) {
     option (google.api.http) = { post: "/api/v1/create/user"; body: "*"; };
   };
+  rpc GetUserV1(GetUserV1Request) returns (GetUserV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/user"; body: "*"; };
+  };
   rpc JoinUserToOrganizationV1(JoinUserToOrganizationV1Request) returns (JoinUserToOrganizationV1Response) {
     option (google.api.http) = { post: "/api/v1/join/user/organization"; body: "*"; };
+  };
+  rpc SelectUserFundV1(SelectUserFundV1Request) returns (SelectUserFundV1Response) {
+    option (google.api.http) = { post: "/api/v1/select/user/fund"; body: "*"; };
   };
 }
 
@@ -29,3 +35,22 @@ message JoinUserToOrganizationV1Request {
 }
 
 message JoinUserToOrganizationV1Response {}
+
+message GetUserV1Request {
+  string access_token = 1;
+}
+
+message GetUserV1Response {
+  string email = 1;
+  string name = 2;
+  string date_of_birthday = 3;
+  uint64 coins = 4;
+  uint64 rubles = 5;
+}
+
+message SelectUserFundV1Request {
+  string access_token = 1;
+  uint64 fund_id = 2;
+}
+
+message SelectUserFundV1Response {}

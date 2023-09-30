@@ -9,13 +9,17 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/activity"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
+	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/fund"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/organization"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/user"
 	"github.com/NameLessCorporation/active-charity-backend/app/repository"
 	"github.com/NameLessCorporation/active-charity-backend/app/service"
 	"github.com/NameLessCorporation/active-charity-backend/config"
 	"github.com/NameLessCorporation/active-charity-backend/dependers/database"
+	app_activity "github.com/NameLessCorporation/active-charity-backend/extra/activity"
 	app_auth "github.com/NameLessCorporation/active-charity-backend/extra/auth"
+	app_fund "github.com/NameLessCorporation/active-charity-backend/extra/fund"
+	app_organization "github.com/NameLessCorporation/active-charity-backend/extra/organization"
 	app_user "github.com/NameLessCorporation/active-charity-backend/extra/user"
 	gateway_tools "github.com/NameLessCorporation/active-charity-backend/tools/gateway"
 
@@ -134,6 +138,18 @@ func (app *App) StartApp(certPath string) error {
 		return err
 	}
 
+	if err = app_activity.RegisterActivityHandler(context.Background(), gwmux, gwconn); err != nil {
+		return err
+	}
+
+	if err = app_fund.RegisterFundHandler(context.Background(), gwmux, gwconn); err != nil {
+		return err
+	}
+
+	if err = app_organization.RegisterOrganizationHandler(context.Background(), gwmux, gwconn); err != nil {
+		return err
+	}
+
 	gwServer := &http.Server{
 		Addr:    app.config.Gateway.IP + app.config.Gateway.Port,
 		Handler: gwmux,
@@ -147,12 +163,14 @@ func (app *App) InitEndpointContainer(service *service.Services) *endpoint.Endpo
 	userServices := user.NewUserEndpoint(service, app.config)
 	organizationServices := organization.NewOrganizationEndpoint(service, app.config)
 	activityServices := activity.NewActivityEndpoint(service, app.config)
+	fundService := fund.NewFundEndpoint(service, app.config)
 
 	serviceContainer := endpoint.NewEndpointContainer(
 		authServices,
 		userServices,
 		organizationServices,
 		activityServices,
+		fundService,
 	)
 
 	return serviceContainer
