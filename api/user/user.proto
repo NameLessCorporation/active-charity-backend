@@ -41,11 +41,12 @@ message GetUserV1Request {
 }
 
 message GetUserV1Response {
-  string email = 1;
-  string name = 2;
-  string date_of_birthday = 3;
-  uint64 coins = 4;
-  uint64 rubles = 5;
+  uint64 id = 1;
+  string email = 2;
+  string name = 3;
+  string date_of_birthday = 4;
+  uint64 coins = 5;
+  uint64 rubles = 6;
 }
 
 message SelectUserFundV1Request {

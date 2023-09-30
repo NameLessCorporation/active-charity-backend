@@ -205,6 +205,10 @@
     "userGetUserV1Response": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
         "email": {
           "type": "string"
         },

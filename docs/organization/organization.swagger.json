@@ -157,6 +157,10 @@
       "properties": {
         "name": {
           "type": "string"
+        },
+        "ownerId": {
+          "type": "string",
+          "format": "uint64"
         }
       }
     },

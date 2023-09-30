@@ -18,6 +18,7 @@ func (f *FundEndpoint) GetFundsV1(ctx context.Context, req *fund.GetFundsV1Reque
 			Id:          fundModel.ID,
 			Name:        fundModel.Name,
 			Description: fundModel.Description,
+			OwnerId:     fundModel.OwnerID,
 		})
 	}
 

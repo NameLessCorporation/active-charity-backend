@@ -40,4 +40,5 @@ message GetOrganizationV1Request {
 
 message GetOrganizationV1Response {
   string name = 1;
+  uint64 owner_id = 2;
 }

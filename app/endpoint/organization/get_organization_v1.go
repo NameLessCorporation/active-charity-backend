@@ -26,6 +26,7 @@ func (o *OrganizationEndpoint) GetOrganizationV1(ctx context.Context, req *organ
 	}
 
 	return &organization.GetOrganizationV1Response{
-		Name: org.Name,
+		Name:    org.Name,
+		OwnerId: org.OwnerID,
 	}, nil
 }
