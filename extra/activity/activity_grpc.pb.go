@@ -19,124 +19,124 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Auth_GetActivityListV1_FullMethodName = "/proto.activity.Auth/GetActivityListV1"
-	Auth_TrackStepsV1_FullMethodName      = "/proto.activity.Auth/TrackStepsV1"
+	Activity_GetActivityListV1_FullMethodName = "/proto.activity.Activity/GetActivityListV1"
+	Activity_TrackStepsV1_FullMethodName      = "/proto.activity.Activity/TrackStepsV1"
 )
 
-// AuthClient is the client API for Auth service.
+// ActivityClient is the client API for Activity service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthClient interface {
+type ActivityClient interface {
 	GetActivityListV1(ctx context.Context, in *GetActivityListV1Request, opts ...grpc.CallOption) (*GetActivityListV1Response, error)
 	TrackStepsV1(ctx context.Context, in *TrackStepsV1Request, opts ...grpc.CallOption) (*TrackStepsV1Response, error)
 }
 
-type authClient struct {
+type activityClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthClient(cc grpc.ClientConnInterface) AuthClient {
-	return &authClient{cc}
+func NewActivityClient(cc grpc.ClientConnInterface) ActivityClient {
+	return &activityClient{cc}
 }
 
-func (c *authClient) GetActivityListV1(ctx context.Context, in *GetActivityListV1Request, opts ...grpc.CallOption) (*GetActivityListV1Response, error) {
+func (c *activityClient) GetActivityListV1(ctx context.Context, in *GetActivityListV1Request, opts ...grpc.CallOption) (*GetActivityListV1Response, error) {
 	out := new(GetActivityListV1Response)
-	err := c.cc.Invoke(ctx, Auth_GetActivityListV1_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Activity_GetActivityListV1_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) TrackStepsV1(ctx context.Context, in *TrackStepsV1Request, opts ...grpc.CallOption) (*TrackStepsV1Response, error) {
+func (c *activityClient) TrackStepsV1(ctx context.Context, in *TrackStepsV1Request, opts ...grpc.CallOption) (*TrackStepsV1Response, error) {
 	out := new(TrackStepsV1Response)
-	err := c.cc.Invoke(ctx, Auth_TrackStepsV1_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Activity_TrackStepsV1_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthServer is the server API for Auth service.
-// All implementations should embed UnimplementedAuthServer
+// ActivityServer is the server API for Activity service.
+// All implementations should embed UnimplementedActivityServer
 // for forward compatibility
-type AuthServer interface {
+type ActivityServer interface {
 	GetActivityListV1(context.Context, *GetActivityListV1Request) (*GetActivityListV1Response, error)
 	TrackStepsV1(context.Context, *TrackStepsV1Request) (*TrackStepsV1Response, error)
 }
 
-// UnimplementedAuthServer should be embedded to have forward compatible implementations.
-type UnimplementedAuthServer struct {
+// UnimplementedActivityServer should be embedded to have forward compatible implementations.
+type UnimplementedActivityServer struct {
 }
 
-func (UnimplementedAuthServer) GetActivityListV1(context.Context, *GetActivityListV1Request) (*GetActivityListV1Response, error) {
+func (UnimplementedActivityServer) GetActivityListV1(context.Context, *GetActivityListV1Request) (*GetActivityListV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActivityListV1 not implemented")
 }
-func (UnimplementedAuthServer) TrackStepsV1(context.Context, *TrackStepsV1Request) (*TrackStepsV1Response, error) {
+func (UnimplementedActivityServer) TrackStepsV1(context.Context, *TrackStepsV1Request) (*TrackStepsV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TrackStepsV1 not implemented")
 }
 
-// UnsafeAuthServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthServer will
+// UnsafeActivityServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ActivityServer will
 // result in compilation errors.
-type UnsafeAuthServer interface {
-	mustEmbedUnimplementedAuthServer()
+type UnsafeActivityServer interface {
+	mustEmbedUnimplementedActivityServer()
 }
 
-func RegisterAuthServer(s grpc.ServiceRegistrar, srv AuthServer) {
-	s.RegisterService(&Auth_ServiceDesc, srv)
+func RegisterActivityServer(s grpc.ServiceRegistrar, srv ActivityServer) {
+	s.RegisterService(&Activity_ServiceDesc, srv)
 }
 
-func _Auth_GetActivityListV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Activity_GetActivityListV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetActivityListV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).GetActivityListV1(ctx, in)
+		return srv.(ActivityServer).GetActivityListV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Auth_GetActivityListV1_FullMethodName,
+		FullMethod: Activity_GetActivityListV1_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetActivityListV1(ctx, req.(*GetActivityListV1Request))
+		return srv.(ActivityServer).GetActivityListV1(ctx, req.(*GetActivityListV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_TrackStepsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Activity_TrackStepsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TrackStepsV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).TrackStepsV1(ctx, in)
+		return srv.(ActivityServer).TrackStepsV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Auth_TrackStepsV1_FullMethodName,
+		FullMethod: Activity_TrackStepsV1_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).TrackStepsV1(ctx, req.(*TrackStepsV1Request))
+		return srv.(ActivityServer).TrackStepsV1(ctx, req.(*TrackStepsV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
+// Activity_ServiceDesc is the grpc.ServiceDesc for Activity service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Auth_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "proto.activity.Auth",
-	HandlerType: (*AuthServer)(nil),
+var Activity_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "proto.activity.Activity",
+	HandlerType: (*ActivityServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetActivityListV1",
-			Handler:    _Auth_GetActivityListV1_Handler,
+			Handler:    _Activity_GetActivityListV1_Handler,
 		},
 		{
 			MethodName: "TrackStepsV1",
-			Handler:    _Auth_TrackStepsV1_Handler,
+			Handler:    _Activity_TrackStepsV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

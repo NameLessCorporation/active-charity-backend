@@ -6,7 +6,7 @@
   },
   "tags": [
     {
-      "name": "Auth"
+      "name": "Activity"
     }
   ],
   "consumes": [
@@ -18,7 +18,7 @@
   "paths": {
     "/api/v1/get/activity/list": {
       "post": {
-        "operationId": "Auth_GetActivityListV1",
+        "operationId": "Activity_GetActivityListV1",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -44,13 +44,13 @@
           }
         ],
         "tags": [
-          "Auth"
+          "Activity"
         ]
       }
     },
     "/api/v1/track/steps": {
       "post": {
-        "operationId": "Auth_TrackStepsV1",
+        "operationId": "Activity_TrackStepsV1",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -76,13 +76,13 @@
           }
         ],
         "tags": [
-          "Auth"
+          "Activity"
         ]
       }
     }
   },
   "definitions": {
-    "activityActivity": {
+    "activityActivityMessage": {
       "type": "object",
       "properties": {
         "id": {
@@ -109,7 +109,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/activityActivity"
+            "$ref": "#/definitions/activityActivityMessage"
           }
         }
       }
@@ -124,7 +124,7 @@
         "accessToken": {
           "type": "string"
         },
-        "stepsPerDay": {
+        "steps": {
           "type": "integer",
           "format": "int64"
         }

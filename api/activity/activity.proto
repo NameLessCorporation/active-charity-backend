@@ -20,7 +20,7 @@ message GetActivityListV1Request{
 }
 
 message GetActivityListV1Response {
-  repeated Activity activity_list = 1;
+  repeated ActivityMessage activity_list = 1;
 }
 
 message TrackStepsV1Request {
@@ -31,7 +31,7 @@ message TrackStepsV1Request {
 
 message TrackStepsV1Response {}
 
-message Activity {
+message ActivityMessage {
   uint64 id = 1;
   string name = 2;
 }
