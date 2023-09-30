@@ -51,7 +51,7 @@ message TrackCyclingV1Response {}
 message TrackCyclingV1Request {
   uint64 activity_id = 1;
   string access_token = 2;
-  uint32 miles = 3;
+  uint32 metres = 3;
 }
 
 message TrackCrunchesV1Request {

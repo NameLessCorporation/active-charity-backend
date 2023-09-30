@@ -13,6 +13,10 @@ type IActivityService interface {
 	TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
 	GetActivityList(ctx context.Context) ([]*models.Activity, error)
 	TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error
+	TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 }
 
 type ITokenService interface {

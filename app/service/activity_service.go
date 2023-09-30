@@ -6,6 +6,22 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
+func (a *Service) TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+
+}
+
+func (a *Service) TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+
+}
+
+func (a *Service) TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error {
+
+}
+
+func (a *Service) TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+
+}
+
 func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
 	isPeriod, err := a.repository.ActivityRepository.IsActiveStepsPeriod(ctx, userId)
 	if err != nil {

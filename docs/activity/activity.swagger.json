@@ -322,7 +322,7 @@
         "accessToken": {
           "type": "string"
         },
-        "miles": {
+        "metres": {
           "type": "integer",
           "format": "int64"
         }
