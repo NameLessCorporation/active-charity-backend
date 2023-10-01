@@ -59,7 +59,7 @@ func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint6
 			return 0, err
 		}
 
-		log.Println("PIZDEC", steps-value)
+		log.Println(steps, value, "PIZDEC", steps-value)
 
 		return steps - value, nil
 	} else {
