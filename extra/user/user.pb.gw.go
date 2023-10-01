@@ -374,7 +374,7 @@ func RegisterUserHandlerServer(ctx context.Context, mux *runtime.ServeMux, serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.user.User/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/transactions"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.user.User/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/user/transactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -548,7 +548,7 @@ func RegisterUserHandlerClient(ctx context.Context, mux *runtime.ServeMux, clien
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.user.User/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/transactions"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.user.User/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/user/transactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -578,7 +578,7 @@ var (
 
 	pattern_User_CreateNewTransferV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "create", "new", "transfer"}, ""))
 
-	pattern_User_GetTransactionsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "get", "transactions"}, ""))
+	pattern_User_GetTransactionsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "get", "user", "transactions"}, ""))
 )
 
 var (

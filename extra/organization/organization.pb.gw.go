@@ -492,7 +492,7 @@ func RegisterOrganizationHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.organization.Organization/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/transactions"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.organization.Organization/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/organization/transactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -710,7 +710,7 @@ func RegisterOrganizationHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.organization.Organization/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/transactions"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.organization.Organization/GetTransactionsV1", runtime.WithHTTPPathPattern("/api/v1/get/organization/transactions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -744,7 +744,7 @@ var (
 
 	pattern_Organization_WithdrawalCoinsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "organization", "withdrawal", "coins"}, ""))
 
-	pattern_Organization_GetTransactionsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "get", "transactions"}, ""))
+	pattern_Organization_GetTransactionsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"api", "v1", "get", "organization", "transactions"}, ""))
 )
 
 var (
