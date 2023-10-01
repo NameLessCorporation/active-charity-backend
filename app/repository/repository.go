@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/jmoiron/sqlx"
 
@@ -19,6 +20,13 @@ type ActivityRepository interface {
 	TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 	TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error
 	TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+
+	GetStepsValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
+	GetBenchPressValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
+	GetCrunchesValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
+	GetCyclingValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
+	GetPullUpValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
+	GetPushUpValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
 }
 
 type UserRepository interface {
@@ -31,6 +39,8 @@ type UserRepository interface {
 	UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
 	GetUserByWalletID(ctx context.Context, walletID uint64) (*models.User, error)
 	GetWalletIdById(ctx context.Context, id uint64) (uint64, error)
+	GetUsersByOrganizationID(ctx context.Context, id uint64) ([]*models.User, error)
+	GetOrganizationByUserID(ctx context.Context, id uint64) (uint64, error)
 }
 
 type TokenRepository interface {

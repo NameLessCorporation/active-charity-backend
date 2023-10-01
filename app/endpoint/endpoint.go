@@ -47,6 +47,7 @@ type UserServiceInter interface {
 	SelectUserFundV1(ctx context.Context, req *user.SelectUserFundV1Request) (*user.SelectUserFundV1Response, error)
 	CreateNewTransferV1(ctx context.Context, req *user.CreateNewTransferV1Request) (*user.CreateNewTransferV1Response, error)
 	GetTransactionsV1(ctx context.Context, req *user.GetTransactionsV1Request) (*user.GetTransactionsV1Response, error)
+	GetTopV1(ctx context.Context, req *user.GetTopV1Request) (*user.GetTopV1Response, error)
 }
 
 type OrganizationServiceInter interface {
