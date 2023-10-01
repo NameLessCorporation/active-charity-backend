@@ -31,6 +31,8 @@ type UserRepository interface {
 	UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
 	GetUserByWalletID(ctx context.Context, walletID uint64) (*models.User, error)
 	GetWalletIdById(ctx context.Context, id uint64) (uint64, error)
+	GetUsersByOrganizationID(ctx context.Context, id uint64) ([]*models.User, error)
+	GetOrganizationByUserID(ctx context.Context, id uint64) (uint64, error)
 }
 
 type TokenRepository interface {

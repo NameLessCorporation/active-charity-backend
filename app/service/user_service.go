@@ -90,3 +90,22 @@ func (s *Service) GetUserByWalletID(ctx context.Context, walletID uint64) (*mode
 
 	return user, nil
 }
+
+func (s *Service) GetUsersByOrganizationID(ctx context.Context, id uint64) ([]*models.User, error) {
+	users, err := s.repository.UserRepository.GetUsersByOrganizationID(ctx, id)
+	if err != nil {
+		s.logger.Error("s.repository.OrganizationRepository.GetOrganizationUsersByID", zap.Error(err))
+		return nil, err
+	}
+
+	return users, nil
+}
+
+func (s *Service) GetOrganizationByUserID(ctx context.Context, id uint64) (uint64, error) {
+	organizationID, err := s.repository.UserRepository.GetOrganizationByUserID(ctx, id)
+	if err != nil {
+		return 0, err
+	}
+
+	return organizationID, nil
+}

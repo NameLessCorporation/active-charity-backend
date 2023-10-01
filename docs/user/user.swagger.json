@@ -80,6 +80,38 @@
         ]
       }
     },
+    "/api/v1/get/top": {
+      "post": {
+        "operationId": "User_GetTopV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetTopV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userGetTopV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/api/v1/get/transactions": {
       "post": {
         "operationId": "User_GetTransactionsV1",
@@ -283,6 +315,30 @@
     "userCreateUserV1Response": {
       "type": "object"
     },
+    "userGetTopV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "length": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "userGetTopV1Response": {
+      "type": "object",
+      "properties": {
+        "top": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/userTopTab"
+          }
+        }
+      }
+    },
     "userGetTransactionsV1Request": {
       "type": "object",
       "properties": {
@@ -379,6 +435,18 @@
     },
     "userSelectUserFundV1Response": {
       "type": "object"
+    },
+    "userTopTab": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "points": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
     },
     "userTransaction": {
       "type": "object",

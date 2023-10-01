@@ -24,6 +24,23 @@ service User {
   rpc GetTransactionsV1(GetTransactionsV1Request) returns (GetTransactionsV1Response) {
     option (google.api.http) = { post: "/api/v1/get/transactions"; body: "*"; };
   };
+  rpc GetTopV1(GetTopV1Request) returns (GetTopV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/top"; body: "*"; };
+  };
+}
+
+message GetTopV1Request {
+  string access_token = 1;
+  uint32 length = 2;
+}
+
+message GetTopV1Response {
+  repeated TopTab top = 1;
+}
+
+message TopTab {
+  string name = 1;
+  uint32 points = 2;
 }
 
 message CreateUserV1Request {

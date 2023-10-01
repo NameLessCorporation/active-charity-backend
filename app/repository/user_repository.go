@@ -130,3 +130,25 @@ func (u *User) GetUserByWalletID(ctx context.Context, walletID uint64) (*models.
 
 	return &user, nil
 }
+
+func (u *User) GetUsersByOrganizationID(ctx context.Context, id uint64) ([]*models.User, error) {
+	var users []*models.User
+
+	err := u.db.SelectContext(ctx, &users, "select * from users where organization_id = $1", id)
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
+func (u *User) GetOrganizationByUserID(ctx context.Context, id uint64) (uint64, error) {
+	var organizationID uint64
+
+	err := u.db.GetContext(ctx, &organizationID, "select organization_id from users where id = $1", id)
+	if err != nil {
+		return 0, err
+	}
+
+	return organizationID, nil
+}
