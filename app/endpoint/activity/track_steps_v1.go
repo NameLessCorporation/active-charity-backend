@@ -2,6 +2,7 @@ package activity
 
 import (
 	"context"
+	"log"
 	"math"
 
 	"github.com/NameLessCorporation/active-charity-backend/extra/activity"
@@ -20,7 +21,8 @@ func (a *ActivityEndpoint) TrackStepsV1(ctx context.Context, req *activity.Track
 
 	coins := uint64(math.Floor(float64(difference) / 10))
 
-	if coins != 0 {
+	log.Println(difference, coins)
+	if coins >= 1 {
 		walletId, err := a.services.UserService.GetWalletIdByUserId(ctx, userID)
 		if err != nil {
 			return nil, err
