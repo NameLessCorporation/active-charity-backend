@@ -2,13 +2,11 @@ package activity
 
 import (
 	"context"
-	"log"
 
 	"github.com/NameLessCorporation/active-charity-backend/extra/activity"
 )
 
 func (a *ActivityEndpoint) TrackActivityV1(ctx context.Context, req *activity.TrackActivityV1Request) (*activity.TrackActivityV1Response, error) {
-	log.Println(req.Value)
 	if req.Value == 0 {
 		return &activity.TrackActivityV1Response{}, nil
 	}

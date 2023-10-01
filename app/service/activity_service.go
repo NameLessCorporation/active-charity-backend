@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 
 	"go.uber.org/zap"
 
@@ -57,6 +58,8 @@ func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint6
 		if err != nil {
 			return 0, err
 		}
+
+		log.Println("PIZDEC", steps-value)
 
 		return steps - value, nil
 	} else {
