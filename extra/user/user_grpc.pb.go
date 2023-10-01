@@ -23,6 +23,8 @@ const (
 	User_GetUserV1_FullMethodName                = "/proto.user.User/GetUserV1"
 	User_JoinUserToOrganizationV1_FullMethodName = "/proto.user.User/JoinUserToOrganizationV1"
 	User_SelectUserFundV1_FullMethodName         = "/proto.user.User/SelectUserFundV1"
+	User_CreateNewTransferV1_FullMethodName      = "/proto.user.User/CreateNewTransferV1"
+	User_GetTransactionsV1_FullMethodName        = "/proto.user.User/GetTransactionsV1"
 )
 
 // UserClient is the client API for User service.
@@ -33,6 +35,8 @@ type UserClient interface {
 	GetUserV1(ctx context.Context, in *GetUserV1Request, opts ...grpc.CallOption) (*GetUserV1Response, error)
 	JoinUserToOrganizationV1(ctx context.Context, in *JoinUserToOrganizationV1Request, opts ...grpc.CallOption) (*JoinUserToOrganizationV1Response, error)
 	SelectUserFundV1(ctx context.Context, in *SelectUserFundV1Request, opts ...grpc.CallOption) (*SelectUserFundV1Response, error)
+	CreateNewTransferV1(ctx context.Context, in *CreateNewTransferV1Request, opts ...grpc.CallOption) (*CreateNewTransferV1Response, error)
+	GetTransactionsV1(ctx context.Context, in *GetTransactionsV1Request, opts ...grpc.CallOption) (*GetTransactionsV1Response, error)
 }
 
 type userClient struct {
@@ -79,6 +83,24 @@ func (c *userClient) SelectUserFundV1(ctx context.Context, in *SelectUserFundV1R
 	return out, nil
 }
 
+func (c *userClient) CreateNewTransferV1(ctx context.Context, in *CreateNewTransferV1Request, opts ...grpc.CallOption) (*CreateNewTransferV1Response, error) {
+	out := new(CreateNewTransferV1Response)
+	err := c.cc.Invoke(ctx, User_CreateNewTransferV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) GetTransactionsV1(ctx context.Context, in *GetTransactionsV1Request, opts ...grpc.CallOption) (*GetTransactionsV1Response, error) {
+	out := new(GetTransactionsV1Response)
+	err := c.cc.Invoke(ctx, User_GetTransactionsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations should embed UnimplementedUserServer
 // for forward compatibility
@@ -87,6 +109,8 @@ type UserServer interface {
 	GetUserV1(context.Context, *GetUserV1Request) (*GetUserV1Response, error)
 	JoinUserToOrganizationV1(context.Context, *JoinUserToOrganizationV1Request) (*JoinUserToOrganizationV1Response, error)
 	SelectUserFundV1(context.Context, *SelectUserFundV1Request) (*SelectUserFundV1Response, error)
+	CreateNewTransferV1(context.Context, *CreateNewTransferV1Request) (*CreateNewTransferV1Response, error)
+	GetTransactionsV1(context.Context, *GetTransactionsV1Request) (*GetTransactionsV1Response, error)
 }
 
 // UnimplementedUserServer should be embedded to have forward compatible implementations.
@@ -104,6 +128,12 @@ func (UnimplementedUserServer) JoinUserToOrganizationV1(context.Context, *JoinUs
 }
 func (UnimplementedUserServer) SelectUserFundV1(context.Context, *SelectUserFundV1Request) (*SelectUserFundV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SelectUserFundV1 not implemented")
+}
+func (UnimplementedUserServer) CreateNewTransferV1(context.Context, *CreateNewTransferV1Request) (*CreateNewTransferV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateNewTransferV1 not implemented")
+}
+func (UnimplementedUserServer) GetTransactionsV1(context.Context, *GetTransactionsV1Request) (*GetTransactionsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTransactionsV1 not implemented")
 }
 
 // UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
@@ -189,6 +219,42 @@ func _User_SelectUserFundV1_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_CreateNewTransferV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateNewTransferV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).CreateNewTransferV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_CreateNewTransferV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).CreateNewTransferV1(ctx, req.(*CreateNewTransferV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_GetTransactionsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTransactionsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetTransactionsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_GetTransactionsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetTransactionsV1(ctx, req.(*GetTransactionsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -211,6 +277,14 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SelectUserFundV1",
 			Handler:    _User_SelectUserFundV1_Handler,
+		},
+		{
+			MethodName: "CreateNewTransferV1",
+			Handler:    _User_CreateNewTransferV1_Handler,
+		},
+		{
+			MethodName: "GetTransactionsV1",
+			Handler:    _User_GetTransactionsV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

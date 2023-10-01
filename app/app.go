@@ -9,10 +9,10 @@ import (
 
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/NameLessCorporation/active-charity-backend/app/balance_operations"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/fund"
 	app_fund "github.com/NameLessCorporation/active-charity-backend/extra/fund"
 
-	"github.com/NameLessCorporation/active-charity-backend/app/balance_operations"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/activity"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
@@ -170,8 +170,8 @@ func (app *App) StartApp(certPath string) error {
 
 func (app *App) InitEndpointContainer(service *service.Services, operations balance_operations.BalanceOperations) *endpoint.EndpointContainer {
 	authServices := auth.NewAuthEndpoint(service, app.config)
-	userServices := user.NewUserEndpoint(service, app.config)
-	organizationServices := organization.NewOrganizationEndpoint(service, app.config)
+	userServices := user.NewUserEndpoint(service, app.config, operations)
+	organizationServices := organization.NewOrganizationEndpoint(service, app.config, operations)
 	activityServices := activity.NewActivityEndpoint(service, app.config, operations)
 	fundService := fund.NewFundEndpoint(service, app.config)
 

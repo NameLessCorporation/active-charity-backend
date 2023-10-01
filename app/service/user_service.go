@@ -80,3 +80,13 @@ func (s *Service) UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
 
 	return nil
 }
+
+func (s *Service) GetUserByWalletID(ctx context.Context, walletID uint64) (*models.User, error) {
+	user, err := s.repository.UserRepository.GetUserByWalletID(ctx, walletID)
+	if err != nil {
+		s.logger.Error("s.repository.UserRepository.GetUserByWalletID", zap.Error(err))
+		return nil, status.Error(codes.Internal, "Ошибка получения пользователя через walletID")
+	}
+
+	return user, nil
+}

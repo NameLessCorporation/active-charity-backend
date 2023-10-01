@@ -22,6 +22,11 @@ const (
 	Organization_CreateOrganizationV1_FullMethodName           = "/proto.organization.Organization/CreateOrganizationV1"
 	Organization_GetOrganizationV1_FullMethodName              = "/proto.organization.Organization/GetOrganizationV1"
 	Organization_CreateOrganizationInviteCodeV1_FullMethodName = "/proto.organization.Organization/CreateOrganizationInviteCodeV1"
+	Organization_ApproveTransferCoinsV1_FullMethodName         = "/proto.organization.Organization/ApproveTransferCoinsV1"
+	Organization_RejectTransferCoinsV1_FullMethodName          = "/proto.organization.Organization/RejectTransferCoinsV1"
+	Organization_GetNewTransfersV1_FullMethodName              = "/proto.organization.Organization/GetNewTransfersV1"
+	Organization_WithdrawalCoinsV1_FullMethodName              = "/proto.organization.Organization/WithdrawalCoinsV1"
+	Organization_GetTransactionsV1_FullMethodName              = "/proto.organization.Organization/GetTransactionsV1"
 )
 
 // OrganizationClient is the client API for Organization service.
@@ -31,6 +36,11 @@ type OrganizationClient interface {
 	CreateOrganizationV1(ctx context.Context, in *CreateOrganizationV1Request, opts ...grpc.CallOption) (*CreateOrganizationV1Response, error)
 	GetOrganizationV1(ctx context.Context, in *GetOrganizationV1Request, opts ...grpc.CallOption) (*GetOrganizationV1Response, error)
 	CreateOrganizationInviteCodeV1(ctx context.Context, in *CreateOrganizationInviteCodeV1Request, opts ...grpc.CallOption) (*CreateOrganizationInviteCodeV1Response, error)
+	ApproveTransferCoinsV1(ctx context.Context, in *ApproveTransferCoinsV1Request, opts ...grpc.CallOption) (*ApproveTransferCoinsV1Response, error)
+	RejectTransferCoinsV1(ctx context.Context, in *RejectTransferCoinsV1Request, opts ...grpc.CallOption) (*RejectTransferCoinsV1Response, error)
+	GetNewTransfersV1(ctx context.Context, in *GetNewTransfersV1Request, opts ...grpc.CallOption) (*GetNewTransfersV1Response, error)
+	WithdrawalCoinsV1(ctx context.Context, in *WithdrawalCoinsV1Request, opts ...grpc.CallOption) (*WithdrawalCoinsV1Response, error)
+	GetTransactionsV1(ctx context.Context, in *GetTransactionsV1Request, opts ...grpc.CallOption) (*GetTransactionsV1Response, error)
 }
 
 type organizationClient struct {
@@ -68,6 +78,51 @@ func (c *organizationClient) CreateOrganizationInviteCodeV1(ctx context.Context,
 	return out, nil
 }
 
+func (c *organizationClient) ApproveTransferCoinsV1(ctx context.Context, in *ApproveTransferCoinsV1Request, opts ...grpc.CallOption) (*ApproveTransferCoinsV1Response, error) {
+	out := new(ApproveTransferCoinsV1Response)
+	err := c.cc.Invoke(ctx, Organization_ApproveTransferCoinsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationClient) RejectTransferCoinsV1(ctx context.Context, in *RejectTransferCoinsV1Request, opts ...grpc.CallOption) (*RejectTransferCoinsV1Response, error) {
+	out := new(RejectTransferCoinsV1Response)
+	err := c.cc.Invoke(ctx, Organization_RejectTransferCoinsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationClient) GetNewTransfersV1(ctx context.Context, in *GetNewTransfersV1Request, opts ...grpc.CallOption) (*GetNewTransfersV1Response, error) {
+	out := new(GetNewTransfersV1Response)
+	err := c.cc.Invoke(ctx, Organization_GetNewTransfersV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationClient) WithdrawalCoinsV1(ctx context.Context, in *WithdrawalCoinsV1Request, opts ...grpc.CallOption) (*WithdrawalCoinsV1Response, error) {
+	out := new(WithdrawalCoinsV1Response)
+	err := c.cc.Invoke(ctx, Organization_WithdrawalCoinsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationClient) GetTransactionsV1(ctx context.Context, in *GetTransactionsV1Request, opts ...grpc.CallOption) (*GetTransactionsV1Response, error) {
+	out := new(GetTransactionsV1Response)
+	err := c.cc.Invoke(ctx, Organization_GetTransactionsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrganizationServer is the server API for Organization service.
 // All implementations should embed UnimplementedOrganizationServer
 // for forward compatibility
@@ -75,6 +130,11 @@ type OrganizationServer interface {
 	CreateOrganizationV1(context.Context, *CreateOrganizationV1Request) (*CreateOrganizationV1Response, error)
 	GetOrganizationV1(context.Context, *GetOrganizationV1Request) (*GetOrganizationV1Response, error)
 	CreateOrganizationInviteCodeV1(context.Context, *CreateOrganizationInviteCodeV1Request) (*CreateOrganizationInviteCodeV1Response, error)
+	ApproveTransferCoinsV1(context.Context, *ApproveTransferCoinsV1Request) (*ApproveTransferCoinsV1Response, error)
+	RejectTransferCoinsV1(context.Context, *RejectTransferCoinsV1Request) (*RejectTransferCoinsV1Response, error)
+	GetNewTransfersV1(context.Context, *GetNewTransfersV1Request) (*GetNewTransfersV1Response, error)
+	WithdrawalCoinsV1(context.Context, *WithdrawalCoinsV1Request) (*WithdrawalCoinsV1Response, error)
+	GetTransactionsV1(context.Context, *GetTransactionsV1Request) (*GetTransactionsV1Response, error)
 }
 
 // UnimplementedOrganizationServer should be embedded to have forward compatible implementations.
@@ -89,6 +149,21 @@ func (UnimplementedOrganizationServer) GetOrganizationV1(context.Context, *GetOr
 }
 func (UnimplementedOrganizationServer) CreateOrganizationInviteCodeV1(context.Context, *CreateOrganizationInviteCodeV1Request) (*CreateOrganizationInviteCodeV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrganizationInviteCodeV1 not implemented")
+}
+func (UnimplementedOrganizationServer) ApproveTransferCoinsV1(context.Context, *ApproveTransferCoinsV1Request) (*ApproveTransferCoinsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApproveTransferCoinsV1 not implemented")
+}
+func (UnimplementedOrganizationServer) RejectTransferCoinsV1(context.Context, *RejectTransferCoinsV1Request) (*RejectTransferCoinsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RejectTransferCoinsV1 not implemented")
+}
+func (UnimplementedOrganizationServer) GetNewTransfersV1(context.Context, *GetNewTransfersV1Request) (*GetNewTransfersV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNewTransfersV1 not implemented")
+}
+func (UnimplementedOrganizationServer) WithdrawalCoinsV1(context.Context, *WithdrawalCoinsV1Request) (*WithdrawalCoinsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WithdrawalCoinsV1 not implemented")
+}
+func (UnimplementedOrganizationServer) GetTransactionsV1(context.Context, *GetTransactionsV1Request) (*GetTransactionsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTransactionsV1 not implemented")
 }
 
 // UnsafeOrganizationServer may be embedded to opt out of forward compatibility for this service.
@@ -156,6 +231,96 @@ func _Organization_CreateOrganizationInviteCodeV1_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Organization_ApproveTransferCoinsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApproveTransferCoinsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).ApproveTransferCoinsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_ApproveTransferCoinsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).ApproveTransferCoinsV1(ctx, req.(*ApproveTransferCoinsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Organization_RejectTransferCoinsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RejectTransferCoinsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).RejectTransferCoinsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_RejectTransferCoinsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).RejectTransferCoinsV1(ctx, req.(*RejectTransferCoinsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Organization_GetNewTransfersV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNewTransfersV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).GetNewTransfersV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_GetNewTransfersV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).GetNewTransfersV1(ctx, req.(*GetNewTransfersV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Organization_WithdrawalCoinsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WithdrawalCoinsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).WithdrawalCoinsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_WithdrawalCoinsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).WithdrawalCoinsV1(ctx, req.(*WithdrawalCoinsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Organization_GetTransactionsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTransactionsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).GetTransactionsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_GetTransactionsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).GetTransactionsV1(ctx, req.(*GetTransactionsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Organization_ServiceDesc is the grpc.ServiceDesc for Organization service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -174,6 +339,26 @@ var Organization_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateOrganizationInviteCodeV1",
 			Handler:    _Organization_CreateOrganizationInviteCodeV1_Handler,
+		},
+		{
+			MethodName: "ApproveTransferCoinsV1",
+			Handler:    _Organization_ApproveTransferCoinsV1_Handler,
+		},
+		{
+			MethodName: "RejectTransferCoinsV1",
+			Handler:    _Organization_RejectTransferCoinsV1_Handler,
+		},
+		{
+			MethodName: "GetNewTransfersV1",
+			Handler:    _Organization_GetNewTransfersV1_Handler,
+		},
+		{
+			MethodName: "WithdrawalCoinsV1",
+			Handler:    _Organization_WithdrawalCoinsV1_Handler,
+		},
+		{
+			MethodName: "GetTransactionsV1",
+			Handler:    _Organization_GetTransactionsV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -27,6 +27,13 @@ func (o *OrganizationEndpoint) CreateOrganizationInviteCodeV1(ctx context.Contex
 		return nil, status.Error(codes.PermissionDenied, "Пользователь не состоит в организации")
 	}
 
+	var org *models.Organization
+	org, err = o.services.OrganizationService.GetOrganizationByID(ctx, user.OrganizationID)
+
+	if org.OwnerID != userID {
+		return nil, status.Error(codes.PermissionDenied, "Пользователь не владеет организациец")
+	}
+
 	var code = helpers.GenerateRandomString(8)
 	if _, err = o.services.InviteCodeService.CreateInviteCode(ctx, &models.InviteCode{
 		Code:           code,

@@ -14,8 +14,8 @@ type BalanceOperations interface {
 	ConvertCoinsToRubles(coins uint64) uint64
 	AccrualOfCoinsForActivity(ctx context.Context, coins uint64, walletID uint64) (uint64, error)
 	CreateTransferCoinsToOrganization(ctx context.Context, coins uint64, fromWalletID, toWalletID uint64) (uint64, error)
-	ApproveTransferCoinsToOrganization(ctx context.Context, fromWalletID, toWalletID uint64) error
-	RejectTransferCoinsToOrganization(ctx context.Context, fromWalletID, toWalletID uint64) error
+	ApproveTransferCoinsToOrganization(ctx context.Context, transactionID uint64) error
+	RejectTransferCoinsToOrganization(ctx context.Context, transactionID uint64) error
 	WithdrawalCoinsFromOrganization(ctx context.Context, coins, walletID uint64) (uint64, error)
 }
 
@@ -97,24 +97,24 @@ func (b *balanceOperations) CreateTransferCoinsToOrganization(ctx context.Contex
 	return transactionID, nil
 }
 
-func (b *balanceOperations) ApproveTransferCoinsToOrganization(ctx context.Context, fromWalletID, toWalletID uint64) error {
+func (b *balanceOperations) ApproveTransferCoinsToOrganization(ctx context.Context, transactionID uint64) error {
 	var (
-		fromWallet *models.Wallet
-		err        error
+		transaction *models.Transaction
+		err         error
 	)
-	fromWallet, err = b.services.WalletService.GetWalletByID(ctx, fromWalletID)
+	transaction, err = b.services.TransactionService.GetTransactionByID(ctx, transactionID)
+	if err != nil {
+		return err
+	}
+
+	var fromWallet *models.Wallet
+	fromWallet, err = b.services.WalletService.GetWalletByID(ctx, transaction.FromWalletID)
 	if err != nil {
 		return err
 	}
 
 	var toWallet *models.Wallet
-	toWallet, err = b.services.WalletService.GetWalletByID(ctx, toWalletID)
-	if err != nil {
-		return err
-	}
-
-	var transaction *models.Transaction
-	transaction, err = b.services.TransactionService.GetTransactionByToWalletIDAndFromWalletID(ctx, fromWalletID, toWalletID)
+	toWallet, err = b.services.WalletService.GetWalletByID(ctx, transaction.ToWalletID)
 	if err != nil {
 		return err
 	}
@@ -123,19 +123,19 @@ func (b *balanceOperations) ApproveTransferCoinsToOrganization(ctx context.Conte
 		return status.Error(codes.Internal, "Не хватает монет для перевода в организацию")
 	}
 
-	if err = b.services.WalletService.UpdateCoinsByID(ctx, fromWalletID, fromWallet.Coins-transaction.Coins); err != nil {
+	if err = b.services.WalletService.UpdateCoinsByID(ctx, transaction.FromWalletID, fromWallet.Coins-transaction.Coins); err != nil {
 		return err
 	}
 
-	if err = b.services.WalletService.UpdateRublesByID(ctx, fromWalletID, fromWallet.Rubles-transaction.Rubles); err != nil {
+	if err = b.services.WalletService.UpdateRublesByID(ctx, transaction.FromWalletID, fromWallet.Rubles-transaction.Rubles); err != nil {
 		return err
 	}
 
-	if err = b.services.WalletService.UpdateCoinsByID(ctx, fromWalletID, toWallet.Coins+transaction.Coins); err != nil {
+	if err = b.services.WalletService.UpdateCoinsByID(ctx, transaction.ToWalletID, toWallet.Coins+transaction.Coins); err != nil {
 		return err
 	}
 
-	if err = b.services.WalletService.UpdateRublesByID(ctx, fromWalletID, toWallet.Rubles+transaction.Rubles); err != nil {
+	if err = b.services.WalletService.UpdateRublesByID(ctx, transaction.ToWalletID, toWallet.Rubles+transaction.Rubles); err != nil {
 		return err
 	}
 
@@ -146,8 +146,8 @@ func (b *balanceOperations) ApproveTransferCoinsToOrganization(ctx context.Conte
 	return nil
 }
 
-func (b *balanceOperations) RejectTransferCoinsToOrganization(ctx context.Context, fromWalletID, toWalletID uint64) error {
-	transaction, err := b.services.TransactionService.GetTransactionByToWalletIDAndFromWalletID(ctx, fromWalletID, toWalletID)
+func (b *balanceOperations) RejectTransferCoinsToOrganization(ctx context.Context, transactionID uint64) error {
+	transaction, err := b.services.TransactionService.GetTransactionByID(ctx, transactionID)
 	if err != nil {
 		return err
 	}
