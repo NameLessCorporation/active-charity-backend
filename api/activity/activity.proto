@@ -9,11 +9,76 @@ service Activity {
   rpc GetActivityListV1(GetActivityListV1Request) returns (GetActivityListV1Response) {
     option (google.api.http) = { post: "/api/v1/get/activity/list"; body:"*"; };
   };
-
   rpc TrackStepsV1(TrackStepsV1Request) returns (TrackStepsV1Response) {
     option (google.api.http) = { post: "/api/v1/track/steps"; body: "*"; };
   };
+  rpc TrackPushUpsV1(TrackPushUpV1Request) returns (TrackPushUpsV1Response) {
+    option (google.api.http) = { post: "/api/v1/track/push/ups"; body: "*"; };
+  };
+  rpc TrackCrunchesV1(TrackCrunchesV1Request) returns (TrackCrunchesV1Response) {
+    option (google.api.http) = { post: "/api/v1/track/crunches"; body: "*"; };
+  };
+  rpc TrackCyclingV1(TrackCyclingV1Request) returns (TrackCyclingV1Response) {
+    option (google.api.http) = { post: "/api/v1/track/cycling"; body: "*"; };
+  };
+  rpc TrackPullUpsV1(TrackPullUpsV1Request) returns (TrackPullUpsV1Response) {
+    option (google.api.http) = { post: "/api/v1/track/pull/ups"; body: "*"; };
+  };
+  rpc TrackBenchPressV1(TrackBenchPressV1Request) returns (TrackBenchPressV1Response) {
+    option (google.api.http) = { post: "/api/v1/track/bench/press"; body: "*"; };
+  };
+  rpc TrackActivityV1(TrackActivityV1Request) returns (TrackActivityV1Response) {
+    option (google.api.http) = { post: "/api/v1/track/activity"; body: "*"; };
+  };
 }
+
+message TrackActivityV1Request {
+  uint64 activity_id = 1;
+  string access_token = 2;
+  uint32 value = 3;
+}
+
+message TrackActivityV1Response{}
+
+message TrackBenchPressV1Response {}
+
+message TrackBenchPressV1Request {
+  uint64 activity_id = 1;
+  string access_token = 2;
+  uint32 repeats = 3;
+}
+
+message TrackPullUpsV1Request {
+  uint64 activity_id = 1;
+  string access_token = 2;
+  uint32 repeats = 3;
+}
+
+message TrackPullUpsV1Response {}
+
+message TrackCyclingV1Response {}
+
+message TrackCyclingV1Request {
+  uint64 activity_id = 1;
+  string access_token = 2;
+  uint32 metres = 3;
+}
+
+message TrackCrunchesV1Request {
+  uint64 activity_id = 1;
+  string access_token = 2;
+  uint32 repeats = 3;
+}
+
+message TrackCrunchesV1Response {}
+
+message TrackPushUpV1Request {
+  uint64 activity_id = 1;
+  string access_token = 2;
+  uint32 repeats = 3;
+}
+
+message TrackPushUpsV1Response {}
 
 message GetActivityListV1Request{
   string access_token = 1;
@@ -26,7 +91,7 @@ message GetActivityListV1Response {
 message TrackStepsV1Request {
   uint64 activity_id = 1;
   string access_token = 2;
-  uint32 steps_per_day = 3;
+  uint32 steps = 3;
 }
 
 message TrackStepsV1Response {}

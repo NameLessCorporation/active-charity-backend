@@ -24,7 +24,7 @@ func (s *Service) GetInviteCodeByCode(ctx context.Context, code string) (*models
 	inviteCode, err := s.repository.InviteCodeRepository.GetInviteCodeByCode(ctx, code)
 	if err != nil {
 		s.logger.Error("s.repository.InviteCodeRepository.GetInviteCodeByCode", zap.Error(err))
-		return nil, status.Error(codes.Internal, "Ошибка получения кода приглашения от организаци")
+		return nil, status.Error(codes.Internal, "Ошибка получения кода приглашения от организации")
 	}
 
 	return inviteCode, nil

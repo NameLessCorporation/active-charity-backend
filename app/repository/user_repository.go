@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 
 	"github.com/jmoiron/sqlx"
 
@@ -16,6 +17,20 @@ func NewUserRepository(db *sqlx.DB) *User {
 	return &User{
 		db: db,
 	}
+}
+
+func (u *User) GetWalletIdById(ctx context.Context, id uint64) (uint64, error) {
+	var walletId uint64
+	err := u.db.GetContext(ctx, &walletId, "SELECT wallet_id FROM users WHERE id = $1", id)
+	if err != nil {
+		return 0, err
+	}
+
+	if id == 0 {
+		return 0, errors.New("no rows")
+	}
+
+	return walletId, nil
 }
 
 func (u *User) IsExistByEmail(ctx context.Context, email string) bool {

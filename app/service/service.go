@@ -14,6 +14,11 @@ import (
 type IActivityService interface {
 	TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
 	GetActivityList(ctx context.Context) ([]*models.Activity, error)
+	TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+	TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error
+	TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 }
 
 type ITokenService interface {
@@ -32,6 +37,7 @@ type IUserService interface {
 	GetIDByEmail(ctx context.Context, email string) (uint64, error)
 	UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error
 	UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
+	GetWalletIdByUserId(ctx context.Context, userId uint64) (uint64, error)
 	GetUserByWalletID(ctx context.Context, walletID uint64) (*models.User, error)
 }
 

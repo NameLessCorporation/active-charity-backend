@@ -48,6 +48,198 @@
         ]
       }
     },
+    "/api/v1/track/activity": {
+      "post": {
+        "operationId": "Activity_TrackActivityV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/activityTrackActivityV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activityTrackActivityV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Activity"
+        ]
+      }
+    },
+    "/api/v1/track/bench/press": {
+      "post": {
+        "operationId": "Activity_TrackBenchPressV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/activityTrackBenchPressV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activityTrackBenchPressV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Activity"
+        ]
+      }
+    },
+    "/api/v1/track/crunches": {
+      "post": {
+        "operationId": "Activity_TrackCrunchesV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/activityTrackCrunchesV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activityTrackCrunchesV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Activity"
+        ]
+      }
+    },
+    "/api/v1/track/cycling": {
+      "post": {
+        "operationId": "Activity_TrackCyclingV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/activityTrackCyclingV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activityTrackCyclingV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Activity"
+        ]
+      }
+    },
+    "/api/v1/track/pull/ups": {
+      "post": {
+        "operationId": "Activity_TrackPullUpsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/activityTrackPullUpsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activityTrackPullUpsV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Activity"
+        ]
+      }
+    },
+    "/api/v1/track/push/ups": {
+      "post": {
+        "operationId": "Activity_TrackPushUpsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/activityTrackPushUpsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activityTrackPushUpV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Activity"
+        ]
+      }
+    },
     "/api/v1/track/steps": {
       "post": {
         "operationId": "Activity_TrackStepsV1",
@@ -114,6 +306,120 @@
         }
       }
     },
+    "activityTrackActivityV1Request": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "activityTrackActivityV1Response": {
+      "type": "object"
+    },
+    "activityTrackBenchPressV1Request": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "repeats": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "activityTrackBenchPressV1Response": {
+      "type": "object"
+    },
+    "activityTrackCrunchesV1Request": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "repeats": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "activityTrackCrunchesV1Response": {
+      "type": "object"
+    },
+    "activityTrackCyclingV1Request": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "metres": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "activityTrackCyclingV1Response": {
+      "type": "object"
+    },
+    "activityTrackPullUpsV1Request": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "repeats": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "activityTrackPullUpsV1Response": {
+      "type": "object"
+    },
+    "activityTrackPushUpV1Request": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "repeats": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "activityTrackPushUpsV1Response": {
+      "type": "object"
+    },
     "activityTrackStepsV1Request": {
       "type": "object",
       "properties": {
@@ -124,7 +430,7 @@
         "accessToken": {
           "type": "string"
         },
-        "stepsPerDay": {
+        "steps": {
           "type": "integer",
           "format": "int64"
         }

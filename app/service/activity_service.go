@@ -8,14 +8,69 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
-func (s *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
-	err := s.repository.ActivityRepository.TrackSteps(ctx, steps, activityId, userId)
-	if err != nil {
-		s.logger.Error("s.repository.ActivityRepository.TrackSteps", zap.Error(err))
+func (a *Service) TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackPushUps(ctx, repeats, activityId, userId); err != nil {
 		return err
 	}
 
-	// req to earn coin
+	return nil
+}
+
+func (a *Service) TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackBenchPress(ctx, repeats, activityId, userId); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Service) TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackCycling(ctx, metres, activityId, userId); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Service) TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackCrunches(ctx, repeats, activityId, userId); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
+	isPeriod, err := a.repository.ActivityRepository.IsActiveStepsPeriod(ctx, userId)
+	if err != nil {
+		a.logger.Error("s.repository.ActivityRepository.TrackSteps", zap.Error(err))
+		return err
+	}
+
+	if isPeriod {
+		periodId, err := a.repository.ActivityRepository.GetCurrentPeriodId(ctx, userId)
+		if err != nil {
+			return err
+		}
+
+		err = a.repository.ActivityRepository.TrackCurrentPeriodSteps(ctx, steps, periodId)
+		if err != nil {
+			return err
+		}
+	} else {
+		err = a.repository.ActivityRepository.TrackNewPeriodSteps(ctx, steps, activityId, userId)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (a *Service) TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
+	if err := a.repository.ActivityRepository.TrackPullUps(ctx, repeats, activityId, userId); err != nil {
+		return err
+	}
 
 	return nil
 }
