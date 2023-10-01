@@ -1243,7 +1243,7 @@ type GetOrganizationUserAnalyticsV1Request struct {
 	unknownFields protoimpl.UnknownFields
 
 	AccessToken string `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	UserId      string `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserId      uint64 `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 }
 
 func (x *GetOrganizationUserAnalyticsV1Request) Reset() {
@@ -1285,17 +1285,27 @@ func (x *GetOrganizationUserAnalyticsV1Request) GetAccessToken() string {
 	return ""
 }
 
-func (x *GetOrganizationUserAnalyticsV1Request) GetUserId() string {
+func (x *GetOrganizationUserAnalyticsV1Request) GetUserId() uint64 {
 	if x != nil {
 		return x.UserId
 	}
-	return ""
+	return 0
 }
 
 type GetOrganizationUserAnalyticsV1Response struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
+
+	ActivityList       []*ActivityMessage `protobuf:"bytes,1,rep,name=activity_list,json=activityList,proto3" json:"activity_list,omitempty"`
+	MostEarnedActivity string             `protobuf:"bytes,2,opt,name=most_earned_activity,json=mostEarnedActivity,proto3" json:"most_earned_activity,omitempty"`
+	FavouriteActivity  string             `protobuf:"bytes,3,opt,name=favourite_activity,json=favouriteActivity,proto3" json:"favourite_activity,omitempty"`
+	Steps              []*GraphElement    `protobuf:"bytes,4,rep,name=steps,proto3" json:"steps,omitempty"`
+	PushUps            []*GraphElement    `protobuf:"bytes,5,rep,name=push_ups,json=pushUps,proto3" json:"push_ups,omitempty"`
+	Crunches           []*GraphElement    `protobuf:"bytes,6,rep,name=crunches,proto3" json:"crunches,omitempty"`
+	Cycling            []*GraphElement    `protobuf:"bytes,7,rep,name=cycling,proto3" json:"cycling,omitempty"`
+	PullUps            []*GraphElement    `protobuf:"bytes,8,rep,name=pull_ups,json=pullUps,proto3" json:"pull_ups,omitempty"`
+	BenchPress         []*GraphElement    `protobuf:"bytes,9,rep,name=bench_press,json=benchPress,proto3" json:"bench_press,omitempty"`
 }
 
 func (x *GetOrganizationUserAnalyticsV1Response) Reset() {
@@ -1328,6 +1338,211 @@ func (x *GetOrganizationUserAnalyticsV1Response) ProtoReflect() protoreflect.Mes
 // Deprecated: Use GetOrganizationUserAnalyticsV1Response.ProtoReflect.Descriptor instead.
 func (*GetOrganizationUserAnalyticsV1Response) Descriptor() ([]byte, []int) {
 	return file_organization_organization_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetActivityList() []*ActivityMessage {
+	if x != nil {
+		return x.ActivityList
+	}
+	return nil
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetMostEarnedActivity() string {
+	if x != nil {
+		return x.MostEarnedActivity
+	}
+	return ""
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetFavouriteActivity() string {
+	if x != nil {
+		return x.FavouriteActivity
+	}
+	return ""
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetSteps() []*GraphElement {
+	if x != nil {
+		return x.Steps
+	}
+	return nil
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetPushUps() []*GraphElement {
+	if x != nil {
+		return x.PushUps
+	}
+	return nil
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetCrunches() []*GraphElement {
+	if x != nil {
+		return x.Crunches
+	}
+	return nil
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetCycling() []*GraphElement {
+	if x != nil {
+		return x.Cycling
+	}
+	return nil
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetPullUps() []*GraphElement {
+	if x != nil {
+		return x.PullUps
+	}
+	return nil
+}
+
+func (x *GetOrganizationUserAnalyticsV1Response) GetBenchPress() []*GraphElement {
+	if x != nil {
+		return x.BenchPress
+	}
+	return nil
+}
+
+type ActivityMessage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id   uint64  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name string  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Unit string  `protobuf:"bytes,3,opt,name=unit,proto3" json:"unit,omitempty"`
+	Max  uint32  `protobuf:"varint,4,opt,name=max,proto3" json:"max,omitempty"`
+	Min  uint32  `protobuf:"varint,5,opt,name=min,proto3" json:"min,omitempty"`
+	Avg  float32 `protobuf:"fixed32,6,opt,name=avg,proto3" json:"avg,omitempty"`
+}
+
+func (x *ActivityMessage) Reset() {
+	*x = ActivityMessage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_organization_organization_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ActivityMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivityMessage) ProtoMessage() {}
+
+func (x *ActivityMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_organization_organization_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivityMessage.ProtoReflect.Descriptor instead.
+func (*ActivityMessage) Descriptor() ([]byte, []int) {
+	return file_organization_organization_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ActivityMessage) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ActivityMessage) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ActivityMessage) GetUnit() string {
+	if x != nil {
+		return x.Unit
+	}
+	return ""
+}
+
+func (x *ActivityMessage) GetMax() uint32 {
+	if x != nil {
+		return x.Max
+	}
+	return 0
+}
+
+func (x *ActivityMessage) GetMin() uint32 {
+	if x != nil {
+		return x.Min
+	}
+	return 0
+}
+
+func (x *ActivityMessage) GetAvg() float32 {
+	if x != nil {
+		return x.Avg
+	}
+	return 0
+}
+
+type GraphElement struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Timestamp string `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Value     uint32 `protobuf:"varint,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *GraphElement) Reset() {
+	*x = GraphElement{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_organization_organization_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GraphElement) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GraphElement) ProtoMessage() {}
+
+func (x *GraphElement) ProtoReflect() protoreflect.Message {
+	mi := &file_organization_organization_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GraphElement.ProtoReflect.Descriptor instead.
+func (*GraphElement) Descriptor() ([]byte, []int) {
+	return file_organization_organization_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *GraphElement) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
+func (x *GraphElement) GetValue() uint32 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
 }
 
 var File_organization_organization_proto protoreflect.FileDescriptor
@@ -1475,10 +1690,56 @@ var file_organization_organization_proto_rawDesc = []byte{
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x61, 0x63, 0x63, 0x65, 0x73, 0x73, 0x5f,
 	0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x61, 0x63, 0x63,
 	0x65, 0x73, 0x73, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72,
-	0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49,
-	0x64, 0x22, 0x28, 0x0a, 0x26, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x41, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
-	0x73, 0x56, 0x31, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xe0, 0x0d, 0x0a, 0x0c,
+	0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49,
+	0x64, 0x22, 0xc2, 0x04, 0x0a, 0x26, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x55, 0x73, 0x65, 0x72, 0x41, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69,
+	0x63, 0x73, 0x56, 0x31, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x48, 0x0a, 0x0d,
+	0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x6f, 0x72, 0x67, 0x61,
+	0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
+	0x79, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x0c, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69,
+	0x74, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x30, 0x0a, 0x14, 0x6d, 0x6f, 0x73, 0x74, 0x5f, 0x65,
+	0x61, 0x72, 0x6e, 0x65, 0x64, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x12, 0x6d, 0x6f, 0x73, 0x74, 0x45, 0x61, 0x72, 0x6e, 0x65, 0x64,
+	0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x12, 0x2d, 0x0a, 0x12, 0x66, 0x61, 0x76, 0x6f,
+	0x75, 0x72, 0x69, 0x74, 0x65, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x66, 0x61, 0x76, 0x6f, 0x75, 0x72, 0x69, 0x74, 0x65, 0x41,
+	0x63, 0x74, 0x69, 0x76, 0x69, 0x74, 0x79, 0x12, 0x36, 0x0a, 0x05, 0x73, 0x74, 0x65, 0x70, 0x73,
+	0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x6f,
+	0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x47, 0x72, 0x61, 0x70,
+	0x68, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x05, 0x73, 0x74, 0x65, 0x70, 0x73, 0x12,
+	0x3b, 0x0a, 0x08, 0x70, 0x75, 0x73, 0x68, 0x5f, 0x75, 0x70, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69,
+	0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x47, 0x72, 0x61, 0x70, 0x68, 0x45, 0x6c, 0x65, 0x6d,
+	0x65, 0x6e, 0x74, 0x52, 0x07, 0x70, 0x75, 0x73, 0x68, 0x55, 0x70, 0x73, 0x12, 0x3c, 0x0a, 0x08,
+	0x63, 0x72, 0x75, 0x6e, 0x63, 0x68, 0x65, 0x73, 0x18, 0x06, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x2e, 0x47, 0x72, 0x61, 0x70, 0x68, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74,
+	0x52, 0x08, 0x63, 0x72, 0x75, 0x6e, 0x63, 0x68, 0x65, 0x73, 0x12, 0x3a, 0x0a, 0x07, 0x63, 0x79,
+	0x63, 0x6c, 0x69, 0x6e, 0x67, 0x18, 0x07, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x2e, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x47, 0x72, 0x61, 0x70, 0x68, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x07, 0x63,
+	0x79, 0x63, 0x6c, 0x69, 0x6e, 0x67, 0x12, 0x3b, 0x0a, 0x08, 0x70, 0x75, 0x6c, 0x6c, 0x5f, 0x75,
+	0x70, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x2e, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x47, 0x72,
+	0x61, 0x70, 0x68, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x07, 0x70, 0x75, 0x6c, 0x6c,
+	0x55, 0x70, 0x73, 0x12, 0x41, 0x0a, 0x0b, 0x62, 0x65, 0x6e, 0x63, 0x68, 0x5f, 0x70, 0x72, 0x65,
+	0x73, 0x73, 0x18, 0x09, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x2e, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x47, 0x72,
+	0x61, 0x70, 0x68, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x0a, 0x62, 0x65, 0x6e, 0x63,
+	0x68, 0x50, 0x72, 0x65, 0x73, 0x73, 0x22, 0x7f, 0x0a, 0x0f, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69,
+	0x74, 0x79, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a,
+	0x04, 0x75, 0x6e, 0x69, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x6e, 0x69,
+	0x74, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x61, 0x78, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03,
+	0x6d, 0x61, 0x78, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x69, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0d,
+	0x52, 0x03, 0x6d, 0x69, 0x6e, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x76, 0x67, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x02, 0x52, 0x03, 0x61, 0x76, 0x67, 0x22, 0x42, 0x0a, 0x0c, 0x47, 0x72, 0x61, 0x70, 0x68,
+	0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65,
+	0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x32, 0xe0, 0x0d, 0x0a, 0x0c,
 	0x4f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0xa1, 0x01, 0x0a,
 	0x14, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74,
 	0x69, 0x6f, 0x6e, 0x56, 0x31, 0x12, 0x2f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x6f, 0x72,
@@ -1605,7 +1866,7 @@ func file_organization_organization_proto_rawDescGZIP() []byte {
 	return file_organization_organization_proto_rawDescData
 }
 
-var file_organization_organization_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_organization_organization_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_organization_organization_proto_goTypes = []interface{}{
 	(*CreateOrganizationV1Request)(nil),            // 0: proto.organization.CreateOrganizationV1Request
 	(*CreateOrganizationV1Response)(nil),           // 1: proto.organization.CreateOrganizationV1Response
@@ -1630,36 +1891,45 @@ var file_organization_organization_proto_goTypes = []interface{}{
 	(*User)(nil),                                   // 20: proto.organization.User
 	(*GetOrganizationUserAnalyticsV1Request)(nil),  // 21: proto.organization.GetOrganizationUserAnalyticsV1Request
 	(*GetOrganizationUserAnalyticsV1Response)(nil), // 22: proto.organization.GetOrganizationUserAnalyticsV1Response
+	(*ActivityMessage)(nil),                        // 23: proto.organization.ActivityMessage
+	(*GraphElement)(nil),                           // 24: proto.organization.GraphElement
 }
 var file_organization_organization_proto_depIdxs = []int32{
 	12, // 0: proto.organization.GetNewTransfersV1Response.new_transfers:type_name -> proto.organization.NewTransfers
 	17, // 1: proto.organization.GetTransactionsV1Response.transactions:type_name -> proto.organization.Transaction
 	20, // 2: proto.organization.GetOrganizationUsersV1Response.users:type_name -> proto.organization.User
-	0,  // 3: proto.organization.Organization.CreateOrganizationV1:input_type -> proto.organization.CreateOrganizationV1Request
-	4,  // 4: proto.organization.Organization.GetOrganizationV1:input_type -> proto.organization.GetOrganizationV1Request
-	2,  // 5: proto.organization.Organization.CreateOrganizationInviteCodeV1:input_type -> proto.organization.CreateOrganizationInviteCodeV1Request
-	6,  // 6: proto.organization.Organization.ApproveTransferCoinsV1:input_type -> proto.organization.ApproveTransferCoinsV1Request
-	8,  // 7: proto.organization.Organization.RejectTransferCoinsV1:input_type -> proto.organization.RejectTransferCoinsV1Request
-	10, // 8: proto.organization.Organization.GetNewTransfersV1:input_type -> proto.organization.GetNewTransfersV1Request
-	13, // 9: proto.organization.Organization.WithdrawalCoinsV1:input_type -> proto.organization.WithdrawalCoinsV1Request
-	15, // 10: proto.organization.Organization.GetTransactionsV1:input_type -> proto.organization.GetTransactionsV1Request
-	18, // 11: proto.organization.Organization.GetOrganizationUsersV1:input_type -> proto.organization.GetOrganizationUsersV1Request
-	21, // 12: proto.organization.Organization.GetOrganizationUserAnalyticsV1:input_type -> proto.organization.GetOrganizationUserAnalyticsV1Request
-	1,  // 13: proto.organization.Organization.CreateOrganizationV1:output_type -> proto.organization.CreateOrganizationV1Response
-	5,  // 14: proto.organization.Organization.GetOrganizationV1:output_type -> proto.organization.GetOrganizationV1Response
-	3,  // 15: proto.organization.Organization.CreateOrganizationInviteCodeV1:output_type -> proto.organization.CreateOrganizationInviteCodeV1Response
-	7,  // 16: proto.organization.Organization.ApproveTransferCoinsV1:output_type -> proto.organization.ApproveTransferCoinsV1Response
-	9,  // 17: proto.organization.Organization.RejectTransferCoinsV1:output_type -> proto.organization.RejectTransferCoinsV1Response
-	11, // 18: proto.organization.Organization.GetNewTransfersV1:output_type -> proto.organization.GetNewTransfersV1Response
-	14, // 19: proto.organization.Organization.WithdrawalCoinsV1:output_type -> proto.organization.WithdrawalCoinsV1Response
-	16, // 20: proto.organization.Organization.GetTransactionsV1:output_type -> proto.organization.GetTransactionsV1Response
-	19, // 21: proto.organization.Organization.GetOrganizationUsersV1:output_type -> proto.organization.GetOrganizationUsersV1Response
-	22, // 22: proto.organization.Organization.GetOrganizationUserAnalyticsV1:output_type -> proto.organization.GetOrganizationUserAnalyticsV1Response
-	13, // [13:23] is the sub-list for method output_type
-	3,  // [3:13] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	23, // 3: proto.organization.GetOrganizationUserAnalyticsV1Response.activity_list:type_name -> proto.organization.ActivityMessage
+	24, // 4: proto.organization.GetOrganizationUserAnalyticsV1Response.steps:type_name -> proto.organization.GraphElement
+	24, // 5: proto.organization.GetOrganizationUserAnalyticsV1Response.push_ups:type_name -> proto.organization.GraphElement
+	24, // 6: proto.organization.GetOrganizationUserAnalyticsV1Response.crunches:type_name -> proto.organization.GraphElement
+	24, // 7: proto.organization.GetOrganizationUserAnalyticsV1Response.cycling:type_name -> proto.organization.GraphElement
+	24, // 8: proto.organization.GetOrganizationUserAnalyticsV1Response.pull_ups:type_name -> proto.organization.GraphElement
+	24, // 9: proto.organization.GetOrganizationUserAnalyticsV1Response.bench_press:type_name -> proto.organization.GraphElement
+	0,  // 10: proto.organization.Organization.CreateOrganizationV1:input_type -> proto.organization.CreateOrganizationV1Request
+	4,  // 11: proto.organization.Organization.GetOrganizationV1:input_type -> proto.organization.GetOrganizationV1Request
+	2,  // 12: proto.organization.Organization.CreateOrganizationInviteCodeV1:input_type -> proto.organization.CreateOrganizationInviteCodeV1Request
+	6,  // 13: proto.organization.Organization.ApproveTransferCoinsV1:input_type -> proto.organization.ApproveTransferCoinsV1Request
+	8,  // 14: proto.organization.Organization.RejectTransferCoinsV1:input_type -> proto.organization.RejectTransferCoinsV1Request
+	10, // 15: proto.organization.Organization.GetNewTransfersV1:input_type -> proto.organization.GetNewTransfersV1Request
+	13, // 16: proto.organization.Organization.WithdrawalCoinsV1:input_type -> proto.organization.WithdrawalCoinsV1Request
+	15, // 17: proto.organization.Organization.GetTransactionsV1:input_type -> proto.organization.GetTransactionsV1Request
+	18, // 18: proto.organization.Organization.GetOrganizationUsersV1:input_type -> proto.organization.GetOrganizationUsersV1Request
+	21, // 19: proto.organization.Organization.GetOrganizationUserAnalyticsV1:input_type -> proto.organization.GetOrganizationUserAnalyticsV1Request
+	1,  // 20: proto.organization.Organization.CreateOrganizationV1:output_type -> proto.organization.CreateOrganizationV1Response
+	5,  // 21: proto.organization.Organization.GetOrganizationV1:output_type -> proto.organization.GetOrganizationV1Response
+	3,  // 22: proto.organization.Organization.CreateOrganizationInviteCodeV1:output_type -> proto.organization.CreateOrganizationInviteCodeV1Response
+	7,  // 23: proto.organization.Organization.ApproveTransferCoinsV1:output_type -> proto.organization.ApproveTransferCoinsV1Response
+	9,  // 24: proto.organization.Organization.RejectTransferCoinsV1:output_type -> proto.organization.RejectTransferCoinsV1Response
+	11, // 25: proto.organization.Organization.GetNewTransfersV1:output_type -> proto.organization.GetNewTransfersV1Response
+	14, // 26: proto.organization.Organization.WithdrawalCoinsV1:output_type -> proto.organization.WithdrawalCoinsV1Response
+	16, // 27: proto.organization.Organization.GetTransactionsV1:output_type -> proto.organization.GetTransactionsV1Response
+	19, // 28: proto.organization.Organization.GetOrganizationUsersV1:output_type -> proto.organization.GetOrganizationUsersV1Response
+	22, // 29: proto.organization.Organization.GetOrganizationUserAnalyticsV1:output_type -> proto.organization.GetOrganizationUserAnalyticsV1Response
+	20, // [20:30] is the sub-list for method output_type
+	10, // [10:20] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_organization_organization_proto_init() }
@@ -1944,6 +2214,30 @@ func file_organization_organization_proto_init() {
 				return nil
 			}
 		}
+		file_organization_organization_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ActivityMessage); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_organization_organization_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GraphElement); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1951,7 +2245,7 @@ func file_organization_organization_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_organization_organization_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   25,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -338,6 +338,33 @@
     }
   },
   "definitions": {
+    "organizationActivityMessage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "max": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "min": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "avg": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
     "organizationApproveTransferCoinsV1Request": {
       "type": "object",
       "properties": {
@@ -410,12 +437,70 @@
           "type": "string"
         },
         "userId": {
-          "type": "string"
+          "type": "string",
+          "format": "uint64"
         }
       }
     },
     "organizationGetOrganizationUserAnalyticsV1Response": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "activityList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationActivityMessage"
+          }
+        },
+        "mostEarnedActivity": {
+          "type": "string"
+        },
+        "favouriteActivity": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationGraphElement"
+          }
+        },
+        "pushUps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationGraphElement"
+          }
+        },
+        "crunches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationGraphElement"
+          }
+        },
+        "cycling": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationGraphElement"
+          }
+        },
+        "pullUps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationGraphElement"
+          }
+        },
+        "benchPress": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationGraphElement"
+          }
+        }
+      }
     },
     "organizationGetOrganizationUsersV1Request": {
       "type": "object",
@@ -488,6 +573,18 @@
             "type": "object",
             "$ref": "#/definitions/organizationTransaction"
           }
+        }
+      }
+    },
+    "organizationGraphElement": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },

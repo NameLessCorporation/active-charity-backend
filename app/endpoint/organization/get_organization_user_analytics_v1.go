@@ -2,6 +2,7 @@ package organization
 
 import (
 	"context"
+	"log"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -29,5 +30,52 @@ func (o *OrganizationEndpoint) GetOrganizationUserAnalyticsV1(ctx context.Contex
 		return nil, status.Error(codes.PermissionDenied, "Пользователь не владеет организацией")
 	}
 
-	return &organization.GetOrganizationUserAnalyticsV1Response{}, nil
+	list, err := o.services.ActivityService.GetActivityList(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	analytics, err := o.services.ActivityService.GetUserActivityAnalytics(ctx, req.GetUserId())
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	fav, err := o.services.ActivityService.GetUserFavouriteActivity(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+
+	mostEarned, err := o.services.ActivityService.GetUserMostEarnedActivity(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+
+	activityList := make([]*organization.ActivityMessage, 0, len(list))
+	for _, value := range list {
+		for _, value2 := range analytics {
+			if value2.Id == value.Id {
+				activityList = append(activityList, &organization.ActivityMessage{
+					Id:   value.Id,
+					Name: value.Name,
+					Unit: value.Unit,
+					Max:  value2.Max,
+					Min:  value2.Min,
+					Avg:  value2.Avg,
+				})
+			}
+		}
+	}
+
+	return &organization.GetOrganizationUserAnalyticsV1Response{
+		ActivityList:       activityList,
+		MostEarnedActivity: mostEarned,
+		FavouriteActivity:  fav,
+		Steps:              nil,
+		PushUps:            nil,
+		Crunches:           nil,
+		Cycling:            nil,
+		PullUps:            nil,
+		BenchPress:         nil,
+	}, nil
 }
