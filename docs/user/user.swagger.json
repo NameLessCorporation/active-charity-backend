@@ -80,38 +80,6 @@
         ]
       }
     },
-    "/api/v1/get/transactions": {
-      "post": {
-        "operationId": "User_GetTransactionsV1",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userGetTransactionsV1Response"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userGetTransactionsV1Request"
-            }
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
     "/api/v1/get/user": {
       "post": {
         "operationId": "User_GetUserV1",
@@ -136,6 +104,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/userGetUserV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/get/user/transactions": {
+      "post": {
+        "operationId": "User_GetTransactionsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetTransactionsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userGetTransactionsV1Request"
             }
           }
         ],

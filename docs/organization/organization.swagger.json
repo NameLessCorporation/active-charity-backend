@@ -112,7 +112,7 @@
         ]
       }
     },
-    "/api/v1/get/transactions": {
+    "/api/v1/get/organization/transactions": {
       "post": {
         "operationId": "Organization_GetTransactionsV1",
         "responses": {

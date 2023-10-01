@@ -30,7 +30,7 @@ service Organization {
     option (google.api.http) = { post: "/api/v1/organization/withdrawal/coins"; body: "*"; };
   };
   rpc GetTransactionsV1(GetTransactionsV1Request) returns (GetTransactionsV1Response) {
-    option (google.api.http) = { post: "/api/v1/get/transactions"; body: "*"; };
+    option (google.api.http) = { post: "/api/v1/get/organization/transactions"; body: "*"; };
   };
 }
 
