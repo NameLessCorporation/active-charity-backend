@@ -30,6 +30,8 @@ type ActivityRepository interface {
 
 	GetUserFavouriteActivity(ctx context.Context, userID uint64) (string, error)
 	GetUserMostEarnedActivity(ctx context.Context, userID uint64) (string, error)
+
+	GetUserActivityAnalytics(ctx context.Context, userID uint64) ([]models.ActivityAnalytics, error)
 }
 
 type UserRepository interface {

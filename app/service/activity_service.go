@@ -8,6 +8,15 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
+func (a *Service) GetUserActivityAnalytics(ctx context.Context, userID uint64) ([]models.ActivityAnalytics, error) {
+	l, err := a.repository.ActivityRepository.GetUserActivityAnalytics(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return l, err
+}
+
 func (a *Service) GetUserFavouriteActivity(ctx context.Context, userID uint64) (string, error) {
 	activity, err := a.repository.ActivityRepository.GetUserFavouriteActivity(ctx, userID)
 	if err != nil {

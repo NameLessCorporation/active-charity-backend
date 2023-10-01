@@ -324,8 +324,8 @@
           "format": "int64"
         },
         "avg": {
-          "type": "integer",
-          "format": "int64"
+          "type": "number",
+          "format": "float"
         }
       }
     },
