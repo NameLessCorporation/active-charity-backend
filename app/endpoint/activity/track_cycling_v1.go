@@ -17,16 +17,18 @@ func (a *ActivityEndpoint) TrackCyclingV1(ctx context.Context, req *activity.Tra
 		return nil, err
 	}
 
-	walletId, err := a.services.UserService.GetWalletIdByUserId(ctx, userID)
-	if err != nil {
-		return nil, err
-	}
-
 	coins := uint64(math.Floor(float64(req.Metres) / 10))
 
-	_, err = a.operations.AccrualOfCoinsForActivity(ctx, coins, walletId)
-	if err != nil {
-		return nil, err
+	if coins >= 1 {
+		walletId, err := a.services.UserService.GetWalletIdByUserId(ctx, userID)
+		if err != nil {
+			return nil, err
+		}
+
+		_, err = a.operations.AccrualOfCoinsForActivity(ctx, coins, walletId)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &activity.TrackCyclingV1Response{}, nil
