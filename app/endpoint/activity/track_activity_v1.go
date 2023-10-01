@@ -7,6 +7,10 @@ import (
 )
 
 func (a *ActivityEndpoint) TrackActivityV1(ctx context.Context, req *activity.TrackActivityV1Request) (*activity.TrackActivityV1Response, error) {
+	if req.Value == 0 {
+		return &activity.TrackActivityV1Response{}, nil
+	}
+
 	switch req.ActivityId {
 	case 1:
 		_, err := a.TrackStepsV1(ctx, &activity.TrackStepsV1Request{
