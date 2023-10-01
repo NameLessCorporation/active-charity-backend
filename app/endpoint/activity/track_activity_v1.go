@@ -3,15 +3,12 @@ package activity
 import (
 	"context"
 
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-
 	"github.com/NameLessCorporation/active-charity-backend/extra/activity"
 )
 
 func (a *ActivityEndpoint) TrackActivityV1(ctx context.Context, req *activity.TrackActivityV1Request) (*activity.TrackActivityV1Response, error) {
 	if req.Value == 0 {
-		return nil, status.Error(codes.InvalidArgument, "value cant be zero")
+		return &activity.TrackActivityV1Response{}, nil
 	}
 
 	switch req.ActivityId {
