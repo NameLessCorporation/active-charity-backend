@@ -58,7 +58,7 @@ func (s *Service) GetNewTransferTransactionsByToWalletID(ctx context.Context, to
 	return transactions, nil
 }
 
-func (s *Service) GetNewTransferTransactionsByWalletID(ctx context.Context, walletID uint64, transactionType, transactionStatus string) ([]*models.Transaction, error) {
+func (s *Service) GetTransactionsByWalletID(ctx context.Context, walletID uint64, transactionType, transactionStatus string) ([]*models.Transaction, error) {
 	transactions, err := s.repository.TransactionRepository.GetTransactionsByWalletID(ctx, walletID, transactionType, transactionStatus)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Ошибка получения транзакций")
