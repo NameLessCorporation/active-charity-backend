@@ -120,3 +120,13 @@ func (u *User) UpdateFundIDByID(ctx context.Context, id, fundID uint64) error {
 
 	return nil
 }
+
+func (u *User) GetUserByWalletID(ctx context.Context, walletID uint64) (*models.User, error) {
+	var user models.User
+	err := u.db.GetContext(ctx, &user, "SELECT * FROM public.users WHERE wallet_id = $1", walletID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}

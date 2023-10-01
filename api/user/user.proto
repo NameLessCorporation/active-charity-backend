@@ -18,6 +18,12 @@ service User {
   rpc SelectUserFundV1(SelectUserFundV1Request) returns (SelectUserFundV1Response) {
     option (google.api.http) = { post: "/api/v1/select/user/fund"; body: "*"; };
   };
+  rpc CreateNewTransferV1(CreateNewTransferV1Request) returns (CreateNewTransferV1Response) {
+    option (google.api.http) = { post: "/api/v1/create/new/transfer"; body: "*"; };
+  };
+  rpc GetTransactionsV1(GetTransactionsV1Request) returns (GetTransactionsV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/transactions"; body: "*"; };
+  };
 }
 
 message CreateUserV1Request {
@@ -57,3 +63,34 @@ message SelectUserFundV1Request {
 }
 
 message SelectUserFundV1Response {}
+
+message CreateNewTransferV1Request {
+  string access_token = 1;
+  uint64 coins = 2;
+  uint64 organization_id = 3;
+}
+
+message CreateNewTransferV1Response {
+  uint64 transaction_id = 1;
+}
+
+message GetTransactionsV1Request {
+  string access_token = 1;
+  string type = 2;
+  string status = 3;
+}
+
+message GetTransactionsV1Response {
+  repeated Transaction transactions = 1;
+}
+
+message Transaction {
+  uint64 id = 1;
+  string type = 2;
+  string to_organization_name = 3;
+  uint64 coins = 6;
+  uint64 rubles = 7;
+  string status = 8;
+  string created_at = 9;
+  string updated_at = 10;
+}

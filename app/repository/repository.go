@@ -29,6 +29,7 @@ type UserRepository interface {
 	GetIDByEmail(ctx context.Context, email string) (uint64, error)
 	UpdateOrganizationIDByID(ctx context.Context, id, organizationID uint64) error
 	UpdateFundIDByID(ctx context.Context, id, fundID uint64) error
+	GetUserByWalletID(ctx context.Context, walletID uint64) (*models.User, error)
 	GetWalletIdById(ctx context.Context, id uint64) (uint64, error)
 }
 
@@ -41,6 +42,7 @@ type TokenRepository interface {
 type OrganizationRepository interface {
 	CreateOrganization(ctx context.Context, organization *models.Organization) (uint64, error)
 	GetOrganizationByID(ctx context.Context, id uint64) (*models.Organization, error)
+	GetOrganizationByWalletID(ctx context.Context, walletID uint64) (*models.Organization, error)
 }
 
 type InviteCodeRepository interface {
@@ -60,6 +62,8 @@ type TransactionRepository interface {
 	UpdateStatusByID(ctx context.Context, id uint64, status string) error
 	GetTransactionByID(ctx context.Context, id uint64) (*models.Transaction, error)
 	GetTransactionByToWalletIDAndFromWalletID(ctx context.Context, fromWalletID, toWalletID uint64) (*models.Transaction, error)
+	GetNewTransferTransactionsByToWalletID(ctx context.Context, toWalletID uint64) ([]*models.Transaction, error)
+	GetTransactionsByWalletID(ctx context.Context, walletID uint64, transactionType, status string) ([]*models.Transaction, error)
 }
 
 type FundRepository interface {

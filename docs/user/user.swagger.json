@@ -16,6 +16,38 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/create/new/transfer": {
+      "post": {
+        "operationId": "User_CreateNewTransferV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userCreateNewTransferV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userCreateNewTransferV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/api/v1/create/user": {
       "post": {
         "operationId": "User_CreateUserV1",
@@ -40,6 +72,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/userCreateUserV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/get/transactions": {
+      "post": {
+        "operationId": "User_GetTransactionsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetTransactionsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userGetTransactionsV1Request"
             }
           }
         ],
@@ -174,6 +238,31 @@
         }
       }
     },
+    "userCreateNewTransferV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "organizationId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "userCreateNewTransferV1Response": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
     "userCreateUserV1Request": {
       "type": "object",
       "properties": {
@@ -193,6 +282,32 @@
     },
     "userCreateUserV1Response": {
       "type": "object"
+    },
+    "userGetTransactionsV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "userGetTransactionsV1Response": {
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/userTransaction"
+          }
+        }
+      }
     },
     "userGetUserV1Request": {
       "type": "object",
@@ -264,6 +379,38 @@
     },
     "userSelectUserFundV1Response": {
       "type": "object"
+    },
+    "userTransaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "toOrganizationName": {
+          "type": "string"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "rubles": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
     }
   }
 }
