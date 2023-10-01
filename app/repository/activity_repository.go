@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"database/sql"
 	"log"
 
 	"github.com/jmoiron/sqlx"
@@ -176,67 +177,67 @@ func (a *Activity) GetActivityList(ctx context.Context) ([]*models.Activity, err
 	return activities, nil
 }
 
-func (a *Activity) GetStepsValue(ctx context.Context, userID uint64) (uint32, error) {
-	var value uint32
+func (a *Activity) GetStepsValue(ctx context.Context, userID uint64) (sql.NullInt32, error) {
+	var value sql.NullInt32
 
-	err := a.db.GetContext(ctx, &value, "select sum(steps) from steps_history where user_id = $1", userID)
+	err := a.db.GetContext(ctx, &value, "select sum(steps) as value from steps_history where user_id = $1", userID)
 	if err != nil {
-		return 0, err
+		return sql.NullInt32{}, err
 	}
 
 	return value, nil
 }
 
-func (a *Activity) GetBenchPressValue(ctx context.Context, userID uint64) (uint32, error) {
-	var value uint32
+func (a *Activity) GetBenchPressValue(ctx context.Context, userID uint64) (sql.NullInt32, error) {
+	var value sql.NullInt32
 
 	err := a.db.GetContext(ctx, &value, "select sum(repeats) from bench_press_history where user_id = $1", userID)
 	if err != nil {
-		return 0, err
+		return sql.NullInt32{}, err
 	}
 
 	return value, nil
 }
 
-func (a *Activity) GetCrunchesValue(ctx context.Context, userID uint64) (uint32, error) {
-	var value uint32
+func (a *Activity) GetCrunchesValue(ctx context.Context, userID uint64) (sql.NullInt32, error) {
+	var value sql.NullInt32
 
 	err := a.db.GetContext(ctx, &value, "select sum(repeats) from crunches_history where user_id = $1", userID)
 	if err != nil {
-		return 0, err
+		return sql.NullInt32{}, err
 	}
 
 	return value, nil
 }
 
-func (a *Activity) GetCyclingValue(ctx context.Context, userID uint64) (uint32, error) {
-	var value uint32
+func (a *Activity) GetCyclingValue(ctx context.Context, userID uint64) (sql.NullInt32, error) {
+	var value sql.NullInt32
 
-	err := a.db.GetContext(ctx, &value, "select sum(metres) from cycling_history where user_id = $1", userID)
+	err := a.db.GetContext(ctx, &value, "select sum(metres) as value from cycling_history where user_id = $1", userID)
 	if err != nil {
-		return 0, err
+		return sql.NullInt32{}, err
 	}
 
 	return value, nil
 }
 
-func (a *Activity) GetPullUpValue(ctx context.Context, userID uint64) (uint32, error) {
-	var value uint32
+func (a *Activity) GetPullUpValue(ctx context.Context, userID uint64) (sql.NullInt32, error) {
+	var value sql.NullInt32
 
 	err := a.db.GetContext(ctx, &value, "select sum(repeats) from pull_ups_history where user_id = $1", userID)
 	if err != nil {
-		return 0, err
+		return sql.NullInt32{}, err
 	}
 
 	return value, nil
 }
 
-func (a *Activity) GetPushUpValue(ctx context.Context, userID uint64) (uint32, error) {
-	var value uint32
+func (a *Activity) GetPushUpValue(ctx context.Context, userID uint64) (sql.NullInt32, error) {
+	var value sql.NullInt32
 
 	err := a.db.GetContext(ctx, &value, "select sum(repeats) from push_ups_history where user_id = $1", userID)
 	if err != nil {
-		return 0, err
+		return sql.NullInt32{}, err
 	}
 
 	return value, nil

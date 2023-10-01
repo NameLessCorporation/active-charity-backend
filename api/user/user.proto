@@ -40,7 +40,7 @@ message GetTopV1Response {
 
 message TopTab {
   string name = 1;
-  uint32 points = 2;
+  uint64 points = 2;
 }
 
 message CreateUserV1Request {

@@ -86,3 +86,57 @@ func (s *Service) GetActivityList(ctx context.Context) ([]*models.Activity, erro
 
 	return list, nil
 }
+
+func (s *Service) GetStepsValue(ctx context.Context, userID uint64) (uint32, error) {
+	value, err := s.repository.ActivityRepository.GetStepsValue(ctx, userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return uint32(value.Int32), nil
+}
+
+func (s *Service) GetBenchPressValue(ctx context.Context, userID uint64) (uint32, error) {
+	value, err := s.repository.ActivityRepository.GetBenchPressValue(ctx, userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return uint32(value.Int32), nil
+}
+
+func (s *Service) GetCrunchesValue(ctx context.Context, userID uint64) (uint32, error) {
+	value, err := s.repository.ActivityRepository.GetCrunchesValue(ctx, userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return uint32(value.Int32), nil
+}
+
+func (s *Service) GetCyclingValue(ctx context.Context, userID uint64) (uint32, error) {
+	value, err := s.repository.ActivityRepository.GetCyclingValue(ctx, userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return uint32(value.Int32), nil
+}
+
+func (s *Service) GetPullUpValue(ctx context.Context, userID uint64) (uint32, error) {
+	value, err := s.repository.ActivityRepository.GetPullUpValue(ctx, userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return uint32(value.Int32), nil
+}
+
+func (s *Service) GetPushUpValue(ctx context.Context, userID uint64) (uint32, error) {
+	value, err := s.repository.ActivityRepository.GetPushUpValue(ctx, userID)
+	if err != nil {
+		return 0, err
+	}
+
+	return uint32(value.Int32), nil
+}

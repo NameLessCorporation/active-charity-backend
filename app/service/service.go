@@ -19,6 +19,13 @@ type IActivityService interface {
 	TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 	TrackCycling(ctx context.Context, metres uint32, activityId uint64, userId uint64) error
 	TrackCrunches(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
+
+	GetStepsValue(ctx context.Context, userID uint64) (uint32, error)
+	GetBenchPressValue(ctx context.Context, userID uint64) (uint32, error)
+	GetCrunchesValue(ctx context.Context, userID uint64) (uint32, error)
+	GetCyclingValue(ctx context.Context, userID uint64) (uint32, error)
+	GetPullUpValue(ctx context.Context, userID uint64) (uint32, error)
+	GetPushUpValue(ctx context.Context, userID uint64) (uint32, error)
 }
 
 type ITokenService interface {

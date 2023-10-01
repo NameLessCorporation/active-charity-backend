@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"math"
+	"sort"
 
 	"github.com/NameLessCorporation/active-charity-backend/extra/user"
 )
@@ -21,4 +23,51 @@ func (u *UserEndpoint) GetTopV1(ctx context.Context, req *user.GetTopV1Request) 
 	if err != nil {
 		return nil, err
 	}
+
+	top := make([]*user.TopTab, 0, len(users))
+	for _, v := range users {
+		stepVal, err := u.services.ActivityService.GetStepsValue(ctx, v.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		pushVal, err := u.services.ActivityService.GetPushUpValue(ctx, v.ID)
+		if err != nil {
+			return nil, err
+		}
+		pullValue, err := u.services.ActivityService.GetPullUpValue(ctx, v.ID)
+		if err != nil {
+			return nil, err
+		}
+		crunVal, err := u.services.ActivityService.GetCrunchesValue(ctx, v.ID)
+		if err != nil {
+			return nil, err
+		}
+		benchVal, err := u.services.ActivityService.GetBenchPressValue(ctx, v.ID)
+		if err != nil {
+			return nil, err
+		}
+		cycleVal, err := u.services.ActivityService.GetCyclingValue(ctx, v.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		points := uint64(math.Floor(float64(stepVal)/10)) +
+			uint64(math.Floor(float64(cycleVal)/10)) +
+			uint64(math.Floor(float64(pushVal)/10)) +
+			uint64(math.Floor(float64(pullValue)/10)) +
+			uint64(math.Floor(float64(crunVal)/10)) +
+			uint64(math.Floor(float64(benchVal)/10))
+
+		top = append(top, &user.TopTab{
+			Name:   v.Name,
+			Points: points * 100,
+		})
+	}
+
+	sort.Slice(top, func(i, j int) bool {
+		return top[i].Points > top[j].Points
+	})
+
+	return &user.GetTopV1Response{Top: top}, nil
 }

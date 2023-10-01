@@ -443,8 +443,8 @@
           "type": "string"
         },
         "points": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string",
+          "format": "uint64"
         }
       }
     },
