@@ -32,6 +32,12 @@ type ActivityRepository interface {
 	GetUserMostEarnedActivity(ctx context.Context, userID uint64) (string, error)
 
 	GetUserActivityAnalytics(ctx context.Context, userID uint64) ([]models.ActivityAnalytics, error)
+	GetStepsGraph(ctx context.Context, userID uint64) ([]*models.Graph, error)
+	GetPushUpGraph(ctx context.Context, userID uint64) ([]*models.Graph, error)
+	GetCrunchesGraph(ctx context.Context, userID uint64) ([]*models.Graph, error)
+	GetCycleGraph(ctx context.Context, userID uint64) ([]*models.Graph, error)
+	GetPullUpGraph(ctx context.Context, userID uint64) ([]*models.Graph, error)
+	GetBenchPressGraph(ctx context.Context, userID uint64) ([]*models.Graph, error)
 }
 
 type UserRepository interface {

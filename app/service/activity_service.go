@@ -8,6 +8,60 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
+func (a *Service) GetStepsGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	graph, err := a.repository.ActivityRepository.GetStepsGraph(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Service) GetPushUpGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	graph, err := a.repository.ActivityRepository.GetPushUpGraph(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Service) GetCrunchesGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	graph, err := a.repository.ActivityRepository.GetCrunchesGraph(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Service) GetCycleGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	graph, err := a.repository.ActivityRepository.GetCycleGraph(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Service) GetPullUpGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	graph, err := a.repository.ActivityRepository.GetPullUpGraph(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Service) GetBenchPressGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	graph, err := a.repository.ActivityRepository.GetBenchPressGraph(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
 func (a *Service) GetUserActivityAnalytics(ctx context.Context, userID uint64) ([]models.ActivityAnalytics, error) {
 	l, err := a.repository.ActivityRepository.GetUserActivityAnalytics(ctx, userID)
 	if err != nil {

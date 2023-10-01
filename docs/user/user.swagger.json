@@ -538,7 +538,8 @@
       "type": "object",
       "properties": {
         "timestamp": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "value": {
           "type": "integer",

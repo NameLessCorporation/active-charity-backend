@@ -20,6 +20,72 @@ func NewActivityRepository(db *sqlx.DB) *Activity {
 	}
 }
 
+func (a *Activity) GetStepsGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	var graph []*models.Graph
+
+	err := a.db.SelectContext(ctx, &graph, "select created_at, steps as value from steps_history where user_id = $1 order by id", userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Activity) GetPushUpGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	var graph []*models.Graph
+
+	err := a.db.SelectContext(ctx, &graph, "select created_at, repeats as value from pull_ups_history where user_id = $1 order by id", userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Activity) GetCrunchesGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	var graph []*models.Graph
+
+	err := a.db.SelectContext(ctx, &graph, "select created_at, repeats as value from crunches_history where user_id = $1 order by id", userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Activity) GetCycleGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	var graph []*models.Graph
+
+	err := a.db.SelectContext(ctx, &graph, "select created_at, metres as value from cycling_history where user_id = $1 order by id", userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Activity) GetPullUpGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	var graph []*models.Graph
+
+	err := a.db.SelectContext(ctx, &graph, "select created_at, repeats as value from pull_ups_history where user_id = $1 order by id", userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
+func (a *Activity) GetBenchPressGraph(ctx context.Context, userID uint64) ([]*models.Graph, error) {
+	var graph []*models.Graph
+
+	err := a.db.SelectContext(ctx, &graph, "select created_at, repeats as value from bench_press_history where user_id = $1 order by id", userID)
+	if err != nil {
+		return nil, err
+	}
+
+	return graph, nil
+}
+
 func (a *Activity) GetUserActivityAnalytics(ctx context.Context, userID uint64) ([]models.ActivityAnalytics, error) {
 	activities := make([]models.ActivityAnalytics, 6)
 
