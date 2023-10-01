@@ -167,7 +167,7 @@ func (a *Activity) TrackNewPeriodSteps(ctx context.Context, steps uint32, activi
 func (a *Activity) GetActivityList(ctx context.Context) ([]*models.Activity, error) {
 	var activities []*models.Activity
 
-	err := a.db.SelectContext(ctx, &activities, "select id, name from activities")
+	err := a.db.SelectContext(ctx, &activities, "select id, name, unit from activities")
 	if err != nil {
 		return nil, err
 	}

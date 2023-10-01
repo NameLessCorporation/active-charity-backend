@@ -99,4 +99,5 @@ message TrackStepsV1Response {}
 message ActivityMessage {
   uint64 id = 1;
   string name = 2;
+  string unit = 3;
 }
