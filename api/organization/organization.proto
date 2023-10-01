@@ -143,10 +143,11 @@ message User {
   uint64 id = 1;
   string email = 2;
   string name  = 3;
-  string fund_name = 4;
-  uint64 coins = 5;
-  uint64 rubles = 6;
-  string created_at = 7;
+  string date_of_birthday = 4;
+  string fund_name = 5;
+  uint64 coins = 6;
+  uint64 rubles = 7;
+  string created_at = 8;
 }
 
 message GetOrganizationUserAnalyticsV1Request {

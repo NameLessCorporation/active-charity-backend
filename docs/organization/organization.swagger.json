@@ -589,6 +589,9 @@
         "name": {
           "type": "string"
         },
+        "dateOfBirthday": {
+          "type": "string"
+        },
         "fundName": {
           "type": "string"
         },

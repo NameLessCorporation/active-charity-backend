@@ -55,13 +55,14 @@ func (o *OrganizationEndpoint) GetOrganizationUsersV1(ctx context.Context, req *
 		}
 
 		usersResponse = append(usersResponse, &organization.User{
-			Id:        userID,
-			Email:     userModel.Email,
-			Name:      userModel.Name,
-			FundName:  fundName,
-			Coins:     wallet.Coins,
-			Rubles:    wallet.Rubles,
-			CreatedAt: userModel.CreatedAt.String(),
+			Id:             userID,
+			Email:          userModel.Email,
+			Name:           userModel.Name,
+			FundName:       fundName,
+			Coins:          wallet.Coins,
+			Rubles:         wallet.Rubles,
+			DateOfBirthday: userModel.DateOfBirthday,
+			CreatedAt:      userModel.CreatedAt.String(),
 		})
 	}
 
