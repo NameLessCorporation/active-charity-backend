@@ -27,6 +27,8 @@ const (
 	Organization_GetNewTransfersV1_FullMethodName              = "/proto.organization.Organization/GetNewTransfersV1"
 	Organization_WithdrawalCoinsV1_FullMethodName              = "/proto.organization.Organization/WithdrawalCoinsV1"
 	Organization_GetTransactionsV1_FullMethodName              = "/proto.organization.Organization/GetTransactionsV1"
+	Organization_GetOrganizationUsersV1_FullMethodName         = "/proto.organization.Organization/GetOrganizationUsersV1"
+	Organization_GetOrganizationUserAnalyticsV1_FullMethodName = "/proto.organization.Organization/GetOrganizationUserAnalyticsV1"
 )
 
 // OrganizationClient is the client API for Organization service.
@@ -41,6 +43,8 @@ type OrganizationClient interface {
 	GetNewTransfersV1(ctx context.Context, in *GetNewTransfersV1Request, opts ...grpc.CallOption) (*GetNewTransfersV1Response, error)
 	WithdrawalCoinsV1(ctx context.Context, in *WithdrawalCoinsV1Request, opts ...grpc.CallOption) (*WithdrawalCoinsV1Response, error)
 	GetTransactionsV1(ctx context.Context, in *GetTransactionsV1Request, opts ...grpc.CallOption) (*GetTransactionsV1Response, error)
+	GetOrganizationUsersV1(ctx context.Context, in *GetOrganizationUsersV1Request, opts ...grpc.CallOption) (*GetOrganizationUsersV1Response, error)
+	GetOrganizationUserAnalyticsV1(ctx context.Context, in *GetOrganizationUserAnalyticsV1Request, opts ...grpc.CallOption) (*GetOrganizationUserAnalyticsV1Response, error)
 }
 
 type organizationClient struct {
@@ -123,6 +127,24 @@ func (c *organizationClient) GetTransactionsV1(ctx context.Context, in *GetTrans
 	return out, nil
 }
 
+func (c *organizationClient) GetOrganizationUsersV1(ctx context.Context, in *GetOrganizationUsersV1Request, opts ...grpc.CallOption) (*GetOrganizationUsersV1Response, error) {
+	out := new(GetOrganizationUsersV1Response)
+	err := c.cc.Invoke(ctx, Organization_GetOrganizationUsersV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *organizationClient) GetOrganizationUserAnalyticsV1(ctx context.Context, in *GetOrganizationUserAnalyticsV1Request, opts ...grpc.CallOption) (*GetOrganizationUserAnalyticsV1Response, error) {
+	out := new(GetOrganizationUserAnalyticsV1Response)
+	err := c.cc.Invoke(ctx, Organization_GetOrganizationUserAnalyticsV1_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrganizationServer is the server API for Organization service.
 // All implementations should embed UnimplementedOrganizationServer
 // for forward compatibility
@@ -135,6 +157,8 @@ type OrganizationServer interface {
 	GetNewTransfersV1(context.Context, *GetNewTransfersV1Request) (*GetNewTransfersV1Response, error)
 	WithdrawalCoinsV1(context.Context, *WithdrawalCoinsV1Request) (*WithdrawalCoinsV1Response, error)
 	GetTransactionsV1(context.Context, *GetTransactionsV1Request) (*GetTransactionsV1Response, error)
+	GetOrganizationUsersV1(context.Context, *GetOrganizationUsersV1Request) (*GetOrganizationUsersV1Response, error)
+	GetOrganizationUserAnalyticsV1(context.Context, *GetOrganizationUserAnalyticsV1Request) (*GetOrganizationUserAnalyticsV1Response, error)
 }
 
 // UnimplementedOrganizationServer should be embedded to have forward compatible implementations.
@@ -164,6 +188,12 @@ func (UnimplementedOrganizationServer) WithdrawalCoinsV1(context.Context, *Withd
 }
 func (UnimplementedOrganizationServer) GetTransactionsV1(context.Context, *GetTransactionsV1Request) (*GetTransactionsV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTransactionsV1 not implemented")
+}
+func (UnimplementedOrganizationServer) GetOrganizationUsersV1(context.Context, *GetOrganizationUsersV1Request) (*GetOrganizationUsersV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrganizationUsersV1 not implemented")
+}
+func (UnimplementedOrganizationServer) GetOrganizationUserAnalyticsV1(context.Context, *GetOrganizationUserAnalyticsV1Request) (*GetOrganizationUserAnalyticsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrganizationUserAnalyticsV1 not implemented")
 }
 
 // UnsafeOrganizationServer may be embedded to opt out of forward compatibility for this service.
@@ -321,6 +351,42 @@ func _Organization_GetTransactionsV1_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Organization_GetOrganizationUsersV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrganizationUsersV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).GetOrganizationUsersV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_GetOrganizationUsersV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).GetOrganizationUsersV1(ctx, req.(*GetOrganizationUsersV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Organization_GetOrganizationUserAnalyticsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrganizationUserAnalyticsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrganizationServer).GetOrganizationUserAnalyticsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Organization_GetOrganizationUserAnalyticsV1_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrganizationServer).GetOrganizationUserAnalyticsV1(ctx, req.(*GetOrganizationUserAnalyticsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Organization_ServiceDesc is the grpc.ServiceDesc for Organization service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -359,6 +425,14 @@ var Organization_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTransactionsV1",
 			Handler:    _Organization_GetTransactionsV1_Handler,
+		},
+		{
+			MethodName: "GetOrganizationUsersV1",
+			Handler:    _Organization_GetOrganizationUsersV1_Handler,
+		},
+		{
+			MethodName: "GetOrganizationUserAnalyticsV1",
+			Handler:    _Organization_GetOrganizationUserAnalyticsV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

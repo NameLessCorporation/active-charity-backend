@@ -32,6 +32,12 @@ service Organization {
   rpc GetTransactionsV1(GetTransactionsV1Request) returns (GetTransactionsV1Response) {
     option (google.api.http) = { post: "/api/v1/get/organization/transactions"; body: "*"; };
   };
+  rpc GetOrganizationUsersV1(GetOrganizationUsersV1Request) returns (GetOrganizationUsersV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/organization/users"; body: "*"; };
+  };
+  rpc GetOrganizationUserAnalyticsV1(GetOrganizationUserAnalyticsV1Request) returns (GetOrganizationUserAnalyticsV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/organization/user/analytics"; body: "*"; };
+  };
 }
 
 message CreateOrganizationV1Request {
@@ -123,4 +129,31 @@ message Transaction {
   uint64 rubles = 7;
   string status = 8;
   string created_at = 9;
+}
+
+message GetOrganizationUsersV1Request {
+  string access_token = 1;
+}
+
+message GetOrganizationUsersV1Response {
+  repeated User users = 1;
+}
+
+message User {
+  uint64 id = 1;
+  string email = 2;
+  string name  = 3;
+  string fund_name = 4;
+  uint64 coins = 5;
+  uint64 rubles = 6;
+  string created_at = 7;
+}
+
+message GetOrganizationUserAnalyticsV1Request {
+  string access_token = 1;
+  string user_id = 2;
+}
+
+message GetOrganizationUserAnalyticsV1Response {
+
 }

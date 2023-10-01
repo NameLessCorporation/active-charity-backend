@@ -59,6 +59,8 @@ type OrganizationServiceInter interface {
 	GetNewTransfersV1(ctx context.Context, req *organization.GetNewTransfersV1Request) (*organization.GetNewTransfersV1Response, error)
 	WithdrawalCoinsV1(ctx context.Context, req *organization.WithdrawalCoinsV1Request) (*organization.WithdrawalCoinsV1Response, error)
 	GetTransactionsV1(ctx context.Context, req *organization.GetTransactionsV1Request) (*organization.GetTransactionsV1Response, error)
+	GetOrganizationUsersV1(ctx context.Context, req *organization.GetOrganizationUsersV1Request) (*organization.GetOrganizationUsersV1Response, error)
+	GetOrganizationUserAnalyticsV1(ctx context.Context, req *organization.GetOrganizationUserAnalyticsV1Request) (*organization.GetOrganizationUserAnalyticsV1Response, error)
 }
 
 type ActivityServiceInter interface {
@@ -68,9 +70,7 @@ type ActivityServiceInter interface {
 	TrackCyclingV1(ctx context.Context, req *activity.TrackCyclingV1Request) (*activity.TrackCyclingV1Response, error)
 	TrackCrunchesV1(ctx context.Context, req *activity.TrackCrunchesV1Request) (*activity.TrackCrunchesV1Response, error)
 	TrackPushUpsV1(ctx context.Context, req *activity.TrackPushUpV1Request) (*activity.TrackPushUpsV1Response, error)
-
 	TrackActivityV1(ctx context.Context, req *activity.TrackActivityV1Request) (*activity.TrackActivityV1Response, error)
-
 	GetActivityListV1(ctx context.Context, req *activity.GetActivityListV1Request) (*activity.GetActivityListV1Response, error)
 }
 

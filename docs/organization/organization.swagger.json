@@ -144,6 +144,70 @@
         ]
       }
     },
+    "/api/v1/get/organization/user/analytics": {
+      "post": {
+        "operationId": "Organization_GetOrganizationUserAnalyticsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationGetOrganizationUserAnalyticsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationGetOrganizationUserAnalyticsV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
+    },
+    "/api/v1/get/organization/users": {
+      "post": {
+        "operationId": "Organization_GetOrganizationUsersV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationGetOrganizationUsersV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationGetOrganizationUsersV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
+    },
     "/api/v1/organization/approve/transfer": {
       "post": {
         "operationId": "Organization_ApproveTransferCoinsV1",
@@ -339,6 +403,40 @@
         }
       }
     },
+    "organizationGetOrganizationUserAnalyticsV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationGetOrganizationUserAnalyticsV1Response": {
+      "type": "object"
+    },
+    "organizationGetOrganizationUsersV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationGetOrganizationUsersV1Response": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationUser"
+          }
+        }
+      }
+    },
     "organizationGetOrganizationV1Request": {
       "type": "object",
       "properties": {
@@ -472,6 +570,35 @@
         },
         "status": {
           "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationUser": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "fundName": {
+          "type": "string"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "rubles": {
+          "type": "string",
+          "format": "uint64"
         },
         "createdAt": {
           "type": "string"
