@@ -48,7 +48,11 @@ func (o *OrganizationEndpoint) GetTransactionsV1(ctx context.Context, req *organ
 			var fund *models.Fund
 			fund, err = o.services.FundService.GetFundByID(ctx, fromUser.FundID)
 
-			userEmail, userName, fundName = fromUser.Email, fromUser.Name, fund.Name
+			if fund != nil {
+				fundName = fund.Name
+			}
+
+			userEmail, userName = fromUser.Email, fromUser.Name
 		}
 
 		transactionsResponse = append(transactionsResponse, &organization.Transaction{
