@@ -144,38 +144,6 @@
         ]
       }
     },
-    "/api/v1/get/user/analytics": {
-      "post": {
-        "operationId": "User_GetUserAnalyticsV1",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/userUserAnalyticsV1Response"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userUserAnalyticsV1Request"
-            }
-          }
-        ],
-        "tags": [
-          "User"
-        ]
-      }
-    },
     "/api/v1/get/user/transactions": {
       "post": {
         "operationId": "User_GetTransactionsV1",
@@ -299,33 +267,6 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
-        }
-      }
-    },
-    "userActivityMessage": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "name": {
-          "type": "string"
-        },
-        "unit": {
-          "type": "string"
-        },
-        "max": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "min": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "avg": {
-          "type": "integer",
-          "format": "int64"
         }
       }
     },
@@ -466,18 +407,6 @@
         }
       }
     },
-    "userGraphElement": {
-      "type": "object",
-      "properties": {
-        "timestamp": {
-          "type": "string"
-        },
-        "value": {
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
     "userJoinUserToOrganizationV1Request": {
       "type": "object",
       "properties": {
@@ -548,74 +477,6 @@
         },
         "updatedAt": {
           "type": "string"
-        }
-      }
-    },
-    "userUserAnalyticsV1Request": {
-      "type": "object",
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        }
-      }
-    },
-    "userUserAnalyticsV1Response": {
-      "type": "object",
-      "properties": {
-        "activityList": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/userActivityMessage"
-          }
-        },
-        "mostEarnedActivity": {
-          "type": "string"
-        },
-        "favouriteActivity": {
-          "type": "string"
-        },
-        "steps": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/userGraphElement"
-          }
-        },
-        "pushUps": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/userGraphElement"
-          }
-        },
-        "crunches": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/userGraphElement"
-          }
-        },
-        "cycling": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/userGraphElement"
-          }
-        },
-        "pullUps": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/userGraphElement"
-          }
-        },
-        "benchPress": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/userGraphElement"
-          }
         }
       }
     }
