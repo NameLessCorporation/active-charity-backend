@@ -8,16 +8,16 @@ COPY . ./
 
 RUN chmod +x wait-for-postgres.sh
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /active-charity-backend ./cmd/app/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /active-charity-backend ./cmd/main.go
 
 FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates
 
 COPY --from=builder /active-charity-backend ./active-charity-backend
-RUN mkdir ./configs
-COPY ./configs/default-config.yaml ./configs
+RUN mkdir ./config
+COPY ./config/default-config.yaml ./config
 
-EXPOSE 65000
+EXPOSE 65001
 
 ENTRYPOINT ["./active-charity-backend"]
