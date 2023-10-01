@@ -111,9 +111,184 @@
           "Organization"
         ]
       }
+    },
+    "/api/v1/get/transactions": {
+      "post": {
+        "operationId": "Organization_GetTransactionsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationGetTransactionsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationGetTransactionsV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
+    },
+    "/api/v1/organization/approve/transfer": {
+      "post": {
+        "operationId": "Organization_ApproveTransferCoinsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationApproveTransferCoinsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationApproveTransferCoinsV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
+    },
+    "/api/v1/organization/get/new/transfers": {
+      "post": {
+        "operationId": "Organization_GetNewTransfersV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationGetNewTransfersV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationGetNewTransfersV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
+    },
+    "/api/v1/organization/reject/transfer": {
+      "post": {
+        "operationId": "Organization_RejectTransferCoinsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationRejectTransferCoinsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationRejectTransferCoinsV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
+    },
+    "/api/v1/organization/withdrawal/coins": {
+      "post": {
+        "operationId": "Organization_WithdrawalCoinsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/organizationWithdrawalCoinsV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/organizationWithdrawalCoinsV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Organization"
+        ]
+      }
     }
   },
   "definitions": {
+    "organizationApproveTransferCoinsV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "transactionId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "organizationApproveTransferCoinsV1Response": {
+      "type": "object"
+    },
     "organizationCreateOrganizationInviteCodeV1Request": {
       "type": "object",
       "properties": {
@@ -144,6 +319,26 @@
     "organizationCreateOrganizationV1Response": {
       "type": "object"
     },
+    "organizationGetNewTransfersV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationGetNewTransfersV1Response": {
+      "type": "object",
+      "properties": {
+        "newTransfers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationNewTransfers"
+          }
+        }
+      }
+    },
     "organizationGetOrganizationV1Request": {
       "type": "object",
       "properties": {
@@ -159,6 +354,138 @@
           "type": "string"
         },
         "ownerId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "organizationGetTransactionsV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationGetTransactionsV1Response": {
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/organizationTransaction"
+          }
+        }
+      }
+    },
+    "organizationNewTransfers": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "fromEmail": {
+          "type": "string"
+        },
+        "fromName": {
+          "type": "string"
+        },
+        "fundName": {
+          "type": "string"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "rubles": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationRejectTransferCoinsV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "transactionId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "organizationRejectTransferCoinsV1Response": {
+      "type": "object"
+    },
+    "organizationTransaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "fromEmail": {
+          "type": "string"
+        },
+        "fromName": {
+          "type": "string"
+        },
+        "fundName": {
+          "type": "string"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "rubles": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "organizationWithdrawalCoinsV1Request": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "organizationWithdrawalCoinsV1Response": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
           "type": "string",
           "format": "uint64"
         }

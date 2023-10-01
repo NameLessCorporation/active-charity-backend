@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/jmoiron/sqlx"
 
@@ -64,4 +65,31 @@ func (t *Transaction) GetTransactionByToWalletIDAndFromWalletID(ctx context.Cont
 	}
 
 	return &transaction, nil
+}
+
+func (t *Transaction) GetNewTransferTransactionsByToWalletID(ctx context.Context, toWalletID uint64) ([]*models.Transaction, error) {
+	var transactions []*models.Transaction
+	if err := t.db.SelectContext(ctx, &transactions, "SELECT * FROM public.transactions WHERE to_wallet_id = $1 AND type = $2 AND status = $3", toWalletID, models.TransactionTransferType, models.TransactionNewStatus); err != nil {
+		return nil, err
+	}
+
+	return transactions, nil
+}
+
+func (t *Transaction) GetTransactionsByWalletID(ctx context.Context, walletID uint64, transactionType, status string) ([]*models.Transaction, error) {
+	query := "SELECT * FROM public.transactions WHERE (to_wallet_id = $1 OR from_wallet_id = $2)"
+	if transactionType != "" {
+		query += fmt.Sprintf(" AND type = %s", transactionType)
+	}
+
+	if status != "" {
+		query += fmt.Sprintf(" AND status = %s", status)
+	}
+
+	var transactions []*models.Transaction
+	if err := t.db.SelectContext(ctx, &transactions, query, walletID, walletID); err != nil {
+		return nil, err
+	}
+
+	return transactions, nil
 }

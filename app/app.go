@@ -9,6 +9,7 @@ import (
 
 	"google.golang.org/grpc/credentials/insecure"
 
+	"github.com/NameLessCorporation/active-charity-backend/app/balance_operations"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/activity"
 	"github.com/NameLessCorporation/active-charity-backend/app/endpoint/auth"
@@ -79,7 +80,8 @@ func (app *App) StartApp(certPath string) error {
 	service := service.NewService(store, app.config, app.logger)
 	service.InitServices()
 
-	endpointContainer := app.InitEndpointContainer(service.Services)
+	balanceOperations := balance_operations.NewBalanceOperations(*service.Services)
+	endpointContainer := app.InitEndpointContainer(service.Services, balanceOperations)
 
 	listener, err := net.Listen("tcp", ":"+app.config.Server.Port)
 	if err != nil {
@@ -164,10 +166,10 @@ func (app *App) StartApp(certPath string) error {
 	return http.ListenAndServe(gwServer.Addr, wsproxy.WebsocketProxy(handler))
 }
 
-func (app *App) InitEndpointContainer(service *service.Services) *endpoint.EndpointContainer {
+func (app *App) InitEndpointContainer(service *service.Services, operations balance_operations.BalanceOperations) *endpoint.EndpointContainer {
 	authServices := auth.NewAuthEndpoint(service, app.config)
-	userServices := user.NewUserEndpoint(service, app.config)
-	organizationServices := organization.NewOrganizationEndpoint(service, app.config)
+	userServices := user.NewUserEndpoint(service, app.config, operations)
+	organizationServices := organization.NewOrganizationEndpoint(service, app.config, operations)
 	activityServices := activity.NewActivityEndpoint(service, app.config)
 	fundService := fund.NewFundEndpoint(service, app.config)
 

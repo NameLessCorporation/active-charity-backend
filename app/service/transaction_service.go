@@ -48,3 +48,21 @@ func (s *Service) GetTransactionByToWalletIDAndFromWalletID(ctx context.Context,
 
 	return transaction, nil
 }
+
+func (s *Service) GetNewTransferTransactionsByToWalletID(ctx context.Context, toWalletID uint64) ([]*models.Transaction, error) {
+	transactions, err := s.repository.TransactionRepository.GetNewTransferTransactionsByToWalletID(ctx, toWalletID)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Ошибка получения новых трансферов")
+	}
+
+	return transactions, nil
+}
+
+func (s *Service) GetNewTransferTransactionsByWalletID(ctx context.Context, walletID uint64, transactionType, transactionStatus string) ([]*models.Transaction, error) {
+	transactions, err := s.repository.TransactionRepository.GetTransactionsByWalletID(ctx, walletID, transactionType, transactionStatus)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Ошибка получения транзакций")
+	}
+
+	return transactions, nil
+}

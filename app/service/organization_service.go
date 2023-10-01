@@ -28,3 +28,12 @@ func (s *Service) GetOrganizationByID(ctx context.Context, id uint64) (*models.O
 
 	return organization, nil
 }
+
+func (s *Service) GetOrganizationByWalletID(ctx context.Context, walletID uint64) (*models.Organization, error) {
+	organization, err := s.repository.OrganizationRepository.GetOrganizationByWalletID(ctx, walletID)
+	if err != nil {
+		return nil, err
+	}
+
+	return organization, nil
+}

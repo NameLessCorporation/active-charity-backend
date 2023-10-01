@@ -17,6 +17,21 @@ service Organization {
   rpc CreateOrganizationInviteCodeV1(CreateOrganizationInviteCodeV1Request) returns (CreateOrganizationInviteCodeV1Response) {
     option (google.api.http) = { post: "/api/v1/create/organization/code"; body: "*"; };
   };
+  rpc ApproveTransferCoinsV1(ApproveTransferCoinsV1Request) returns (ApproveTransferCoinsV1Response) {
+    option (google.api.http) = { post: "/api/v1/organization/approve/transfer"; body: "*"; };
+  };
+  rpc RejectTransferCoinsV1(RejectTransferCoinsV1Request) returns (RejectTransferCoinsV1Response) {
+    option (google.api.http) = { post: "/api/v1/organization/reject/transfer"; body: "*"; };
+  };
+  rpc GetNewTransfersV1(GetNewTransfersV1Request) returns (GetNewTransfersV1Response) {
+    option (google.api.http) = { post: "/api/v1/organization/get/new/transfers"; body: "*"; };
+  };
+  rpc WithdrawalCoinsV1(WithdrawalCoinsV1Request) returns (WithdrawalCoinsV1Response) {
+    option (google.api.http) = { post: "/api/v1/organization/withdrawal/coins"; body: "*"; };
+  };
+  rpc GetTransactionsV1(GetTransactionsV1Request) returns (GetTransactionsV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/transactions"; body: "*"; };
+  };
 }
 
 message CreateOrganizationV1Request {
@@ -41,4 +56,69 @@ message GetOrganizationV1Request {
 message GetOrganizationV1Response {
   string name = 1;
   uint64 owner_id = 2;
+}
+
+message ApproveTransferCoinsV1Request {
+  string access_token = 1;
+  uint64 transaction_id = 2;
+}
+
+message ApproveTransferCoinsV1Response {}
+
+message RejectTransferCoinsV1Request {
+  string access_token = 1;
+  uint64 transaction_id = 2;
+}
+
+message RejectTransferCoinsV1Response {}
+
+message GetNewTransfersV1Request {
+  string access_token = 1;
+}
+
+message GetNewTransfersV1Response {
+  repeated NewTransfers new_transfers = 1;
+}
+
+message NewTransfers {
+  uint64 id = 1;
+  string type = 2;
+  string from_email = 3;
+  string from_name = 4;
+  string fund_name = 5;
+  uint64 coins = 6;
+  uint64 rubles = 7;
+  string status = 8;
+  string created_at = 9;
+}
+
+message WithdrawalCoinsV1Request {
+  string access_token = 1;
+  uint64 coins = 2;
+}
+
+message WithdrawalCoinsV1Response {
+  uint64 transaction_id = 1;
+}
+
+message GetTransactionsV1Request {
+  string access_token = 1;
+  string status = 2;
+  string type = 3;
+}
+
+message GetTransactionsV1Response {
+  repeated Transaction transactions = 1;
+}
+
+message Transaction {
+  uint64 id = 1;
+  string type = 2;
+  string from_email = 3;
+  string from_name = 4;
+  string fund_name = 5;
+  uint64 coins = 6;
+  uint64 rubles = 7;
+  string status = 8;
+  string created_at = 9;
 }

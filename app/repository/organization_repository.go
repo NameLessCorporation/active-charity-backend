@@ -43,3 +43,13 @@ func (o *Organization) GetOrganizationByID(ctx context.Context, id uint64) (*mod
 
 	return &organization, nil
 }
+
+func (o *Organization) GetOrganizationByWalletID(ctx context.Context, walletID uint64) (*models.Organization, error) {
+	var organization models.Organization
+	err := o.db.GetContext(ctx, &organization, "SELECT * FROM public.organizations WHERE wallet_id = $1", walletID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &organization, nil
+}

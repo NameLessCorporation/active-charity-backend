@@ -45,12 +45,19 @@ type UserServiceInter interface {
 	JoinUserToOrganizationV1(ctx context.Context, req *user.JoinUserToOrganizationV1Request) (*user.JoinUserToOrganizationV1Response, error)
 	GetUserV1(ctx context.Context, req *user.GetUserV1Request) (*user.GetUserV1Response, error)
 	SelectUserFundV1(ctx context.Context, req *user.SelectUserFundV1Request) (*user.SelectUserFundV1Response, error)
+	CreateNewTransferV1(ctx context.Context, req *user.CreateNewTransferV1Request) (*user.CreateNewTransferV1Response, error)
+	GetTransactionsV1(ctx context.Context, req *user.GetTransactionsV1Request) (*user.GetTransactionsV1Response, error)
 }
 
 type OrganizationServiceInter interface {
 	CreateOrganizationV1(ctx context.Context, req *organization.CreateOrganizationV1Request) (*organization.CreateOrganizationV1Response, error)
 	CreateOrganizationInviteCodeV1(ctx context.Context, req *organization.CreateOrganizationInviteCodeV1Request) (*organization.CreateOrganizationInviteCodeV1Response, error)
 	GetOrganizationV1(ctx context.Context, req *organization.GetOrganizationV1Request) (*organization.GetOrganizationV1Response, error)
+	ApproveTransferCoinsV1(ctx context.Context, req *organization.ApproveTransferCoinsV1Request) (*organization.ApproveTransferCoinsV1Response, error)
+	RejectTransferCoinsV1(ctx context.Context, req *organization.RejectTransferCoinsV1Request) (*organization.RejectTransferCoinsV1Response, error)
+	GetNewTransfersV1(ctx context.Context, req *organization.GetNewTransfersV1Request) (*organization.GetNewTransfersV1Response, error)
+	WithdrawalCoinsV1(ctx context.Context, req *organization.WithdrawalCoinsV1Request) (*organization.WithdrawalCoinsV1Response, error)
+	GetTransactionsV1(ctx context.Context, req *organization.GetTransactionsV1Request) (*organization.GetTransactionsV1Response, error)
 }
 
 type ActivityServiceInter interface {
