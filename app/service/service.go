@@ -12,7 +12,7 @@ import (
 )
 
 type IActivityService interface {
-	TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
+	TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) (uint32, error)
 	GetActivityList(ctx context.Context) ([]*models.Activity, error)
 	TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 	TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error

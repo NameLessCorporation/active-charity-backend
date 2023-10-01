@@ -94,22 +94,24 @@ func (a *Activity) TrackPullUps(ctx context.Context, repeats uint32, activityId 
 	return nil
 }
 
-func (a *Activity) GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, error) {
-	var periodId uint64
+func (a *Activity) GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, uint32, error) {
+	var (
+		periodId uint64
+		value    uint32
+	)
 
-	err := a.db.GetContext(
+	err := a.db.QueryRowxContext(
 		ctx,
-		&periodId,
-		`select id from steps_history 
+		`select id, steps from steps_history 
                 where created_at > CURRENT_DATE and 
                       created_at < CURRENT_DATE + interval '1 day' and
                       user_id = $1`,
-		userId)
+		userId).Scan(&periodId, &value)
 	if err != nil {
-		return 0, err
+		return 0, 0, err
 	}
 
-	return periodId, nil
+	return periodId, value, nil
 }
 
 func (a *Activity) IsActiveStepsPeriod(ctx context.Context, userId uint64) (bool, error) {
