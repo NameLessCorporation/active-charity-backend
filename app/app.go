@@ -2,7 +2,6 @@ package app
 
 import (
 	"context"
-	"log"
 	"net"
 	"net/http"
 	"time"
@@ -102,7 +101,6 @@ func (app *App) StartApp(certPath string) error {
 		zap.String("addr", app.config.Server.IP+":"+app.config.Server.Port),
 		zap.Int64("duration", time.Now().UnixNano()-startTime),
 	)
-	log.Println(app.config.Server.IP + ":" + app.config.Server.Port)
 
 	go func() {
 		app.logger.Fatal("listen grpc server error", zap.Error(grpcServer.Serve(listener)))

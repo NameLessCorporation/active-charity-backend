@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"log"
 
 	"github.com/jmoiron/sqlx"
 
@@ -136,7 +135,6 @@ func (a *Activity) IsActiveStepsPeriod(ctx context.Context, userId uint64) (bool
 }
 
 func (a *Activity) TrackCurrentPeriodSteps(ctx context.Context, steps uint32, periodId uint64) error {
-	log.Println(steps, periodId)
 	_, err := a.db.ExecContext(
 		ctx,
 		"update steps_history set steps = $1, updated_at = now() where id = $2",

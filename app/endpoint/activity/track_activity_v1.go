@@ -8,8 +8,8 @@ import (
 )
 
 func (a *ActivityEndpoint) TrackActivityV1(ctx context.Context, req *activity.TrackActivityV1Request) (*activity.TrackActivityV1Response, error) {
+	log.Println(req.Value)
 	if req.Value == 0 {
-		log.Println(req.Value)
 		return &activity.TrackActivityV1Response{}, nil
 	}
 
