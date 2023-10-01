@@ -7,25 +7,25 @@ import "google/api/annotations.proto";
 
 service User {
   rpc CreateUserV1(CreateUserV1Request) returns (CreateUserV1Response) {
-    option (google.api.http) = { post: "/api/v1/create/user"; body: "*"; };
+    option (google.api.http) = {post: "/api/v1/create/user"; body: "*";};
   };
   rpc GetUserV1(GetUserV1Request) returns (GetUserV1Response) {
-    option (google.api.http) = { post: "/api/v1/get/user"; body: "*"; };
+    option (google.api.http) = {post: "/api/v1/get/user"; body: "*";};
   };
   rpc JoinUserToOrganizationV1(JoinUserToOrganizationV1Request) returns (JoinUserToOrganizationV1Response) {
-    option (google.api.http) = { post: "/api/v1/join/user/organization"; body: "*"; };
+    option (google.api.http) = {post: "/api/v1/join/user/organization"; body: "*";};
   };
   rpc SelectUserFundV1(SelectUserFundV1Request) returns (SelectUserFundV1Response) {
-    option (google.api.http) = { post: "/api/v1/select/user/fund"; body: "*"; };
+    option (google.api.http) = {post: "/api/v1/select/user/fund"; body: "*";};
   };
   rpc CreateNewTransferV1(CreateNewTransferV1Request) returns (CreateNewTransferV1Response) {
-    option (google.api.http) = { post: "/api/v1/create/new/transfer"; body: "*"; };
+    option (google.api.http) = {post: "/api/v1/create/new/transfer"; body: "*";};
   };
   rpc GetTransactionsV1(GetTransactionsV1Request) returns (GetTransactionsV1Response) {
-    option (google.api.http) = { post: "/api/v1/get/user/transactions"; body: "*"; };
+    option (google.api.http) = {post: "/api/v1/get/user/transactions"; body: "*";};
   };
   rpc GetTopV1(GetTopV1Request) returns (GetTopV1Response) {
-    option (google.api.http) = { post: "/api/v1/get/top"; body: "*"; };
+    option (google.api.http) = {post: "/api/v1/get/top"; body: "*";};
   };
 }
 
