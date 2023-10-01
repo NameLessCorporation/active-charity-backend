@@ -25,8 +25,16 @@ func (o *OrganizationEndpoint) GetOrganizationV1(ctx context.Context, req *organ
 		return nil, err
 	}
 
+	var wallet *models.Wallet
+	wallet, err = o.services.WalletService.GetWalletByID(ctx, org.WalletID)
+	if err != nil {
+		return nil, err
+	}
+
 	return &organization.GetOrganizationV1Response{
 		Name:    org.Name,
 		OwnerId: org.OwnerID,
+		Coins:   wallet.Coins,
+		Rubles:  wallet.Rubles,
 	}, nil
 }

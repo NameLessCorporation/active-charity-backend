@@ -356,6 +356,14 @@
         "ownerId": {
           "type": "string",
           "format": "uint64"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "rubles": {
+          "type": "string",
+          "format": "uint64"
         }
       }
     },
