@@ -8,6 +8,24 @@ import (
 	"github.com/NameLessCorporation/active-charity-backend/app/models"
 )
 
+func (a *Service) GetUserFavouriteActivity(ctx context.Context, userID uint64) (string, error) {
+	activity, err := a.repository.ActivityRepository.GetUserFavouriteActivity(ctx, userID)
+	if err != nil {
+		return "", err
+	}
+
+	return activity, nil
+}
+
+func (a *Service) GetUserMostEarnedActivity(ctx context.Context, userID uint64) (string, error) {
+	activity, err := a.repository.ActivityRepository.GetUserMostEarnedActivity(ctx, userID)
+	if err != nil {
+		return "", err
+	}
+
+	return activity, nil
+}
+
 func (a *Service) TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {
 	if err := a.repository.ActivityRepository.TrackPushUps(ctx, repeats, activityId, userId); err != nil {
 		return err

@@ -27,7 +27,41 @@ service User {
   rpc GetTopV1(GetTopV1Request) returns (GetTopV1Response) {
     option (google.api.http) = {post: "/api/v1/get/top"; body: "*";};
   };
+  rpc GetUserAnalyticsV1(GetUserAnalyticsV1Request) returns (GetUserAnalyticsV1Response) {
+    option (google.api.http) = { post: "/api/v1/get/user/analytics"; body: "*"; };
+  };
 }
+
+message GetUserAnalyticsV1Request {
+  string access_token = 1;
+}
+
+message GetUserAnalyticsV1Response {
+  repeated ActivityMessage activity_list = 1;
+  string most_earned_activity = 2;
+  string favourite_activity = 3;
+  repeated GraphElement steps = 4;
+  repeated GraphElement push_ups = 5;
+  repeated GraphElement crunches = 6;
+  repeated GraphElement cycling = 7;
+  repeated GraphElement pull_ups = 8;
+  repeated GraphElement bench_press = 9;
+}
+
+message ActivityMessage {
+  uint64 id = 1;
+  string name = 2;
+  string unit = 3;
+  uint32 max = 4;
+  uint32 min = 5;
+  uint32 avg = 6;
+}
+
+message GraphElement {
+  string timestamp = 1;
+  uint32 value = 2;
+}
+
 
 message GetTopV1Request {
   string access_token = 1;

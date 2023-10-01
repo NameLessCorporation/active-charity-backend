@@ -27,6 +27,9 @@ type ActivityRepository interface {
 	GetCyclingValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
 	GetPullUpValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
 	GetPushUpValue(ctx context.Context, userID uint64) (sql.NullInt32, error)
+
+	GetUserFavouriteActivity(ctx context.Context, userID uint64) (string, error)
+	GetUserMostEarnedActivity(ctx context.Context, userID uint64) (string, error)
 }
 
 type UserRepository interface {
