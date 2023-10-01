@@ -48,6 +48,38 @@
         ]
       }
     },
+    "/api/v1/track/activity": {
+      "post": {
+        "operationId": "Activity_TrackActivityV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/activityTrackActivityV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/activityTrackActivityV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "Activity"
+        ]
+      }
+    },
     "/api/v1/track/bench/press": {
       "post": {
         "operationId": "Activity_TrackBenchPressV1",
@@ -273,6 +305,25 @@
           }
         }
       }
+    },
+    "activityTrackActivityV1Request": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "activityTrackActivityV1Response": {
+      "type": "object"
     },
     "activityTrackBenchPressV1Request": {
       "type": "object",

@@ -27,7 +27,18 @@ service Activity {
   rpc TrackBenchPressV1(TrackBenchPressV1Request) returns (TrackBenchPressV1Response) {
     option (google.api.http) = { post: "/api/v1/track/bench/press"; body: "*"; };
   };
+  rpc TrackActivityV1(TrackActivityV1Request) returns (TrackActivityV1Response) {
+    option (google.api.http) = { post: "/api/v1/track/activity"; body: "*"; };
+  };
 }
+
+message TrackActivityV1Request {
+  uint64 activity_id = 1;
+  string access_token = 2;
+  uint32 value = 3;
+}
+
+message TrackActivityV1Response{}
 
 message TrackBenchPressV1Response {}
 

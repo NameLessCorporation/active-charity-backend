@@ -61,6 +61,8 @@ type ActivityServiceInter interface {
 	TrackCrunchesV1(ctx context.Context, req *activity.TrackCrunchesV1Request) (*activity.TrackCrunchesV1Response, error)
 	TrackPushUpsV1(ctx context.Context, req *activity.TrackPushUpV1Request) (*activity.TrackPushUpsV1Response, error)
 
+	TrackActivityV1(ctx context.Context, req *activity.TrackActivityV1Request) (*activity.TrackActivityV1Response, error)
+
 	GetActivityListV1(ctx context.Context, req *activity.GetActivityListV1Request) (*activity.GetActivityListV1Response, error)
 }
 
