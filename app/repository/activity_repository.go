@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"sort"
 
 	"github.com/jmoiron/sqlx"
 
@@ -17,6 +18,220 @@ func NewActivityRepository(db *sqlx.DB) *Activity {
 	return &Activity{
 		db: db,
 	}
+}
+
+func (a *Activity) GetUserFavouriteActivity(ctx context.Context, userID uint64) (string, error) {
+	var (
+		pushUps  models.FavouriteActivity
+		pullUps  models.FavouriteActivity
+		cycling  models.FavouriteActivity
+		crunches models.FavouriteActivity
+		bench    models.FavouriteActivity
+	)
+
+	err := a.db.GetContext(ctx, &pullUps,
+		`select count(*), a.name from pull_ups_history
+				inner join activities a on a.id = pull_ups_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		pullUps = models.FavouriteActivity{
+			Count: 0,
+			Name:  "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &pushUps,
+		`select count(*), a.name from push_ups_history
+				inner join activities a on a.id = push_ups_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		pushUps = models.FavouriteActivity{
+			Count: 0,
+			Name:  "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &cycling,
+		`select count(*), a.name from cycling_history
+				inner join activities a on a.id = cycling_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		cycling = models.FavouriteActivity{
+			Count: 0,
+			Name:  "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &crunches,
+		`select count(*), a.name from crunches_history
+				inner join activities a on a.id = crunches_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		crunches = models.FavouriteActivity{
+			Count: 0,
+			Name:  "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &bench,
+		`select count(*), a.name from bench_press_history
+				inner join activities a on a.id = bench_press_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		bench = models.FavouriteActivity{
+			Count: 0,
+			Name:  "",
+		}
+	}
+
+	arr := []models.FavouriteActivity{pushUps, pullUps, cycling, crunches, bench}
+	sort.Slice(arr, func(i, j int) bool {
+		return arr[j].Count < arr[i].Count
+	})
+
+	return arr[0].Name, nil
+}
+
+func (a *Activity) GetUserMostEarnedActivity(ctx context.Context, userID uint64) (string, error) {
+	var (
+		pushUps  models.MostEarned
+		pullUps  models.MostEarned
+		cycling  models.MostEarned
+		crunches models.MostEarned
+		bench    models.MostEarned
+	)
+
+	err := a.db.GetContext(ctx, &pullUps,
+		`select sum(repeats), a.name from pull_ups_history
+				inner join activities a on a.id = pull_ups_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		pullUps = models.MostEarned{
+			Sum:  0,
+			Name: "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &pushUps,
+		`select sum(repeats), a.name from push_ups_history
+				inner join activities a on a.id = push_ups_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		pushUps = models.MostEarned{
+			Sum:  0,
+			Name: "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &cycling,
+		`select sum(metres), a.name from cycling_history
+				inner join activities a on a.id = cycling_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		cycling = models.MostEarned{
+			Sum:  0,
+			Name: "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &crunches,
+		`select sum(repeats), a.name from crunches_history
+				inner join activities a on a.id = crunches_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		crunches = models.MostEarned{
+			Sum:  0,
+			Name: "",
+		}
+	}
+
+	err = a.db.GetContext(ctx, &bench,
+		`select sum(repeats), a.name from bench_press_history
+				inner join activities a on a.id = bench_press_history.activity_id
+				where user_id = $1
+				group by a.name;`,
+		userID,
+	)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return "", err
+		}
+
+		bench = models.MostEarned{
+			Sum:  0,
+			Name: "",
+		}
+	}
+
+	arr := []models.MostEarned{pushUps, pullUps, cycling, crunches, bench}
+	sort.Slice(arr, func(i, j int) bool {
+		return arr[j].Sum < arr[i].Sum
+	})
+
+	return arr[0].Name, nil
 }
 
 func (a *Activity) TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {

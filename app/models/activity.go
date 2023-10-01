@@ -9,3 +9,13 @@ type Activity struct {
 	CreatedAt time.Time `db:"created_at"`
 	UpdatedAt time.Time `db:"updated_at"`
 }
+
+type FavouriteActivity struct {
+	Count int32  `db:"count"`
+	Name  string `db:"name"`
+}
+
+type MostEarned struct {
+	Sum  int32  `db:"sum"`
+	Name string `db:"name"`
+}
