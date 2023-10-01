@@ -21,7 +21,7 @@ func NewUserRepository(db *sqlx.DB) *User {
 
 func (u *User) GetWalletIdById(ctx context.Context, id uint64) (uint64, error) {
 	var walletId uint64
-	err := u.db.GetContext(ctx, &id, "SELECT wallet_id FROM users WHERE id = $1", id)
+	err := u.db.GetContext(ctx, &walletId, "SELECT wallet_id FROM users WHERE id = $1", id)
 	if err != nil {
 		return 0, err
 	}
