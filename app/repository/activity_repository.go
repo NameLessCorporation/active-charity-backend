@@ -20,6 +20,101 @@ func NewActivityRepository(db *sqlx.DB) *Activity {
 	}
 }
 
+func (a *Activity) GetUserActivityAnalytics(ctx context.Context, userID uint64) ([]models.ActivityAnalytics, error) {
+	activities := make([]models.ActivityAnalytics, 6)
+
+	err := a.db.QueryRowxContext(ctx, `
+		select a.id, max(sh.steps), min(sh.steps), avg(sh.steps) from activities as a
+		inner join steps_history sh on a.id = sh.activity_id
+		where user_id = $1
+		group by a.id`,
+		userID,
+	).Scan(&activities[0].Id, &activities[0].Max, &activities[0].Min, &activities[0].Avg)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return nil, err
+		}
+
+		activities[0] = models.ActivityAnalytics{}
+	}
+
+	err = a.db.QueryRowxContext(ctx, `
+		select a.id, max(sh.repeats), min(sh.repeats), avg(sh.repeats) from activities as a
+		inner join push_ups_history sh on a.id = sh.activity_id
+		where user_id = $1
+		group by a.id`,
+		userID,
+	).Scan(&activities[1].Id, &activities[1].Max, &activities[1].Min, &activities[1].Avg)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return nil, err
+		}
+
+		activities[1] = models.ActivityAnalytics{}
+	}
+
+	err = a.db.QueryRowxContext(ctx, `
+		select a.id, max(sh.repeats), min(sh.repeats), avg(sh.repeats) from activities as a
+		inner join pull_ups_history sh on a.id = sh.activity_id
+		where user_id = $1
+		group by a.id`,
+		userID,
+	).Scan(&activities[2].Id, &activities[2].Max, &activities[2].Min, &activities[2].Avg)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return nil, err
+		}
+
+		activities[2] = models.ActivityAnalytics{}
+	}
+
+	err = a.db.QueryRowxContext(ctx, `
+		select a.id, max(sh.metres), min(sh.metres), avg(sh.metres) from activities as a
+		inner join cycling_history sh on a.id = sh.activity_id
+		where user_id = $1
+		group by a.id`,
+		userID,
+	).Scan(&activities[3].Id, &activities[3].Max, &activities[3].Min, &activities[3].Avg)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return nil, err
+		}
+
+		activities[3] = models.ActivityAnalytics{}
+	}
+
+	err = a.db.QueryRowxContext(ctx, `
+		select a.id, max(sh.repeats), min(sh.repeats), avg(sh.repeats) from activities as a
+		inner join crunches_history sh on a.id = sh.activity_id
+		where user_id = $1
+		group by a.id`,
+		userID,
+	).Scan(&activities[4].Id, &activities[4].Max, &activities[4].Min, &activities[4].Avg)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return nil, err
+		}
+
+		activities[4] = models.ActivityAnalytics{}
+	}
+
+	err = a.db.QueryRowxContext(ctx, `
+		select a.id, max(sh.repeats), min(sh.repeats), avg(sh.repeats) from activities as a
+		inner join bench_press_history sh on a.id = sh.activity_id
+		where user_id = $1
+		group by a.id`,
+		userID,
+	).Scan(&activities[5].Id, &activities[5].Max, &activities[5].Min, &activities[5].Avg)
+	if err != nil {
+		if err != sql.ErrNoRows {
+			return nil, err
+		}
+
+		activities[5] = models.ActivityAnalytics{}
+	}
+	return activities, nil
+}
+
 func (a *Activity) GetUserFavouriteActivity(ctx context.Context, userID uint64) (string, error) {
 	var (
 		pushUps  models.FavouriteActivity

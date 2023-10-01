@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"log"
 
 	"github.com/NameLessCorporation/active-charity-backend/extra/user"
 )
@@ -17,7 +18,11 @@ func (u *UserEndpoint) GetUserAnalyticsV1(ctx context.Context, req *user.GetUser
 		return nil, err
 	}
 
-	//u.services.ActivityService.GetUserActivityAnalytics(ctx, userID)
+	analytics, err := u.services.ActivityService.GetUserActivityAnalytics(ctx, userID)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
 
 	fav, err := u.services.ActivityService.GetUserFavouriteActivity(ctx, userID)
 	if err != nil {
@@ -31,14 +36,18 @@ func (u *UserEndpoint) GetUserAnalyticsV1(ctx context.Context, req *user.GetUser
 
 	activityList := make([]*user.ActivityMessage, 0, len(list))
 	for _, value := range list {
-		activityList = append(activityList, &user.ActivityMessage{
-			Id:   value.Id,
-			Name: value.Name,
-			Unit: value.Unit,
-			Max:  1,
-			Min:  1,
-			Avg:  1,
-		})
+		for _, value2 := range analytics {
+			if value2.Id == value.Id {
+				activityList = append(activityList, &user.ActivityMessage{
+					Id:   value.Id,
+					Name: value.Name,
+					Unit: value.Unit,
+					Max:  value2.Max,
+					Min:  value2.Min,
+					Avg:  value2.Avg,
+				})
+			}
+		}
 	}
 
 	return &user.GetUserAnalyticsV1Response{

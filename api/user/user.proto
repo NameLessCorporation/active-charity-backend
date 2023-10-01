@@ -54,7 +54,7 @@ message ActivityMessage {
   string unit = 3;
   uint32 max = 4;
   uint32 min = 5;
-  uint32 avg = 6;
+  float avg = 6;
 }
 
 message GraphElement {
