@@ -40,31 +40,33 @@ func (a *Service) TrackCrunches(ctx context.Context, repeats uint32, activityId 
 	return nil
 }
 
-func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error {
+func (a *Service) TrackSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) (uint32, error) {
 	isPeriod, err := a.repository.ActivityRepository.IsActiveStepsPeriod(ctx, userId)
 	if err != nil {
 		a.logger.Error("s.repository.ActivityRepository.TrackSteps", zap.Error(err))
-		return err
+		return 0, err
 	}
 
 	if isPeriod {
-		periodId, err := a.repository.ActivityRepository.GetCurrentPeriodId(ctx, userId)
+		periodId, value, err := a.repository.ActivityRepository.GetCurrentPeriodId(ctx, userId)
 		if err != nil {
-			return err
+			return 0, err
 		}
 
 		err = a.repository.ActivityRepository.TrackCurrentPeriodSteps(ctx, steps, periodId)
 		if err != nil {
-			return err
+			return 0, err
 		}
+
+		return steps - value, nil
 	} else {
 		err = a.repository.ActivityRepository.TrackNewPeriodSteps(ctx, steps, activityId, userId)
 		if err != nil {
-			return err
+			return 0, err
 		}
-	}
 
-	return nil
+		return steps, nil
+	}
 }
 
 func (a *Service) TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error {

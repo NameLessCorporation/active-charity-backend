@@ -13,7 +13,7 @@ type ActivityRepository interface {
 	TrackNewPeriodSteps(ctx context.Context, steps uint32, activityId uint64, userId uint64) error
 	GetActivityList(ctx context.Context) ([]*models.Activity, error)
 	IsActiveStepsPeriod(ctx context.Context, userId uint64) (bool, error)
-	GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, error)
+	GetCurrentPeriodId(ctx context.Context, userId uint64) (uint64, uint32, error)
 	TrackPullUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 	TrackPushUps(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
 	TrackBenchPress(ctx context.Context, repeats uint32, activityId uint64, userId uint64) error
