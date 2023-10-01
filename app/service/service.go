@@ -29,6 +29,8 @@ type IActivityService interface {
 
 	GetUserFavouriteActivity(ctx context.Context, userID uint64) (string, error)
 	GetUserMostEarnedActivity(ctx context.Context, userID uint64) (string, error)
+
+	GetUserActivityAnalytics(ctx context.Context, userID uint64, list []*models.Activity)
 }
 
 type ITokenService interface {

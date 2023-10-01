@@ -17,7 +17,7 @@ func (u *UserEndpoint) GetUserAnalyticsV1(ctx context.Context, req *user.GetUser
 		return nil, err
 	}
 
-	//u.services.ActivityService.GetUserActivityAnalytics(ctx, userID)
+	u.services.ActivityService.GetUserActivityAnalytics(ctx, userID, list)
 
 	fav, err := u.services.ActivityService.GetUserFavouriteActivity(ctx, userID)
 	if err != nil {
