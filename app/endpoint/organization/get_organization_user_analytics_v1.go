@@ -67,15 +67,87 @@ func (o *OrganizationEndpoint) GetOrganizationUserAnalyticsV1(ctx context.Contex
 		}
 	}
 
+	pullGraph, err := o.services.ActivityService.GetPullUpGraph(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+	pullGraphResp := make([]*organization.GraphElement, 0, len(pullGraph))
+	for _, graph := range pullGraph {
+		pullGraphResp = append(pullGraphResp, &organization.GraphElement{
+			Timestamp: graph.Timestamp.UnixNano(),
+			Value:     graph.Value,
+		})
+	}
+
+	cycleGraph, err := o.services.ActivityService.GetCycleGraph(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+	cycleGraphResp := make([]*organization.GraphElement, 0, len(cycleGraph))
+	for _, graph := range cycleGraph {
+		cycleGraphResp = append(cycleGraphResp, &organization.GraphElement{
+			Timestamp: graph.Timestamp.UnixNano(),
+			Value:     graph.Value,
+		})
+	}
+
+	crunchGraph, err := o.services.ActivityService.GetCrunchesGraph(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+	crunchGraphResp := make([]*organization.GraphElement, 0, len(crunchGraph))
+	for _, graph := range crunchGraph {
+		crunchGraphResp = append(crunchGraphResp, &organization.GraphElement{
+			Timestamp: graph.Timestamp.UnixNano(),
+			Value:     graph.Value,
+		})
+	}
+
+	stepsGraph, err := o.services.ActivityService.GetStepsGraph(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+	stepsGraphResp := make([]*organization.GraphElement, 0, len(stepsGraph))
+	for _, graph := range stepsGraph {
+		stepsGraphResp = append(stepsGraphResp, &organization.GraphElement{
+			Timestamp: graph.Timestamp.UnixNano(),
+			Value:     graph.Value,
+		})
+	}
+
+	pushGraph, err := o.services.ActivityService.GetPushUpGraph(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+	pushGraphResp := make([]*organization.GraphElement, 0, len(pushGraph))
+	for _, graph := range pushGraph {
+		pushGraphResp = append(pushGraphResp, &organization.GraphElement{
+			Timestamp: graph.Timestamp.UnixNano(),
+			Value:     graph.Value,
+		})
+	}
+
+	benchGraph, err := o.services.ActivityService.GetBenchPressGraph(ctx, req.GetUserId())
+	if err != nil {
+		return nil, err
+	}
+	benchGraphResp := make([]*organization.GraphElement, 0, len(benchGraph))
+	for _, graph := range benchGraph {
+		benchGraphResp = append(benchGraphResp, &organization.GraphElement{
+			Timestamp: graph.Timestamp.UnixNano(),
+			Value:     graph.Value,
+		})
+	}
+
 	return &organization.GetOrganizationUserAnalyticsV1Response{
 		ActivityList:       activityList,
 		MostEarnedActivity: mostEarned,
 		FavouriteActivity:  fav,
-		Steps:              nil,
-		PushUps:            nil,
-		Crunches:           nil,
-		Cycling:            nil,
-		PullUps:            nil,
-		BenchPress:         nil,
+		Steps:              stepsGraphResp,
+		PushUps:            pushGraphResp,
+		Crunches:           crunchGraphResp,
+		Cycling:            cycleGraphResp,
+		PullUps:            pushGraphResp,
+		BenchPress:         benchGraphResp,
 	}, nil
 }
