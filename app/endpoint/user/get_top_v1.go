@@ -5,6 +5,9 @@ import (
 	"math"
 	"sort"
 
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	"github.com/NameLessCorporation/active-charity-backend/extra/user"
 )
 
@@ -19,6 +22,10 @@ func (u *UserEndpoint) GetTopV1(ctx context.Context, req *user.GetTopV1Request) 
 		return nil, err
 	}
 
+	if organizationID == 0 {
+		return nil, status.Error(codes.InvalidArgument, "Вы не состоите в организациях")
+	}
+
 	users, err := u.services.UserService.GetUsersByOrganizationID(ctx, organizationID)
 	if err != nil {
 		return nil, err
@@ -30,7 +37,6 @@ func (u *UserEndpoint) GetTopV1(ctx context.Context, req *user.GetTopV1Request) 
 		if err != nil {
 			return nil, err
 		}
-
 		pushVal, err := u.services.ActivityService.GetPushUpValue(ctx, v.ID)
 		if err != nil {
 			return nil, err
