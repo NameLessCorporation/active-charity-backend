@@ -187,5 +187,13 @@ func (b *balanceOperations) WithdrawalCoinsFromOrganization(ctx context.Context,
 		return 0, err
 	}
 
+	if err = b.services.WalletService.UpdateCoinsByID(ctx, wallet.ID, wallet.Coins-coins); err != nil {
+		return 0, err
+	}
+
+	if err = b.services.WalletService.UpdateRublesByID(ctx, wallet.ID, wallet.Rubles-rubles); err != nil {
+		return 0, err
+	}
+
 	return transactionID, nil
 }

@@ -22,7 +22,7 @@ service User {
     option (google.api.http) = { post: "/api/v1/create/new/transfer"; body: "*"; };
   };
   rpc GetTransactionsV1(GetTransactionsV1Request) returns (GetTransactionsV1Response) {
-    option (google.api.http) = { post: "/api/v1/get/transactions"; body: "*"; };
+    option (google.api.http) = { post: "/api/v1/get/user/transactions"; body: "*"; };
   };
   rpc GetTopV1(GetTopV1Request) returns (GetTopV1Response) {
     option (google.api.http) = { post: "/api/v1/get/top"; body: "*"; };
@@ -105,9 +105,9 @@ message Transaction {
   uint64 id = 1;
   string type = 2;
   string to_organization_name = 3;
-  uint64 coins = 6;
-  uint64 rubles = 7;
-  string status = 8;
-  string created_at = 9;
-  string updated_at = 10;
+  uint64 coins = 4;
+  uint64 rubles = 5;
+  string status = 6;
+  string created_at = 7;
+  string updated_at = 8;
 }

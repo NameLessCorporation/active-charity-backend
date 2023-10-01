@@ -86,6 +86,8 @@ func (t *Transaction) GetTransactionsByWalletID(ctx context.Context, walletID ui
 		query += fmt.Sprintf(" AND status = %s", status)
 	}
 
+	query += " ORDER BY id DESC"
+
 	var transactions []*models.Transaction
 	if err := t.db.SelectContext(ctx, &transactions, query, walletID, walletID); err != nil {
 		return nil, err

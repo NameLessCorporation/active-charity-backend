@@ -20,14 +20,16 @@ func (a *ActivityEndpoint) TrackStepsV1(ctx context.Context, req *activity.Track
 
 	coins := uint64(math.Floor(float64(difference) / 10))
 
-	walletId, err := a.services.UserService.GetWalletIdByUserId(ctx, userID)
-	if err != nil {
-		return nil, err
-	}
+	if coins != 0 {
+		walletId, err := a.services.UserService.GetWalletIdByUserId(ctx, userID)
+		if err != nil {
+			return nil, err
+		}
 
-	_, err = a.operations.AccrualOfCoinsForActivity(ctx, coins, walletId)
-	if err != nil {
-		return nil, err
+		_, err = a.operations.AccrualOfCoinsForActivity(ctx, coins, walletId)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &activity.TrackStepsV1Response{}, nil

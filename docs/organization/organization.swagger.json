@@ -112,7 +112,7 @@
         ]
       }
     },
-    "/api/v1/get/transactions": {
+    "/api/v1/get/organization/transactions": {
       "post": {
         "operationId": "Organization_GetTransactionsV1",
         "responses": {
@@ -354,6 +354,14 @@
           "type": "string"
         },
         "ownerId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "coins": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "rubles": {
           "type": "string",
           "format": "uint64"
         }
